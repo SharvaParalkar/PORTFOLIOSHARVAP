@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sharva Paralkar | Computational Architect & Designer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        :root {
+            /* Earthy Color Palette */
+            --bg-primary: #F5F1EB;
+            --bg-secondary: #E8E2D9;
+            --bg-dark: #2C2420;
+            --text-primary: #1A1614;
+            --text-secondary: #6B5D54;
+            --text-light: #F5F1EB;
+            --accent-terracotta: #C17A53;
+            --accent-sage: #8B9A7B;
+            --accent-clay: #A67B5B;
+            --accent-stone: #9C8B7A;
+            --border: #D4C8BC;
+            --border-dark: #4A403C;
+        }
+
+        .dark {
+            --bg-primary: #1A1614;
+            --bg-secondary: #252019;
+            --bg-dark: #F5F1EB;
+            --text-primary: #E8E2D9;
+            --text-secondary: #B8A99A;
+            --text-light: #1A1614;
+            --accent-terracotta: #D48C63;
+            --accent-sage: #9BAE8A;
+            --accent-clay: #B88B6B;
+            --accent-stone: #A99B8A;
+            --border: #3D3530;
+            --border-dark: #D4C8BC;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background-color 0.5s ease, color 0.5s ease;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 300;
+            letter-spacing: -0.02em;
+        }
+
+        h4, .font-display {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* Custom Cursor */
+        .cursor-dot,
+        .cursor-outline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        .cursor-dot {
+            width: 5px;
+            height: 5px;
+            background-color: var(--accent-terracotta);
+        }
+
+        .cursor-outline {
+            width: 30px;
+            height: 30px;
+            border: 1px solid var(--accent-terracotta);
+            transition: width 0.3s, height 0.3s, background-color 0.3s, border-color 0.3s;
+        }
+
+        .cursor-outline.hover {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(193, 122, 83, 0.1);
+            border-color: var(--accent-terracotta);
+        }
+
+        /* Organic Grain Texture Overlay */
+        .grain-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9998;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Smooth Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Project Card Hover - Earthy Style */
+        .project-card {
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, transparent 100%);
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px -15px rgba(193, 122, 83, 0.2);
+        }
+
+        .project-card .overlay {
+            opacity: 0;
+            transition: all 0.4s ease;
+            background: linear-gradient(to top, rgba(44, 36, 32, 0.95) 0%, rgba(44, 36, 32, 0.7) 50%, transparent 100%);
+        }
+
+        .project-card:hover .overlay {
+            opacity: 1;
+        }
+
+        /* Filter Buttons - Organic Shape */
+        .filter-btn {
+            transition: all 0.3s ease;
+            border-radius: 9999px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-secondary);
+        }
+
+        .filter-btn:hover {
+            border-color: var(--accent-terracotta);
+            color: var(--accent-terracotta);
+        }
+
+        .filter-btn.active {
+            background-color: var(--accent-terracotta);
+            color: white;
+            border-color: var(--accent-terracotta);
+        }
+
+        /* Organic Decorative Shapes */
+        .organic-shape {
+            position: absolute;
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            background: linear-gradient(135deg, var(--accent-sage) 0%, var(--accent-terracotta) 100%);
+            opacity: 0.1;
+            filter: blur(60px);
+            animation: morph 15s ease-in-out infinite;
+        }
+
+        @keyframes morph {
+            0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+            25% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+            50% { border-radius: 50% 60% 30% 60% / 30% 60% 70% 40%; }
+            75% { border-radius: 60% 40% 60% 30% / 60% 30% 40% 70%; }
+        }
+
+        /* Custom Scrollbar - Earthy */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-clay);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-terracotta);
+        }
+
+        /* Loading Screen */
+        .loader {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-primary);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.8s ease;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .earth-loader {
+            width: 60px;
+            height: 60px;
+            border: 2px solid var(--border);
+            border-top-color: var(--accent-terracotta);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Process Section Cards */
+        .process-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            transition: all 0.4s ease;
+        }
+
+        .process-card:hover {
+            border-color: var(--accent-terracotta);
+            transform: translateX(10px);
+        }
+
+        /* Accent Lines */
+        .accent-line {
+            height: 1px;
+            background: linear-gradient(to right, var(--accent-terracotta), transparent);
+            width: 100%;
+        }
+
+        /* Image Masking for Organic Feel */
+        .organic-mask {
+            border-radius: 40% 60% 60% 40% / 60% 40% 60% 40%;
+            transition: all 0.6s ease;
+        }
+
+        .project-card:hover .organic-mask {
+            border-radius: 50% 50% 50% 50% / 50% 50% 50% 50%;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-[#C17A53] selection:text-white dark:selection:bg-[#D48C63] dark:selection:text-[#1A1614]">
+
+    <!-- Grain Texture Overlay -->
+    <div class="grain-overlay"></div>
+
+    <!-- Loading Screen -->
+    <div class="loader" id="loader">
+        <div class="earth-loader"></div>
+    </div>
+
+    <!-- Custom Cursor Elements -->
+    <div class="cursor-dot hidden md:block"></div>
+    <div class="cursor-outline hidden md:block"></div>
+
+    <!-- Organic Background Shapes -->
+    <div class="organic-shape w-96 h-96 fixed top-20 -left-20 z-0"></div>
+    <div class="organic-shape w-[500px] h-[500px] fixed bottom-0 right-0 z-0" style="animation-delay: -5s; background: linear-gradient(135deg, var(--accent-clay) 0%, var(--accent-stone) 100%);"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 px-6 py-6 flex justify-between items-center backdrop-blur-md bg-[var(--bg-primary)]/80 border-b border-[var(--border)]">
+        <a href="#" class="text-2xl font-bold tracking-tighter font-['Cormorant_Garamond'] hoverable text-[var(--accent-terracotta)] italic">sp.</a>
+        
+        <div class="hidden md:flex gap-12 text-sm font-medium tracking-widest uppercase">
+            <a href="#work" class="hoverable hover:text-[var(--accent-terracotta)] transition-colors duration-300">Selected Works</a>
+            <a href="#about" class="hoverable hover:text-[var(--accent-terracotta)] transition-colors duration-300">Approach</a>
+            <a href="#contact" class="hoverable hover:text-[var(--accent-terracotta)] transition-colors duration-300">Contact</a>
+        </div>
+
+        <button id="theme-toggle" class="hoverable p-2 rounded-full border border-[var(--border)] hover:border-[var(--accent-terracotta)] transition-all duration-300 group">
+            <i data-lucide="sun" class="w-4 h-4 hidden dark:block text-[var(--accent-terracotta)]"></i>
+            <i data-lucide="moon" class="w-4 h-4 block dark:hidden text-[var(--accent-terracotta)]"></i>
+        </button>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative min-h-screen flex flex-col justify-center px-6 md:px-12 lg:px-24 pt-20">
+        <div class="max-w-6xl mx-auto w-full relative z-10">
+            <div class="reveal">
+                <p class="text-xs md:text-sm text-[var(--accent-terracotta)] mb-6 tracking-[0.3em] uppercase font-medium">Computational Architecture & Design</p>
+                <h1 class="text-6xl md:text-8xl lg:text-[10rem] font-light leading-[0.85] tracking-tight mb-8 text-[var(--text-primary)]">
+                    SHARVA<br>
+                    <span class="italic text-[var(--accent-clay)]">PARALKAR</span>
+                </h1>
+                <div class="w-24 h-px bg-[var(--accent-terracotta)] mb-8"></div>
+                <p class="text-lg md:text-xl max-w-xl text-[var(--text-secondary)] leading-relaxed font-light">
+                    Exploring the intersection of algorithmic thinking, material innovation, and spatial experience. Currently pursuing BS.Arch at Texas A&M.
+                </p>
+            </div>
+
+            <div class="mt-16 flex gap-6 reveal" style="transition-delay: 0.2s;">
+                <a href="#work" class="hoverable group flex items-center gap-3 text-sm font-medium bg-[var(--accent-terracotta)] text-white px-8 py-4 rounded-full hover:bg-[var(--accent-clay)] transition-all duration-300 shadow-lg shadow-[var(--accent-terracotta)]/20">
+                    View Selected Works
+                    <i data-lucide="arrow-down" class="w-4 h-4 group-hover:translate-y-1 transition-transform"></i>
+                </a>
+                <a href="#about" class="hoverable group flex items-center gap-3 text-sm font-medium border border-[var(--border)] text-[var(--text-primary)] px-8 py-4 rounded-full hover:border-[var(--accent-terracotta)] hover:text-[var(--accent-terracotta)] transition-all duration-300">
+                    Design Philosophy
+                </a>
+            </div>
+        </div>
+
+        <div class="absolute bottom-12 left-6 md:left-12 text-xs text-[var(--text-secondary)] space-y-2 reveal" style="transition-delay: 0.4s;">
+            <p class="tracking-widest uppercase">Based in College Station, TX</p>
+            <p class="tracking-widest uppercase text-[var(--accent-terracotta)]">Available for Collaboration</p>
+        </div>
+
+        <!-- Decorative Element -->
+        <div class="absolute right-12 top-1/2 -translate-y-1/2 hidden lg:block reveal" style="transition-delay: 0.6s;">
+            <div class="w-px h-32 bg-[var(--border)] mx-auto mb-4"></div>
+            <p class="text-xs tracking-widest text-[var(--text-secondary)] uppercase vertical-rl" style="writing-mode: vertical-rl;">Scroll to Explore</p>
+        </div>
+    </header>
+
+    <!-- Work Section -->
+    <section id="work" class="py-32 px-6 md:px-12 lg:px-24 relative bg-[var(--bg-secondary)]">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-20 reveal">
+                <div>
+                    <p class="text-xs text-[var(--accent-terracotta)] tracking-widest uppercase mb-4">Portfolio</p>
+                    <h2 class="text-5xl md:text-7xl font-light mb-4 text-[var(--text-primary)]">Selected<br>Works</h2>
+                    <p class="text-[var(--text-secondary)] font-light">2022 — 2024</p>
+                </div>
+                
+                <!-- Filter Buttons -->
+                <div class="flex gap-3 mt-8 md:mt-0 flex-wrap">
+                    <button class="filter-btn active hoverable px-6 py-2 text-xs uppercase tracking-wider" data-filter="all">All</button>
+                    <button class="filter-btn hoverable px-6 py-2 text-xs uppercase tracking-wider" data-filter="architecture">Architecture</button>
+                    <button class="filter-btn hoverable px-6 py-2 text-xs uppercase tracking-wider" data-filter="product">Product</button>
+                    <button class="filter-btn hoverable px-6 py-2 text-xs uppercase tracking-wider" data-filter="computational">Computational</button>
+                </div>
+            </div>
+
+            <!-- Projects Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid">
+                
+                <!-- Project 1 -->
+                <article class="project-card group relative aspect-[4/5] overflow-hidden reveal hoverable cursor-pointer" data-category="architecture computational">
+                    <div class="absolute inset-0 bg-[var(--bg-primary)]">
+                        <img src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&q=80&w=800" alt="Parametric Facade" class="w-full h-full object-cover opacity-90 sepia-[0.2]">
+                    </div>
+                    <div class="overlay absolute inset-0 flex flex-col justify-end p-8 text-[var(--text-light)]">
+                        <span class="text-xs uppercase tracking-[0.2em] text-[var(--accent-sage)] mb-3 font-medium">Architecture / Generative</span>
+                        <h3 class="text-3xl font-light mb-3 italic">Adaptive Facade</h3>
+                        <p class="text-sm text-[var(--text-light)]/80 mb-4 font-light leading-relaxed">Responsive shading system driven by solar radiation analysis and agent-based algorithms.</p>
+                        <div class="flex gap-3 text-xs text-[var(--text-light)]/60 uppercase tracking-wider">
+                            <span>Grasshopper</span>
+                            <span class="text-[var(--accent-terracotta)]">•</span>
+                            <span>Python</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Project 2 -->
+                <article class="project-card group relative aspect-[4/5] overflow-hidden reveal hoverable cursor-pointer" data-category="product computational" style="transition-delay: 0.1s;">
+                    <div class="absolute inset-0 bg-[var(--bg-primary)]">
+                        <img src="https://images.unsplash.com/photo-1507646227500-4d389b0012be?auto=format&fit=crop&q=80&w=800" alt="Generative Stool" class="w-full h-full object-cover opacity-90 sepia-[0.3]">
+                    </div>
+                    <div class="overlay absolute inset-0 flex flex-col justify-end p-8 text-[var(--text-light)]">
+                        <span class="text-xs uppercase tracking-[0.2em] text-[var(--accent-sage)] mb-3 font-medium">Product / Optimization</span>
+                        <h3 class="text-3xl font-light mb-3 italic">Voxel Stool</h3>
+                        <p class="text-sm text-[var(--text-light)]/80 mb-4 font-light leading-relaxed">3D printed furniture derived from stress analysis and topology optimization.</p>
+                        <div class="flex gap-3 text-xs text-[var(--text-light)]/60 uppercase tracking-wider">
+                            <span>Blender</span>
+                            <span class="text-[var(--accent-terracotta)]">•</span>
+                            <span>SLA Printing</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Project 3 -->
+                <article class="project-card group relative aspect-[4/5] overflow-hidden reveal hoverable cursor-pointer" data-category="architecture" style="transition-delay: 0.2s;">
+                    <div class="absolute inset-0 bg-[var(--bg-primary)]">
+                        <img src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&q=80&w=800" alt="Pavilion" class="w-full h-full object-cover opacity-90 sepia-[0.2]">
+                    </div>
+                    <div class="overlay absolute inset-0 flex flex-col justify-end p-8 text-[var(--text-light)]">
+                        <span class="text-xs uppercase tracking-[0.2em] text-[var(--accent-sage)] mb-3 font-medium">Installation / Textile</span>
+                        <h3 class="text-3xl font-light mb-3 italic">Woven Pavilion</h3>
+                        <p class="text-sm text-[var(--text-light)]/80 mb-4 font-light leading-relaxed">Temporary structure exploring textile logic at architectural scale using bamboo.</p>
+                        <div class="flex gap-3 text-xs text-[var(--text-light)]/60 uppercase tracking-wider">
+                            <span>Physical Model</span>
+                            <span class="text-[var(--accent-terracotta)]">•</span>
+                            <span>Kangaroo</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Project 4 -->
+                <article class="project-card group relative aspect-[4/5] overflow-hidden reveal hoverable cursor-pointer" data-category="product">
+                    <div class="absolute inset-0 bg-[var(--bg-primary)]">
+                        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&q=80&w=800" alt="Light Fixture" class="w-full h-full object-cover opacity-90 sepia-[0.3]">
+                    </div>
+                    <div class="overlay absolute inset-0 flex flex-col justify-end p-8 text-[var(--text-light)]">
+                        <span class="text-xs uppercase tracking-[0.2em] text-[var(--accent-sage)] mb-3 font-medium">Lighting / Voronoi</span>
+                        <h3 class="text-3xl font-light mb-3 italic">Diffusion Lamp</h3>
+                        <p class="text-sm text-[var(--text-light)]/80 mb-4 font-light leading-relaxed">Modular system inspired by crystal growth patterns and Voronoi diagrams.</p>
+                        <div class="flex gap-3 text-xs text-[var(--text-light)]/60 uppercase tracking-wider">
+                            <span>Rhino</span>
+                            <span class="text-[var(--accent-terracotta)]">•</span>
+                            <span>Resin</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Project 5 -->
+                <article class="project-card group relative aspect-[4/5] overflow-hidden reveal hoverable cursor-pointer" data-category="computational">
+                    <div class="absolute inset-0 bg-[var(--bg-primary)]">
+                        <img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&q=80&w=800" alt="Algorithmic Art" class="w-full h-full object-cover opacity-90 sepia-[0.2]">
+                    </div>
+                    <div class="overlay absolute inset-0 flex flex-col justify-end p-8 text-[var(--text-light)]">
+                        <span class="text-xs uppercase tracking-[0.2em] text-[var(--accent-sage)] mb-3 font-medium">Generative / Art</span>
+                        <h3 class="text-3xl font-light mb-3 italic">Emergent Patterns</h3>
+                        <p class="text-sm text-[var(--text-light)]/80 mb-4 font-light leading-relaxed">Series exploring reaction-diffusion algorithms through pen plotter drawings.</p>
+                        <div class="flex gap-3 text-xs text-[var(--text-light)]/60 uppercase tracking-wider">
+                            <span>Processing</span>
+                            <span class="text-[var(--accent-terracotta)]">•</span>
+                            <span>A1 Format</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Project 6 -->
+                <article class="project-card group relative aspect-[4/5] overflow-hidden reveal hoverable cursor-pointer" data-category="architecture computational">
+                    <div class="absolute inset-0 bg-[var(--bg-primary)]">
+                        <img src="https://images.unsplash.com/photo-1493397212122-2b85dda8106b?auto=format&fit=crop&q=80&w=800" alt="Urban Proposal" class="w-full h-full object-cover opacity-90 sepia-[0.2]">
+                    </div>
+                    <div class="overlay absolute inset-0 flex flex-col justify-end p-8 text-[var(--text-light)]">
+                        <span class="text-xs uppercase tracking-[0.2em] text-[var(--accent-sage)] mb-3 font-medium">Urban / Data</span>
+                        <h3 class="text-3xl font-light mb-3 italic">Flow City</h3>
+                        <p class="text-sm text-[var(--text-light)]/80 mb-4 font-light leading-relaxed">Urban intervention based on pedestrian flow analysis and density mapping.</p>
+                        <div class="flex gap-3 text-xs text-[var(--text-light)]/60 uppercase tracking-wider">
+                            <span>GIS</span>
+                            <span class="text-[var(--accent-terracotta)]">•</span>
+                            <span>Unity</span>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Process / About Section - Redesigned -->
+    <section id="about" class="py-32 px-6 md:px-12 lg:px-24 bg-[var(--bg-primary)] relative overflow-hidden">
+        <!-- Decorative Background -->
+        <div class="absolute top-0 right-0 w-1/3 h-full bg-[var(--bg-secondary)] -skew-x-12 translate-x-1/4 z-0"></div>
+        
+        <div class="max-w-6xl mx-auto relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+                
+                <!-- Left Column - Title -->
+                <div class="lg:col-span-5 reveal">
+                    <p class="text-xs text-[var(--accent-terracotta)] tracking-widest uppercase mb-4">Methodology</p>
+                    <h2 class="text-5xl md:text-6xl font-light mb-6 leading-tight">Design<br>Approach</h2>
+                    <div class="w-16 h-px bg-[var(--accent-terracotta)] mb-8"></div>
+                    <p class="text-[var(--text-secondary)] leading-relaxed font-light text-lg">
+                        A synthesis of computational precision and organic intuition. Each project begins with an understanding of material behavior and spatial context.
+                    </p>
+                    
+                    <!-- Stats -->
+                    <div class="mt-12 grid grid-cols-2 gap-8">
+                        <div>
+                            <p class="text-3xl font-light text-[var(--accent-terracotta)] italic">5+</p>
+                            <p class="text-xs uppercase tracking-wider text-[var(--text-secondary)] mt-1">Years Experience</p>
+                        </div>
+                        <div>
+                            <p class="text-3xl font-light text-[var(--accent-terracotta)] italic">12</p>
+                            <p class="text-xs uppercase tracking-wider text-[var(--text-secondary)] mt-1">Projects Completed</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right Column - Process Cards -->
+                <div class="lg:col-span-7 space-y-6">
+                    
+                    <div class="process-card p-8 rounded-2xl reveal">
+                        <div class="flex items-start gap-6">
+                            <div class="w-12 h-12 rounded-full bg-[var(--accent-terracotta)]/10 flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="cpu" class="w-5 h-5 text-[var(--accent-terracotta)]"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-medium mb-3 text-[var(--text-primary)]">Algorithmic Design</h3>
+                                <p class="text-[var(--text-secondary)] leading-relaxed font-light">
+                                    Utilizing computational tools as collaborative partners. From genetic algorithms to machine learning, code enables exploration of solution spaces impossible to navigate manually, while maintaining human oversight on qualitative decisions.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="process-card p-8 rounded-2xl reveal" style="transition-delay: 0.1s;">
+                        <div class="flex items-start gap-6">
+                            <div class="w-12 h-12 rounded-full bg-[var(--accent-sage)]/10 flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="layers" class="w-5 h-5 text-[var(--accent-sage)]"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-medium mb-3 text-[var(--text-primary)]">Material Innovation</h3>
+                                <p class="text-[var(--text-secondary)] leading-relaxed font-light">
+                                    Digital fabrication collapses the boundary between design and making. Specializing in robotic fabrication, 3D printing, and composite materials to ensure computational complexity translates into physical reality with tactile warmth.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="process-card p-8 rounded-2xl reveal" style="transition-delay: 0.2s;">
+                        <div class="flex items-start gap-6">
+                            <div class="w-12 h-12 rounded-full bg-[var(--accent-clay)]/10 flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="users" class="w-5 h-5 text-[var(--accent-clay)]"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-medium mb-3 text-[var(--text-primary)]">Human Experience</h3>
+                                <p class="text-[var(--text-secondary)] leading-relaxed font-light">
+                                    Technology serves humanity. Every parametric model is judged by its ability to enhance spatial experience, improve functionality, and evoke emotional connection. The metric of success is human comfort and wonder.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 pt-8 border-t border-[var(--border)] reveal" style="transition-delay: 0.3s;">
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-6 text-sm">
+                            <div>
+                                <p class="text-[var(--text-secondary)] mb-2 uppercase text-xs tracking-wider">Software</p>
+                                <p class="text-[var(--text-primary)] font-medium">Rhino, Grasshopper, Blender, Houdini, Python</p>
+                            </div>
+                            <div>
+                                <p class="text-[var(--text-secondary)] mb-2 uppercase text-xs tracking-wider">Fabrication</p>
+                                <p class="text-[var(--text-primary)] font-medium">CNC, 3D Printing, Laser, Robotics</p>
+                            </div>
+                            <div>
+                                <p class="text-[var(--text-secondary)] mb-2 uppercase text-xs tracking-wider">Focus</p>
+                                <p class="text-[var(--text-primary)] font-medium">Sustainable Materials, Biophilic Design</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-32 px-6 md:px-12 lg:px-24 bg-[var(--bg-secondary)] relative">
+        <div class="max-w-4xl mx-auto text-center reveal">
+            <p class="text-xs text-[var(--accent-terracotta)] tracking-[0.3em] uppercase mb-6">Collaboration</p>
+            <h2 class="text-6xl md:text-8xl font-light mb-8 text-[var(--text-primary)]">Let's Create<br><span class="italic text-[var(--accent-clay)]">Together</span></h2>
+            <div class="w-24 h-px bg-[var(--accent-terracotta)] mx-auto mb-8"></div>
+            <p class="text-lg text-[var(--text-secondary)] mb-12 max-w-2xl mx-auto font-light leading-relaxed">
+                Currently open for internship opportunities and freelance computational design consulting. Based in College Station, available globally.
+            </p>
+            
+            <div class="flex flex-col md:flex-row gap-6 justify-center items-center">
+                <a href="mailto:sharva.paralkar@gmail.com" class="hoverable group relative overflow-hidden px-10 py-5 bg-[var(--accent-terracotta)] text-white rounded-full font-medium transition-all duration-300 hover:shadow-xl hover:shadow-[var(--accent-terracotta)]/30 hover:scale-105">
+                    <span class="relative z-10 flex items-center gap-3">
+                        sharva.paralkar@gmail.com
+                        <i data-lucide="arrow-up-right" class="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
+                    </span>
+                </a>
+                
+                <div class="flex gap-4">
+                    <a href="#" class="hoverable w-14 h-14 rounded-full border border-[var(--border)] flex items-center justify-center text-[var(--text-secondary)] hover:border-[var(--accent-terracotta)] hover:text-[var(--accent-terracotta)] transition-all duration-300 hover:scale-110">
+                        <i data-lucide="linkedin" class="w-5 h-5"></i>
+                    </a>
+                    <a href="#" class="hoverable w-14 h-14 rounded-full border border-[var(--border)] flex items-center justify-center text-[var(--text-secondary)] hover:border-[var(--accent-terracotta)] hover:text-[var(--accent-terracotta)] transition-all duration-300 hover:scale-110">
+                        <i data-lucide="instagram" class="w-5 h-5"></i>
+                    </a>
+                    <a href="#" class="hoverable w-14 h-14 rounded-full border border-[var(--border)] flex items-center justify-center text-[var(--text-secondary)] hover:border-[var(--accent-terracotta)] hover:text-[var(--accent-terracotta)] transition-all duration-300 hover:scale-110">
+                        <i data-lucide="github" class="w-5 h-5"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-6 md:px-12 text-center bg-[var(--bg-primary)] border-t border-[var(--border)]">
+        <p class="text-sm text-[var(--text-secondary)] font-light">© 2026 Sharva Paralkar. Crafted with organic intention.</p>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Remove Loader
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+            }, 800);
+        });
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+        
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+        } else {
+            html.classList.remove('dark');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            localStorage.theme = html.classList.contains('dark') ? 'dark' : 'light';
+        });
+
+        // Custom Cursor
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
+        const hoverables = document.querySelectorAll('.hoverable');
+
+        window.addEventListener('mousemove', (e) => {
+            const posX = e.clientX;
+            const posY = e.clientY;
+
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
+
+            cursorOutline.animate({
+                left: `${posX}px`,
+                top: `${posY}px`
+            }, { duration: 500, fill: "forwards" });
+        });
+
+        hoverables.forEach(el => {
+            el.addEventListener('mouseenter', () => cursorOutline.classList.add('hover'));
+            el.addEventListener('mouseleave', () => cursorOutline.classList.remove('hover'));
+        });
+
+        // Scroll Reveal Animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Project Filtering
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const filter = btn.getAttribute('data-filter');
+
+                projectCards.forEach(card => {
+                    const categories = card.getAttribute('data-category');
+                    
+                    if (filter === 'all' || categories.includes(filter)) {
+                        card.style.display = 'block';
+                        setTimeout(() => {
+                            card.style.opacity = '1';
+                            card.style.transform = 'translateY(0)';
+                        }, 50);
+                    } else {
+                        card.style.opacity = '0';
+                        card.style.transform = 'translateY(20px)';
+                        setTimeout(() => {
+                            card.style.display = 'none';
+                        }, 300);
+                    }
+                });
+            });
+        });
+
+        // Smooth Scroll for Navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
