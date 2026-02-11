@@ -136,6 +136,7 @@
                     <button type="button" id="sync-folder" class="btn-primary" style="background:#0ea5e9;color:#fff" title="Scan TemplateEdit/projects/ and add any .html files to projects.json"><i data-lucide="folder-sync" class="w-4 h-4 inline mr-1.5 -mt-0.5"></i> Sync from folder</button>
                     <button type="button" id="download" class="btn-primary btn-download"><i data-lucide="download" class="w-4 h-4 inline mr-1.5 -mt-0.5"></i> Download HTML</button>
                     <button type="button" id="save-server" class="btn-primary btn-save"><i data-lucide="save" class="w-4 h-4 inline mr-1.5 -mt-0.5"></i> Save to project (server)</button>
+                    <button type="button" id="sync-github" class="btn-primary" style="background:#111827;color:#fff" title="Commit and push changes using pushi"><i data-lucide="git-commit" class="w-4 h-4 inline mr-1.5 -mt-0.5"></i> Sync to GitHub</button>
                     <button type="button" id="preview" class="btn-primary btn-fullscreen"><i data-lucide="maximize" class="w-4 h-4 inline mr-1.5 -mt-0.5"></i> Fullscreen preview</button>
                 </div>
                 <div id="status"></div>
@@ -561,6 +562,40 @@
                 setStatus('Saved to TemplateEdit/projects/' + slug + '.html and projects.json updated.');
             } catch (e) {
                 setStatus('Run: npm run editor — then open http://localhost:3333/template-editor.html');
+            }
+        });
+
+        document.getElementById('sync-github').addEventListener('click', async () => {
+            const message = window.prompt('Commit message for GitHub sync:', 'Update project pages from editor');
+            if (message === null) {
+                // User cancelled
+                return;
+            }
+            setStatus('Syncing to GitHub via pushi…');
+            try {
+                const r = await fetch(EDITOR_API + '/api/push', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message })
+                });
+                let data;
+                let rawText = '';
+                try {
+                    rawText = await r.text();
+                    data = rawText ? JSON.parse(rawText) : {};
+                } catch {
+                    data = {};
+                }
+                if (!r.ok || !data.ok) {
+                    const details = (data && (data.stderr || data.error || data.details)) ||
+                        (rawText ? rawText.substring(0, 200) : '') ||
+                        ('HTTP ' + r.status + ' ' + r.statusText);
+                    setStatus('GitHub sync failed: ' + details);
+                    return;
+                }
+                setStatus('Synced to GitHub. ' + (data.stdout ? data.stdout.trim() : ''));
+            } catch (e) {
+                setStatus('GitHub sync failed. Is the editor server running with pushi available?');
             }
         });
 

@@ -15,6 +15,7 @@ const express = require('express');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const { spawn } = require('child_process');
 
 const app = express();
 const PORT = 3333;
@@ -158,6 +159,62 @@ app.get('/api/sync-projects', (req, res) => {
     added,
     removed: removedCount,
     message: `Synced: ${projects.length} project(s). Added: ${added.length}; removed from list: ${removedCount}.`,
+  });
+});
+
+// Run "pushi" in the portfolio root to add, commit, and push changes
+// POST /api/push  { "message": "commit message" }
+app.post('/api/push', express.json(), (req, res) => {
+  const rawMessage = (req.body && req.body.message) || '';
+  const message = String(rawMessage || '').trim();
+
+  // Ensure we always send *some* message to pushi
+  const finalMessage = message || 'Auto-commit from template editor';
+  // Escape double quotes for PowerShell command string
+  const safeMessage = finalMessage.replace(/"/g, '\\"');
+  const psCommand = `pushi "${safeMessage}"`;
+
+  // On Windows, run via PowerShell so user-defined pushi function/alias is available
+  const child = spawn('powershell.exe', ['-Command', psCommand], {
+    cwd: PORTFOLIO_ROOT,
+  });
+
+  let stdout = '';
+  let stderr = '';
+
+  child.stdout.on('data', (data) => {
+    stdout += data.toString();
+  });
+  child.stderr.on('data', (data) => {
+    stderr += data.toString();
+  });
+
+  child.on('error', (err) => {
+    res.status(500).json({
+      ok: false,
+      error: 'Failed to start pushi',
+      details: String(err && err.message ? err.message : err),
+    });
+  });
+
+  child.on('close', (code) => {
+    if (res.headersSent) return;
+    if (code === 0) {
+      res.json({
+        ok: true,
+        code,
+        stdout,
+        stderr,
+      });
+    } else {
+      console.error('pushi failed with code', code, 'stdout:', stdout, 'stderr:', stderr);
+      res.status(500).json({
+        ok: false,
+        code,
+        stdout,
+        stderr,
+      });
+    }
   });
 });
 
