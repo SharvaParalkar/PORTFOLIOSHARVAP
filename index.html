@@ -309,7 +309,7 @@
                 </div>
             </div>
 
-            <!-- Projects Grid (loaded from projects/projects.json) -->
+            <!-- Projects Grid (loaded from TemplateEdit/projects/projects.json) -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid">
                 <!-- Cards injected by loadProjects() -->
             </div>
@@ -430,14 +430,8 @@
                 </a>
                 
                 <div class="flex gap-4">
-                    <a href="#" class="hoverable w-14 h-14 rounded-full border border-[var(--border)] flex items-center justify-center text-[var(--text-secondary)] hover:border-[var(--accent-terracotta)] hover:text-[var(--accent-terracotta)] transition-all duration-300 hover:scale-110">
+                    <a href="https://www.linkedin.com/in/sharva-paralkar-9b5147228/" target="_blank" rel="noopener noreferrer" class="hoverable w-14 h-14 rounded-full border border-[var(--border)] flex items-center justify-center text-[var(--text-secondary)] hover:border-[var(--accent-terracotta)] hover:text-[var(--accent-terracotta)] transition-all duration-300 hover:scale-110">
                         <i data-lucide="linkedin" class="w-5 h-5"></i>
-                    </a>
-                    <a href="#" class="hoverable w-14 h-14 rounded-full border border-[var(--border)] flex items-center justify-center text-[var(--text-secondary)] hover:border-[var(--accent-terracotta)] hover:text-[var(--accent-terracotta)] transition-all duration-300 hover:scale-110">
-                        <i data-lucide="instagram" class="w-5 h-5"></i>
-                    </a>
-                    <a href="#" class="hoverable w-14 h-14 rounded-full border border-[var(--border)] flex items-center justify-center text-[var(--text-secondary)] hover:border-[var(--accent-terracotta)] hover:text-[var(--accent-terracotta)] transition-all duration-300 hover:scale-110">
-                        <i data-lucide="github" class="w-5 h-5"></i>
                     </a>
                 </div>
             </div>
@@ -491,7 +485,7 @@
             el.addEventListener('mouseleave', () => cursorOutline.classList.remove('hover'));
         });
 
-        // Load projects from projects/projects.json (fallback used when fetch fails, e.g. file://)
+        // Load projects from TemplateEdit/projects/projects.json (fallback used when fetch fails, e.g. file://)
         window.__PORTFOLIO_PROJECTS__ = [{"slug":"woven-pavilion","title":"Woven Pavilion","category":"Installation / Textile","dataCategory":["architecture"],"description":"Temporary structure exploring textile logic at architectural scale using bamboo.","tags":["Physical Model","Kangaroo"],"image":"https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&q=80&w=800"}];
         const projectsGrid = document.getElementById('projects-grid');
         const projectsEmpty = document.getElementById('projects-empty');
@@ -515,7 +509,7 @@
                 const tags = Array.isArray(p.tags) ? p.tags : (p.tags || '').toString().split(/[\n,]+/).map(t => t.trim()).filter(Boolean);
                 const tagsHtml = tags.map((t, j) => (j > 0 ? ' <span class="overlay-accent">•</span> ' : '') + '<span>' + escapeAttr(t) + '</span>').join('');
                 const imgSrc = p.image || '';
-                const href = 'projects/' + (p.slug || '') + '.html';
+                const href = 'TemplateEdit/projects/' + (p.slug || '') + '.html';
                 const card = document.createElement('a');
                 card.href = href;
                 card.className = 'block';
@@ -542,7 +536,7 @@
 
         function loadProjects() {
             const fallback = window.__PORTFOLIO_PROJECTS__;
-            fetch(new URL('projects/projects.json', document.baseURI || window.location.href).href)
+            fetch(new URL('TemplateEdit/projects/projects.json', document.baseURI || window.location.href).href)
                 .then(r => r.ok ? r.json() : [])
                 .then(projects => {
                     const list = (Array.isArray(projects) && projects.length > 0) ? projects : (fallback || []);

@@ -2,13 +2,13 @@
  * Template editor server — Node.js (JavaScript), not Java.
  * You only need to run this if you want to:
  *   - Upload images from the editor into public/images
- *   - Save generated project pages to projects/ from the editor
+ *   - Save generated project pages to TemplateEdit/projects/ from the editor
  *
  * Run: npm install   (once)
  *      npm run editor
  * Then open: http://localhost:3333/template-editor.html
  *
- * Without the server: use the editor with image URLs and "Download HTML", then move the file to projects/ yourself.
+ * Without the server: use the editor with image URLs and "Download HTML", then move the file to TemplateEdit/projects/ yourself.
  */
 
 const express = require('express');
@@ -19,10 +19,11 @@ const fs = require('fs');
 const app = express();
 const PORT = 3333;
 const ROOT = __dirname;
-// Portfolio root is parent of TemplateEdit; projects and public live there
+// Portfolio root is parent of TemplateEdit; public images live there
 const PORTFOLIO_ROOT = path.join(ROOT, '..');
 const PUBLIC_IMAGES = path.join(PORTFOLIO_ROOT, 'public', 'images');
-const PROJECTS_DIR = path.join(PORTFOLIO_ROOT, 'projects');
+// Projects live in TemplateEdit/projects so index.html and Cloudflare Pages can serve them from one place
+const PROJECTS_DIR = path.join(ROOT, 'projects');
 const PROJECTS_JSON = path.join(PROJECTS_DIR, 'projects.json');
 
 // Ensure directories exist
@@ -85,10 +86,82 @@ app.post('/api/save', express.json(), (req, res) => {
 
   fs.writeFileSync(PROJECTS_JSON, JSON.stringify(projects, null, 2), 'utf8');
 
-  res.json({ path: 'projects/' + slug + '.html' });
+  res.json({ path: 'TemplateEdit/projects/' + slug + '.html' });
+});
+
+// Sync projects.json with .html files in the projects folder (add missing entries, optionally remove orphans)
+function parseMetaFromHtml(html) {
+  const meta = { title: '', image: '' };
+  const titleMatch = html.match(/<title[^>]*>([^<]+)<\/title>/i);
+  if (titleMatch) {
+    meta.title = titleMatch[1].replace(/\s*\|\s*Sharva Paralkar\s*$/i, '').trim();
+  }
+  const h1Match = html.match(/<h1[^>]*>([^<]+)<\/h1>/i);
+  if (h1Match && !meta.title) meta.title = h1Match[1].trim();
+  const imgMatch = html.match(/<img[^>]+src=["']([^"']+)["']/i);
+  if (imgMatch) meta.image = imgMatch[1].trim();
+  return meta;
+}
+
+app.get('/api/sync-projects', (req, res) => {
+  let projects = [];
+  if (fs.existsSync(PROJECTS_JSON)) {
+    try {
+      projects = JSON.parse(fs.readFileSync(PROJECTS_JSON, 'utf8'));
+    } catch (e) {
+      projects = [];
+    }
+  }
+  if (!Array.isArray(projects)) projects = [];
+
+  const files = fs.readdirSync(PROJECTS_DIR).filter((f) => f.endsWith('.html'));
+  const slugsFromFiles = new Set(files.map((f) => path.basename(f, '.html').toLowerCase()));
+  const bySlug = new Map(projects.map((p) => [String(p.slug || '').toLowerCase(), p]));
+
+  const added = [];
+  for (const file of files) {
+    const slug = path.basename(file, '.html');
+    const key = slug.toLowerCase();
+    if (!bySlug.has(key)) {
+      const filePath = path.join(PROJECTS_DIR, file);
+      let html = '';
+      try {
+        html = fs.readFileSync(filePath, 'utf8');
+      } catch (e) {
+        html = '';
+      }
+      const parsed = parseMetaFromHtml(html);
+      const entry = {
+        slug,
+        title: parsed.title || slug.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()),
+        category: '',
+        dataCategory: [],
+        description: '',
+        tags: [],
+        image: parsed.image || '',
+      };
+      projects.push(entry);
+      bySlug.set(key, entry);
+      added.push(slug);
+    }
+  }
+
+  // Remove entries whose .html file no longer exists
+  const before = projects.length;
+  projects = projects.filter((p) => slugsFromFiles.has(String(p.slug || '').toLowerCase()));
+  const removedCount = before - projects.length;
+
+  fs.writeFileSync(PROJECTS_JSON, JSON.stringify(projects, null, 2), 'utf8');
+
+  res.json({
+    projects,
+    added,
+    removed: removedCount,
+    message: `Synced: ${projects.length} project(s). Added: ${added.length}; removed from list: ${removedCount}.`,
+  });
 });
 
 app.listen(PORT, () => {
   console.log('Template editor: http://localhost:' + PORT + '/template-editor.html');
-  console.log('  Uploads → public/images/   Save → projects/<slug>.html');
+  console.log('  Uploads → public/images/   Save → TemplateEdit/projects/<slug>.html');
 });
