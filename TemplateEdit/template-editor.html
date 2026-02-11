@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Template Editor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; margin: 0; overflow: hidden; height: 100vh; }
+        .editor-layout { display: grid; grid-template-columns: 1fr 1fr; height: 100vh; min-height: 0; }
+        .editor-col { overflow-y: auto; overflow-x: hidden; background: #f8fafc; border-right: 1px solid #e2e8f0; padding: 1.5rem; min-height: 0; }
+        .preview-col { overflow: hidden; background: #1e293b; display: flex; flex-direction: column; }
+        .preview-header { padding: 0.75rem 1rem; background: #334155; color: #94a3b8; font-size: 0.75rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; }
+        .preview-frame-wrap { flex: 1; min-height: 0; }
+        .preview-frame-wrap iframe { width: 100%; height: 100%; border: 0; display: block; }
+        .section-card { background: #fff; border-radius: 12px; border: 1px solid #e2e8f0; margin-bottom: 1rem; overflow: hidden; }
+        .section-title { padding: 0.875rem 1.25rem; font-size: 0.8125rem; font-weight: 600; color: #475569; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; gap: 0.5rem; }
+        .section-body { padding: 1.25rem; }
+        .field-label { display: block; font-size: 0.8125rem; font-weight: 500; color: #334155; margin-bottom: 0.375rem; }
+        .field-hint { font-size: 0.6875rem; color: #94a3b8; margin-top: 0.25rem; }
+        .input-base { width: 100%; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0.5rem 0.75rem; font-size: 0.875rem; transition: border-color 0.15s, box-shadow 0.15s; }
+        .input-base:focus { outline: none; border-color: #c17a53; box-shadow: 0 0 0 2px rgba(193, 122, 83, 0.2); }
+        .block-item { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1rem; margin-bottom: 0.75rem; }
+        .block-item-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; }
+        .block-type-badge { font-size: 0.6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b; }
+        .btn-remove { color: #94a3b8; padding: 0.25rem; border-radius: 6px; transition: color 0.15s, background 0.15s; }
+        .btn-remove:hover { color: #dc2626; background: #fef2f2; }
+        .add-blocks { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .btn-add { display: inline-flex; align-items: center; gap: 0.375rem; font-size: 0.8125rem; padding: 0.5rem 0.875rem; border-radius: 8px; border: 1px dashed #cbd5e1; background: #fff; color: #64748b; cursor: pointer; transition: all 0.15s; }
+        .btn-add:hover { border-color: #c17a53; color: #c17a53; background: #fffbeb; }
+        .actions-bar { padding: 1rem 1.25rem; background: #f1f5f9; border-top: 1px solid #e2e8f0; display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .btn-primary { padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; border: none; transition: opacity 0.15s; }
+        .btn-primary:hover { opacity: 0.9; }
+        .btn-download { background: #c17a53; color: #fff; }
+        .btn-save { background: #16a34a; color: #fff; }
+        .btn-fullscreen { background: #475569; color: #fff; }
+        #status { font-size: 0.75rem; color: #64748b; padding: 0.5rem 1.25rem; }
+        @media (max-width: 1024px) {
+            .editor-layout { grid-template-columns: 1fr; }
+            .preview-col { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="editor-layout">
+        <!-- Left: Editor -->
+        <div class="editor-col">
+            <div class="flex items-center justify-between gap-3 mb-6 flex-wrap">
+                <div class="flex items-center gap-3">
+                    <h1 class="text-xl font-semibold text-slate-800" style="font-family: 'Gowun Batang', serif;">Project Editor</h1>
+                    <span class="text-xs text-slate-400">Live preview →</span>
+                </div>
+                <button type="button" id="load-template" class="btn-add text-amber-700 border-amber-300 hover:border-amber-500 hover:bg-amber-50">
+                    <i data-lucide="file-input" class="w-4 h-4"></i> Load sample template
+                </button>
+            </div>
+            <p class="text-xs text-slate-500 mb-4">No Java — the <code class="bg-slate-200 px-1 rounded">server-editor.js</code> is Node.js. Run <code class="bg-slate-200 px-1 rounded">npm run editor</code> only if you want to upload images and save pages from here.</p>
+
+            <!-- 1. File -->
+            <div class="section-card">
+                <div class="section-title"><i data-lucide="file-output" class="w-4 h-4 text-slate-400"></i> File name</div>
+                <div class="section-body">
+                    <label class="field-label" for="slug">Page filename (slug)</label>
+                    <input type="text" id="slug" class="input-base" placeholder="e.g. woven-pavilion" />
+                    <p class="field-hint">Saved as <strong>projects/<span id="slug-preview">your-project</span>.html</strong></p>
+                </div>
+            </div>
+
+            <!-- 2. Hero -->
+            <div class="section-card">
+                <div class="section-title"><i data-lucide="layout" class="w-4 h-4 text-slate-400"></i> Hero section</div>
+                <div class="section-body space-y-4">
+                    <div>
+                        <label class="field-label" for="category">Category / discipline</label>
+                        <input type="text" id="category" class="input-base" placeholder="Installation / Textile" />
+                    </div>
+                    <div>
+                        <label class="field-label" for="title">Project title</label>
+                        <div class="flex gap-2 mb-1">
+                            <select id="titleHeading" class="input-base w-auto text-sm">
+                                <option value="h1">H1 (main)</option>
+                                <option value="h2">H2</option>
+                                <option value="h3">H3</option>
+                            </select>
+                        </div>
+                        <input type="text" id="title" class="input-base" placeholder="Woven Pavilion" />
+                    </div>
+                    <div>
+                        <label class="field-label" for="subtitle">Short description</label>
+                        <textarea id="subtitle" class="input-base resize-y min-h-[80px]" rows="2" placeholder="One or two sentences about the project."></textarea>
+                    </div>
+                    <div>
+                        <label class="field-label" for="tags">Tags</label>
+                        <input type="text" id="tags" class="input-base" placeholder="Physical Model, Kangaroo (comma-separated)" />
+                        <p class="field-hint">Shown with • between them</p>
+                    </div>
+                    <div>
+                        <label class="field-label">Filter categories (Selected Works)</label>
+                        <p class="field-hint mb-2">Choose which filter(s) show this project on the main page (All / Architecture / Product / Computational).</p>
+                        <div class="flex flex-wrap gap-4">
+                            <label class="inline-flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" class="data-category-cb" value="architecture" />
+                                <span class="text-sm">Architecture</span>
+                            </label>
+                            <label class="inline-flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" class="data-category-cb" value="product" />
+                                <span class="text-sm">Product</span>
+                            </label>
+                            <label class="inline-flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" class="data-category-cb" value="computational" />
+                                <span class="text-sm">Computational</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Content blocks -->
+            <div class="section-card">
+                <div class="section-title"><i data-lucide="layers" class="w-4 h-4 text-slate-400"></i> Content blocks</div>
+                <div class="section-body">
+                    <div class="add-blocks mb-4">
+                        <button type="button" id="add-image" class="btn-add"><i data-lucide="image" class="w-4 h-4"></i> Image</button>
+                        <button type="button" id="add-heading" class="btn-add"><i data-lucide="heading" class="w-4 h-4"></i> Heading</button>
+                        <button type="button" id="add-paragraph" class="btn-add"><i data-lucide="align-left" class="w-4 h-4"></i> Paragraph</button>
+                    </div>
+                    <div id="blocks" class="space-y-3"></div>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="section-card">
+                <div class="actions-bar">
+                    <button type="button" id="download" class="btn-primary btn-download"><i data-lucide="download" class="w-4 h-4 inline mr-1.5 -mt-0.5"></i> Download HTML</button>
+                    <button type="button" id="save-server" class="btn-primary btn-save"><i data-lucide="save" class="w-4 h-4 inline mr-1.5 -mt-0.5"></i> Save to project (server)</button>
+                    <button type="button" id="preview" class="btn-primary btn-fullscreen"><i data-lucide="maximize" class="w-4 h-4 inline mr-1.5 -mt-0.5"></i> Fullscreen preview</button>
+                </div>
+                <div id="status"></div>
+            </div>
+        </div>
+
+        <!-- Right: Live preview -->
+        <div class="preview-col">
+            <div class="preview-header">
+                <i data-lucide="eye" class="w-4 h-4"></i>
+                Live preview
+            </div>
+            <div class="preview-frame-wrap">
+                <iframe id="live-preview" title="Live preview"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fullscreen preview modal -->
+    <div id="preview-modal" class="fixed inset-0 bg-black/60 z-50 hidden items-center justify-center p-4" style="display: none;">
+        <div class="bg-white rounded-xl w-full max-w-5xl h-[90vh] overflow-hidden flex flex-col">
+            <div class="p-3 border-b flex justify-between items-center">
+                <span class="font-medium text-slate-700">Preview</span>
+                <button type="button" id="close-preview" class="text-slate-500 hover:text-slate-700 p-1 rounded">Close</button>
+            </div>
+            <iframe id="preview-frame" class="flex-1 w-full border-0" title="Fullscreen preview"></iframe>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+        const EDITOR_API = '';
+
+        const slugEl = document.getElementById('slug');
+        const slugPreview = document.getElementById('slug-preview');
+        slugEl.addEventListener('input', () => { slugPreview.textContent = slugEl.value || 'your-project'; });
+
+        const blocksContainer = document.getElementById('blocks');
+        const livePreview = document.getElementById('live-preview');
+        let blockId = 0;
+        let updateTimeout = null;
+
+        function escapeHtml(s) {
+            if (!s) return '';
+            const div = document.createElement('div');
+            div.textContent = s;
+            return div.innerHTML;
+        }
+
+        function scheduleLiveUpdate() {
+            if (updateTimeout) clearTimeout(updateTimeout);
+            updateTimeout = setTimeout(() => {
+                livePreview.srcdoc = generateHTML();
+                updateTimeout = null;
+            }, 350);
+        }
+
+        function addImageBlock(initial) {
+            const id = ++blockId;
+            initial = initial || {};
+            const div = document.createElement('div');
+            div.className = 'block-item';
+            div.dataset.blockType = 'image';
+            div.innerHTML = `
+                <div class="block-item-header">
+                    <span class="block-type-badge">Image</span>
+                    <button type="button" class="remove-block btn-remove" title="Remove block"><i data-lucide="x" class="w-4 h-4"></i></button>
+                </div>
+                <div class="space-y-3">
+                    <div>
+                        <label class="field-label">Image</label>
+                        <div class="flex gap-2">
+                            <input type="text" class="block-image-url input-base flex-1 text-sm" placeholder="URL or upload via Choose file" value="${escapeHtml(initial.url || '')}" />
+                            <input type="file" class="block-image-file hidden" accept="image/*" />
+                            <button type="button" class="block-upload-btn btn-add shrink-0">Choose file</button>
+                        </div>
+                        <div class="block-image-preview mt-2 max-h-28 overflow-hidden rounded-lg bg-slate-100"></div>
+                    </div>
+                    <div>
+                        <label class="field-label">Caption (optional)</label>
+                        <input type="text" class="block-caption input-base text-sm" placeholder="Image caption" value="${escapeHtml(initial.caption || '')}" />
+                    </div>
+                    <div>
+                        <label class="field-label">Text below image (optional)</label>
+                        <textarea class="block-content input-base text-sm resize-y min-h-[60px]" rows="2" placeholder="Paragraph under this image">${escapeHtml(initial.content || '')}</textarea>
+                    </div>
+                </div>
+            `;
+            blocksContainer.appendChild(div);
+            lucide.createIcons();
+            const fileInput = div.querySelector('.block-image-file');
+            const urlInput = div.querySelector('.block-image-url');
+            const preview = div.querySelector('.block-image-preview');
+            div.querySelector('.block-upload-btn').addEventListener('click', () => fileInput.click());
+            fileInput.addEventListener('change', async () => {
+                const file = fileInput.files[0];
+                if (!file) return;
+                try {
+                    const formData = new FormData();
+                    formData.append('image', file);
+                    const r = await fetch(EDITOR_API + '/api/upload', { method: 'POST', body: formData });
+                    if (!r.ok) throw new Error(await r.text());
+                    const data = await r.json();
+                    urlInput.value = data.url;
+                    showPreviewImg(preview, data.url);
+                    setStatus('Image saved to public/images.');
+                } catch (e) {
+                    setStatus('Run server (npm run editor) to save images. Using filename — add file to public/images manually.');
+                    urlInput.value = 'public/images/' + file.name;
+                    showPreviewImg(preview, URL.createObjectURL(file));
+                }
+                scheduleLiveUpdate();
+            });
+            urlInput.addEventListener('input', () => {
+                if (urlInput.value) showPreviewImg(preview, urlInput.value);
+                else preview.innerHTML = '';
+                scheduleLiveUpdate();
+            });
+            div.querySelector('.block-caption').addEventListener('input', scheduleLiveUpdate);
+            div.querySelector('.block-content').addEventListener('input', scheduleLiveUpdate);
+            div.querySelector('.remove-block').addEventListener('click', () => { div.remove(); scheduleLiveUpdate(); });
+            if (initial.url) showPreviewImg(preview, initial.url);
+        }
+
+        function showPreviewImg(container, src) {
+            container.innerHTML = '';
+            if (!src) return;
+            const img = document.createElement('img');
+            img.src = src;
+            img.alt = '';
+            img.className = 'max-h-28 w-full object-cover rounded-lg';
+            img.onerror = () => { container.innerHTML = '<span class="text-slate-400 text-xs p-2">Invalid image</span>'; };
+            container.appendChild(img);
+        }
+
+        function addHeadingBlock(initial) {
+            initial = initial || {};
+            const id = ++blockId;
+            const div = document.createElement('div');
+            div.className = 'block-item';
+            div.dataset.blockType = 'heading';
+            div.innerHTML = `
+                <div class="block-item-header">
+                    <span class="block-type-badge">Heading</span>
+                    <button type="button" class="remove-block btn-remove" title="Remove block"><i data-lucide="x" class="w-4 h-4"></i></button>
+                </div>
+                <div class="flex gap-2 flex-wrap">
+                    <select class="block-heading-level input-base w-auto text-sm">
+                        <option value="h2" ${(initial.level || 'h2') === 'h2' ? 'selected' : ''}>H2</option>
+                        <option value="h3" ${(initial.level || 'h2') === 'h3' ? 'selected' : ''}>H3</option>
+                    </select>
+                    <input type="text" class="block-heading-text input-base flex-1 min-w-0" placeholder="Section title" value="${escapeHtml(initial.text || '')}" />
+                </div>
+            `;
+            blocksContainer.appendChild(div);
+            lucide.createIcons();
+            div.querySelector('.block-heading-level').addEventListener('change', scheduleLiveUpdate);
+            div.querySelector('.block-heading-text').addEventListener('input', scheduleLiveUpdate);
+            div.querySelector('.remove-block').addEventListener('click', () => { div.remove(); scheduleLiveUpdate(); });
+        }
+
+        function addParagraphBlock(initial) {
+            initial = initial || {};
+            const id = ++blockId;
+            const div = document.createElement('div');
+            div.className = 'block-item';
+            div.dataset.blockType = 'paragraph';
+            div.innerHTML = `
+                <div class="block-item-header">
+                    <span class="block-type-badge">Paragraph</span>
+                    <button type="button" class="remove-block btn-remove" title="Remove block"><i data-lucide="x" class="w-4 h-4"></i></button>
+                </div>
+                <textarea class="block-paragraph-text input-base text-sm resize-y min-h-[80px]" rows="3" placeholder="Body text">${escapeHtml(initial.text || '')}</textarea>
+            `;
+            blocksContainer.appendChild(div);
+            lucide.createIcons();
+            div.querySelector('.block-paragraph-text').addEventListener('input', scheduleLiveUpdate);
+            div.querySelector('.remove-block').addEventListener('click', () => { div.remove(); scheduleLiveUpdate(); });
+        }
+
+        function getDataCategory() {
+            return Array.from(document.querySelectorAll('.data-category-cb:checked')).map(cb => cb.value);
+        }
+
+        function setDataCategory(values) {
+            document.querySelectorAll('.data-category-cb').forEach(cb => { cb.checked = (values || []).includes(cb.value); });
+        }
+
+        function loadSampleTemplate() {
+            document.getElementById('slug').value = 'woven-pavilion';
+            slugPreview.textContent = 'woven-pavilion';
+            document.getElementById('category').value = 'Installation / Textile';
+            document.getElementById('title').value = 'Woven Pavilion';
+            document.getElementById('titleHeading').value = 'h1';
+            document.getElementById('subtitle').value = 'Temporary structure exploring textile logic at architectural scale using bamboo.';
+            document.getElementById('tags').value = 'Physical Model, Kangaroo';
+            setDataCategory(['architecture']);
+
+            blocksContainer.innerHTML = '';
+            addImageBlock({
+                url: 'https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&q=80&w=1200',
+                caption: 'Bamboo structure study',
+                content: ''
+            });
+            addParagraphBlock({
+                text: 'This project investigates how textile logic—weaving, tension, and pattern—can be translated to an architectural scale. Using bamboo as the primary material, the pavilion explores temporary occupation and low-impact construction while maintaining a strong spatial presence.'
+            });
+            addImageBlock({
+                url: 'https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&q=80&w=1200',
+                caption: '',
+                content: ''
+            });
+
+            scheduleLiveUpdate();
+            setStatus('Sample template loaded. Edit any field and see the preview update.');
+        }
+
+        document.getElementById('load-template').addEventListener('click', loadSampleTemplate);
+
+        document.getElementById('add-image').addEventListener('click', () => { addImageBlock(); scheduleLiveUpdate(); });
+        document.getElementById('add-heading').addEventListener('click', () => { addHeadingBlock(); scheduleLiveUpdate(); });
+        document.getElementById('add-paragraph').addEventListener('click', () => { addParagraphBlock(); scheduleLiveUpdate(); });
+
+        ['slug','category','title','titleHeading','subtitle','tags'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.addEventListener('input', scheduleLiveUpdate);
+            if (id === 'titleHeading') document.getElementById(id).addEventListener('change', scheduleLiveUpdate);
+        });
+
+        function getTagsArray() {
+            const raw = document.getElementById('tags').value || '';
+            return raw.split(/[\n,]+/).map(t => t.trim()).filter(Boolean);
+        }
+
+        function getBlocksData() {
+            const blocks = [];
+            blocksContainer.querySelectorAll('[data-block-type]').forEach(el => {
+                const type = el.dataset.blockType;
+                if (type === 'image') {
+                    const url = el.querySelector('.block-image-url').value.trim();
+                    const caption = el.querySelector('.block-caption').value.trim();
+                    const content = el.querySelector('.block-content').value.trim();
+                    if (url) blocks.push({ type: 'image', url, caption, content });
+                } else if (type === 'heading') {
+                    const level = el.querySelector('.block-heading-level').value;
+                    const text = el.querySelector('.block-heading-text').value.trim();
+                    if (text) blocks.push({ type: 'heading', level, text });
+                } else if (type === 'paragraph') {
+                    const text = el.querySelector('.block-paragraph-text').value.trim();
+                    if (text) blocks.push({ type: 'paragraph', text });
+                }
+            });
+            return blocks;
+        }
+
+        const TEMPLATE_HEAD = `<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{TITLE}} | Sharva Paralkar</title>
+    <script src="https://cdn.tailwindcss.com"><\/script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Space+Grotesk:wght@300;500;700&family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"><\/script>
+    <style>
+        :root { --bg-primary: #F5F1EB; --bg-secondary: #E8E2D9; --text-primary: #1A1614; --text-secondary: #6B5D54; --accent-terracotta: #C17A53; --accent-sage: #8B9A7B; --accent-clay: #A67B5B; --border: #D4C8BC; }
+        .dark { --bg-primary: #1A1614; --bg-secondary: #252019; --text-primary: #E8E2D9; --text-secondary: #B8A99A; --accent-terracotta: #D48C63; --accent-sage: #9BAE8A; --accent-clay: #B88B6B; --border: #3D3530; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-primary); color: var(--text-primary); transition: background-color 0.5s ease, color 0.5s ease; overflow-x: hidden; }
+        h1, h2, h3 { font-family: 'Gowun Batang', serif; font-weight: 400; letter-spacing: -0.02em; }
+        .grain-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9998; opacity: 0.03; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"); }
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+    <\/style>
+</head>
+<body class="antialiased selection:bg-[#C17A53] selection:text-white dark:selection:bg-[#D48C63] dark:selection:text-[#1A1614]">
+    <div class="grain-overlay"></div>
+    <nav class="fixed top-0 w-full z-50 px-6 py-6 flex justify-between items-center backdrop-blur-md bg-[var(--bg-primary)]/80 border-b border-[var(--border)]">
+        <a href="../index.html" class="text-2xl font-bold tracking-tighter font-['Cormorant_Garamond'] hoverable text-[var(--accent-terracotta)] italic">sp.</a>
+        <div class="hidden md:flex gap-12 text-sm font-medium tracking-widest uppercase">
+            <a href="../index.html#work" class="hoverable hover:text-[var(--accent-terracotta)] transition-colors duration-300">Selected Works</a>
+            <a href="../index.html#about" class="hoverable hover:text-[var(--accent-terracotta)] transition-colors duration-300">Approach</a>
+            <a href="../index.html#contact" class="hoverable hover:text-[var(--accent-terracotta)] transition-colors duration-300">Contact</a>
+        </div>
+        <button id="theme-toggle" class="hoverable p-2 rounded-full border border-[var(--border)] hover:border-[var(--accent-terracotta)] transition-all duration-300 group">
+            <i data-lucide="sun" class="w-4 h-4 hidden dark:block text-[var(--accent-terracotta)]"></i>
+            <i data-lucide="moon" class="w-4 h-4 block dark:hidden text-[var(--accent-terracotta)]"></i>
+        </button>
+    </nav>
+    <main class="pt-28 pb-24">
+        <header class="px-6 md:px-12 lg:px-24 py-20 md:py-32">
+            <div class="max-w-4xl">
+                <a href="../index.html#work" class="inline-flex items-center gap-2 text-sm text-[var(--accent-terracotta)] hover:underline mb-8">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Selected Works
+                </a>
+                <p class="text-xs text-[var(--accent-terracotta)] tracking-[0.2em] uppercase mb-4 reveal">{{CATEGORY}}</p>
+                {{TITLE_TAG}}
+                <p class="text-lg text-[var(--text-secondary)] font-light leading-relaxed max-w-2xl reveal">{{SUBTITLE}}</p>
+                <div class="flex flex-wrap gap-3 mt-8 text-xs uppercase tracking-wider text-[var(--text-secondary)] reveal">{{TAGS_HTML}}</div>
+            </div>
+        </header>
+        <section class="px-6 md:px-12 lg:px-24 max-w-6xl mx-auto space-y-24">`;
+
+        const TEMPLATE_FOOT = `
+        </section>
+    </main>
+    <footer class="py-12 px-6 md:px-12 text-center bg-[var(--bg-primary)] border-t border-[var(--border)]">
+        <p class="text-sm text-[var(--text-secondary)] font-light">© 2026 Sharva Paralkar</p>
+    </footer>
+    <script>
+        lucide.createIcons();
+        const html = document.documentElement;
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) html.classList.add('dark');
+        else html.classList.remove('dark');
+        document.getElementById('theme-toggle').addEventListener('click', () => {
+            html.classList.toggle('dark');
+            localStorage.theme = html.classList.contains('dark') ? 'dark' : 'light';
+        });
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('active'); observer.unobserve(entry.target); } });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    <\/script>
+</body>
+</html>`;
+
+        function generateHTML() {
+            const title = document.getElementById('title').value.trim() || 'Project Title';
+            const titleTagName = document.getElementById('titleHeading').value;
+            const category = document.getElementById('category').value.trim() || 'Category / Discipline';
+            const subtitle = document.getElementById('subtitle').value.trim() || '';
+            const tags = getTagsArray();
+            const tagsHtml = tags.map((t, i) => (i > 0 ? ' <span class="text-[var(--accent-terracotta)]">•</span> ' : '') + '<span>' + escapeHtml(t) + '</span>').join('');
+            const titleTag = `<${titleTagName} class="text-5xl md:text-7xl font-light mb-6 text-[var(--text-primary)] reveal">${escapeHtml(title)}</${titleTagName}>`;
+
+            let body = TEMPLATE_HEAD
+                .replace('{{TITLE}}', escapeHtml(title))
+                .replace('{{CATEGORY}}', escapeHtml(category))
+                .replace('{{TITLE_TAG}}', titleTag)
+                .replace('{{SUBTITLE}}', escapeHtml(subtitle))
+                .replace('{{TAGS_HTML}}', tagsHtml);
+
+            const blocks = getBlocksData();
+            blocks.forEach(b => {
+                if (b.type === 'image') {
+                    let imgSrc = b.url;
+                    if (imgSrc.startsWith('public/')) imgSrc = '../' + imgSrc;
+                    body += `\n            <figure class="reveal">\n                <img src="${escapeHtml(imgSrc)}" alt="${escapeHtml(b.caption) || 'Project image'}" class="w-full aspect-video object-cover rounded-lg">\n                ${b.caption ? `<figcaption class="text-sm text-[var(--text-secondary)] mt-4 font-light">${escapeHtml(b.caption)}</figcaption>\n                ` : ''}</figure>`;
+                    if (b.content) body += `\n            <div class="prose prose-lg max-w-none reveal"><p class="text-[var(--text-secondary)] font-light leading-relaxed">${escapeHtml(b.content)}</p></div>`;
+                } else if (b.type === 'heading') {
+                    body += `\n            <${b.level} class="text-2xl md:text-3xl font-light text-[var(--text-primary)] reveal mt-12">${escapeHtml(b.text)}</${b.level}>`;
+                } else if (b.type === 'paragraph') {
+                    body += `\n            <div class="prose prose-lg max-w-none reveal"><p class="text-[var(--text-secondary)] font-light leading-relaxed">${escapeHtml(b.text)}</p></div>`;
+                }
+            });
+
+            body += TEMPLATE_FOOT;
+            return body;
+        }
+
+        function setStatus(msg) {
+            document.getElementById('status').textContent = msg;
+        }
+
+        document.getElementById('preview').addEventListener('click', () => {
+            const html = generateHTML();
+            const modal = document.getElementById('preview-modal');
+            const frame = document.getElementById('preview-frame');
+            modal.style.display = 'flex';
+            modal.classList.remove('hidden');
+            frame.srcdoc = html;
+        });
+        document.getElementById('close-preview').addEventListener('click', () => {
+            document.getElementById('preview-modal').style.display = 'none';
+            document.getElementById('preview-modal').classList.add('hidden');
+        });
+
+        document.getElementById('download').addEventListener('click', () => {
+            const slug = document.getElementById('slug').value.trim() || 'project';
+            const html = generateHTML();
+            const blob = new Blob([html], { type: 'text/html' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = slug + '.html';
+            a.click();
+            URL.revokeObjectURL(a.href);
+            setStatus('Downloaded ' + slug + '.html — move to projects/ if needed.');
+        });
+
+        document.getElementById('save-server').addEventListener('click', async () => {
+            const slug = document.getElementById('slug').value.trim();
+            if (!slug) { setStatus('Enter a file name first.'); return; }
+            const html = generateHTML();
+            const blocks = getBlocksData();
+            const firstImage = blocks.find(b => b.type === 'image' && b.url);
+            const meta = {
+                title: document.getElementById('title').value.trim() || 'Project',
+                category: document.getElementById('category').value.trim() || '',
+                dataCategory: getDataCategory(),
+                description: document.getElementById('subtitle').value.trim() || '',
+                tags: getTagsArray(),
+                image: firstImage ? firstImage.url : ''
+            };
+            try {
+                const r = await fetch(EDITOR_API + '/api/save', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ slug, html, meta })
+                });
+                if (!r.ok) throw new Error(await r.text());
+                setStatus('Saved to projects/' + slug + '.html and projects.json updated.');
+            } catch (e) {
+                setStatus('Run: npm run editor — then open http://localhost:3333/template-editor.html');
+            }
+        });
+
+        addImageBlock();
+        scheduleLiveUpdate();
+    </script>
+</body>
+</html>

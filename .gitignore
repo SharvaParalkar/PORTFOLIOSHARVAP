@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor / IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Logs and temp
+*.log
+npm-debug.log*
+.npm
+.env
+.env.local
+.env.*.local
+
+# Optional
+*.tgz

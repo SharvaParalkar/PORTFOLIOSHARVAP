@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Space+Grotesk:wght@300;500;700&family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     
     <style>
@@ -50,14 +50,24 @@
             overflow-x: hidden;
         }
 
-        h1, h2, h3 {
+        h1 {
             font-family: 'Cormorant Garamond', serif;
             font-weight: 300;
             letter-spacing: -0.02em;
         }
 
+        h2, h3 {
+            font-family: 'Gowun Batang', serif;
+            font-weight: 400;
+            letter-spacing: -0.02em;
+        }
+
         h4, .font-display {
             font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .font-gowun {
+            font-family: 'Gowun Batang', serif;
         }
 
         /* Custom Cursor */
@@ -102,25 +112,19 @@
             pointer-events: none;
             z-index: 9998;
             opacity: 0.03;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
-        /* Smooth Reveal Animation */
         .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .reveal.active {
             opacity: 1;
-            transform: translateY(0);
+            transform: none;
         }
 
         /* Project Card Hover - Earthy Style */
         .project-card {
             transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
             background: linear-gradient(135deg, var(--bg-secondary) 0%, transparent 100%);
+            border-radius: 0.5rem;
         }
 
         .project-card:hover {
@@ -132,6 +136,23 @@
             opacity: 0;
             transition: all 0.4s ease;
             background: linear-gradient(to top, rgba(44, 36, 32, 0.95) 0%, rgba(44, 36, 32, 0.7) 50%, transparent 100%);
+            color: #E8E2D9;
+        }
+
+        .project-card .overlay * {
+            color: inherit;
+        }
+
+        .project-card .overlay .overlay-meta {
+            color: #9BAE8A !important;
+        }
+
+        .project-card .overlay .overlay-accent {
+            color: #D48C63 !important;
+        }
+
+        .project-card .overlay .overlay-muted {
+            color: rgba(232, 226, 217, 0.85) !important;
         }
 
         .project-card:hover .overlay {
@@ -158,23 +179,6 @@
             border-color: var(--accent-terracotta);
         }
 
-        /* Organic Decorative Shapes */
-        .organic-shape {
-            position: absolute;
-            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-            background: linear-gradient(135deg, var(--accent-sage) 0%, var(--accent-terracotta) 100%);
-            opacity: 0.1;
-            filter: blur(60px);
-            animation: morph 15s ease-in-out infinite;
-        }
-
-        @keyframes morph {
-            0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
-            25% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
-            50% { border-radius: 50% 60% 30% 60% / 30% 60% 70% 40%; }
-            75% { border-radius: 60% 40% 60% 30% / 60% 30% 40% 70%; }
-        }
-
         /* Custom Scrollbar - Earthy */
         ::-webkit-scrollbar {
             width: 8px;
@@ -191,36 +195,6 @@
 
         ::-webkit-scrollbar-thumb:hover {
             background: var(--accent-terracotta);
-        }
-
-        /* Loading Screen */
-        .loader {
-            position: fixed;
-            inset: 0;
-            background: var(--bg-primary);
-            z-index: 10000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.8s ease;
-        }
-
-        .loader.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .earth-loader {
-            width: 60px;
-            height: 60px;
-            border: 2px solid var(--border);
-            border-top-color: var(--accent-terracotta);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
         }
 
         /* Process Section Cards */
@@ -258,18 +232,9 @@
     <!-- Grain Texture Overlay -->
     <div class="grain-overlay"></div>
 
-    <!-- Loading Screen -->
-    <div class="loader" id="loader">
-        <div class="earth-loader"></div>
-    </div>
-
     <!-- Custom Cursor Elements -->
     <div class="cursor-dot hidden md:block"></div>
     <div class="cursor-outline hidden md:block"></div>
-
-    <!-- Organic Background Shapes -->
-    <div class="organic-shape w-96 h-96 fixed top-20 -left-20 z-0"></div>
-    <div class="organic-shape w-[500px] h-[500px] fixed bottom-0 right-0 z-0" style="animation-delay: -5s; background: linear-gradient(135deg, var(--accent-clay) 0%, var(--accent-stone) 100%);"></div>
 
     <!-- Navigation -->
     <nav class="fixed top-0 w-full z-50 px-6 py-6 flex justify-between items-center backdrop-blur-md bg-[var(--bg-primary)]/80 border-b border-[var(--border)]">
@@ -313,15 +278,15 @@
             </div>
         </div>
 
-        <div class="absolute bottom-12 left-6 md:left-12 text-xs text-[var(--text-secondary)] space-y-2 reveal" style="transition-delay: 0.4s;">
-            <p class="tracking-widest uppercase">Based in College Station, TX</p>
-            <p class="tracking-widest uppercase text-[var(--accent-terracotta)]">Available for Collaboration</p>
-        </div>
-
         <!-- Decorative Element -->
-        <div class="absolute right-12 top-1/2 -translate-y-1/2 hidden lg:block reveal" style="transition-delay: 0.6s;">
+        <div class="absolute right-12 top-1/2 -translate-y-1/2 hidden lg:block reveal" style="transition-delay: 0.5s;">
             <div class="w-px h-32 bg-[var(--border)] mx-auto mb-4"></div>
             <p class="text-xs tracking-widest text-[var(--text-secondary)] uppercase vertical-rl" style="writing-mode: vertical-rl;">Scroll to Explore</p>
+        </div>
+
+        <div class="absolute bottom-12 right-6 md:right-12 text-xs text-[var(--text-secondary)] space-y-2 text-right reveal" style="transition-delay: 0.4s;">
+            <p class="tracking-widest uppercase">Based in College Station, TX</p>
+            <p class="tracking-widest uppercase text-[var(--accent-terracotta)]">Available for Collaboration</p>
         </div>
     </header>
 
@@ -332,7 +297,7 @@
                 <div>
                     <p class="text-xs text-[var(--accent-terracotta)] tracking-widest uppercase mb-4">Portfolio</p>
                     <h2 class="text-5xl md:text-7xl font-light mb-4 text-[var(--text-primary)]">Selected<br>Works</h2>
-                    <p class="text-[var(--text-secondary)] font-light">2022 — 2024</p>
+                    <p class="text-[var(--text-secondary)] font-light">2024 — 2026</p>
                 </div>
                 
                 <!-- Filter Buttons -->
@@ -344,120 +309,17 @@
                 </div>
             </div>
 
-            <!-- Projects Grid -->
+            <!-- Projects Grid (loaded from projects/projects.json) -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid">
-                
-                <!-- Project 1 -->
-                <article class="project-card group relative aspect-[4/5] overflow-hidden reveal hoverable cursor-pointer" data-category="architecture computational">
-                    <div class="absolute inset-0 bg-[var(--bg-primary)]">
-                        <img src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&q=80&w=800" alt="Parametric Facade" class="w-full h-full object-cover opacity-90 sepia-[0.2]">
-                    </div>
-                    <div class="overlay absolute inset-0 flex flex-col justify-end p-8 text-[var(--text-light)]">
-                        <span class="text-xs uppercase tracking-[0.2em] text-[var(--accent-sage)] mb-3 font-medium">Architecture / Generative</span>
-                        <h3 class="text-3xl font-light mb-3 italic">Adaptive Facade</h3>
-                        <p class="text-sm text-[var(--text-light)]/80 mb-4 font-light leading-relaxed">Responsive shading system driven by solar radiation analysis and agent-based algorithms.</p>
-                        <div class="flex gap-3 text-xs text-[var(--text-light)]/60 uppercase tracking-wider">
-                            <span>Grasshopper</span>
-                            <span class="text-[var(--accent-terracotta)]">•</span>
-                            <span>Python</span>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Project 2 -->
-                <article class="project-card group relative aspect-[4/5] overflow-hidden reveal hoverable cursor-pointer" data-category="product computational" style="transition-delay: 0.1s;">
-                    <div class="absolute inset-0 bg-[var(--bg-primary)]">
-                        <img src="https://images.unsplash.com/photo-1507646227500-4d389b0012be?auto=format&fit=crop&q=80&w=800" alt="Generative Stool" class="w-full h-full object-cover opacity-90 sepia-[0.3]">
-                    </div>
-                    <div class="overlay absolute inset-0 flex flex-col justify-end p-8 text-[var(--text-light)]">
-                        <span class="text-xs uppercase tracking-[0.2em] text-[var(--accent-sage)] mb-3 font-medium">Product / Optimization</span>
-                        <h3 class="text-3xl font-light mb-3 italic">Voxel Stool</h3>
-                        <p class="text-sm text-[var(--text-light)]/80 mb-4 font-light leading-relaxed">3D printed furniture derived from stress analysis and topology optimization.</p>
-                        <div class="flex gap-3 text-xs text-[var(--text-light)]/60 uppercase tracking-wider">
-                            <span>Blender</span>
-                            <span class="text-[var(--accent-terracotta)]">•</span>
-                            <span>SLA Printing</span>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Project 3 -->
-                <article class="project-card group relative aspect-[4/5] overflow-hidden reveal hoverable cursor-pointer" data-category="architecture" style="transition-delay: 0.2s;">
-                    <div class="absolute inset-0 bg-[var(--bg-primary)]">
-                        <img src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&q=80&w=800" alt="Pavilion" class="w-full h-full object-cover opacity-90 sepia-[0.2]">
-                    </div>
-                    <div class="overlay absolute inset-0 flex flex-col justify-end p-8 text-[var(--text-light)]">
-                        <span class="text-xs uppercase tracking-[0.2em] text-[var(--accent-sage)] mb-3 font-medium">Installation / Textile</span>
-                        <h3 class="text-3xl font-light mb-3 italic">Woven Pavilion</h3>
-                        <p class="text-sm text-[var(--text-light)]/80 mb-4 font-light leading-relaxed">Temporary structure exploring textile logic at architectural scale using bamboo.</p>
-                        <div class="flex gap-3 text-xs text-[var(--text-light)]/60 uppercase tracking-wider">
-                            <span>Physical Model</span>
-                            <span class="text-[var(--accent-terracotta)]">•</span>
-                            <span>Kangaroo</span>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Project 4 -->
-                <article class="project-card group relative aspect-[4/5] overflow-hidden reveal hoverable cursor-pointer" data-category="product">
-                    <div class="absolute inset-0 bg-[var(--bg-primary)]">
-                        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&q=80&w=800" alt="Light Fixture" class="w-full h-full object-cover opacity-90 sepia-[0.3]">
-                    </div>
-                    <div class="overlay absolute inset-0 flex flex-col justify-end p-8 text-[var(--text-light)]">
-                        <span class="text-xs uppercase tracking-[0.2em] text-[var(--accent-sage)] mb-3 font-medium">Lighting / Voronoi</span>
-                        <h3 class="text-3xl font-light mb-3 italic">Diffusion Lamp</h3>
-                        <p class="text-sm text-[var(--text-light)]/80 mb-4 font-light leading-relaxed">Modular system inspired by crystal growth patterns and Voronoi diagrams.</p>
-                        <div class="flex gap-3 text-xs text-[var(--text-light)]/60 uppercase tracking-wider">
-                            <span>Rhino</span>
-                            <span class="text-[var(--accent-terracotta)]">•</span>
-                            <span>Resin</span>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Project 5 -->
-                <article class="project-card group relative aspect-[4/5] overflow-hidden reveal hoverable cursor-pointer" data-category="computational">
-                    <div class="absolute inset-0 bg-[var(--bg-primary)]">
-                        <img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&q=80&w=800" alt="Algorithmic Art" class="w-full h-full object-cover opacity-90 sepia-[0.2]">
-                    </div>
-                    <div class="overlay absolute inset-0 flex flex-col justify-end p-8 text-[var(--text-light)]">
-                        <span class="text-xs uppercase tracking-[0.2em] text-[var(--accent-sage)] mb-3 font-medium">Generative / Art</span>
-                        <h3 class="text-3xl font-light mb-3 italic">Emergent Patterns</h3>
-                        <p class="text-sm text-[var(--text-light)]/80 mb-4 font-light leading-relaxed">Series exploring reaction-diffusion algorithms through pen plotter drawings.</p>
-                        <div class="flex gap-3 text-xs text-[var(--text-light)]/60 uppercase tracking-wider">
-                            <span>Processing</span>
-                            <span class="text-[var(--accent-terracotta)]">•</span>
-                            <span>A1 Format</span>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Project 6 -->
-                <article class="project-card group relative aspect-[4/5] overflow-hidden reveal hoverable cursor-pointer" data-category="architecture computational">
-                    <div class="absolute inset-0 bg-[var(--bg-primary)]">
-                        <img src="https://images.unsplash.com/photo-1493397212122-2b85dda8106b?auto=format&fit=crop&q=80&w=800" alt="Urban Proposal" class="w-full h-full object-cover opacity-90 sepia-[0.2]">
-                    </div>
-                    <div class="overlay absolute inset-0 flex flex-col justify-end p-8 text-[var(--text-light)]">
-                        <span class="text-xs uppercase tracking-[0.2em] text-[var(--accent-sage)] mb-3 font-medium">Urban / Data</span>
-                        <h3 class="text-3xl font-light mb-3 italic">Flow City</h3>
-                        <p class="text-sm text-[var(--text-light)]/80 mb-4 font-light leading-relaxed">Urban intervention based on pedestrian flow analysis and density mapping.</p>
-                        <div class="flex gap-3 text-xs text-[var(--text-light)]/60 uppercase tracking-wider">
-                            <span>GIS</span>
-                            <span class="text-[var(--accent-terracotta)]">•</span>
-                            <span>Unity</span>
-                        </div>
-                    </div>
-                </article>
-
+                <!-- Cards injected by loadProjects() -->
             </div>
+            <p id="projects-empty" class="text-[var(--text-secondary)] font-light text-center py-12 hidden">No projects added yet.</p>
         </div>
     </section>
 
     <!-- Process / About Section - Redesigned -->
     <section id="about" class="py-32 px-6 md:px-12 lg:px-24 bg-[var(--bg-primary)] relative overflow-hidden">
         <!-- Decorative Background -->
-        <div class="absolute top-0 right-0 w-1/3 h-full bg-[var(--bg-secondary)] -skew-x-12 translate-x-1/4 z-0"></div>
-        
         <div class="max-w-6xl mx-auto relative z-10">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
                 
@@ -591,13 +453,6 @@
         // Initialize Lucide Icons
         lucide.createIcons();
 
-        // Remove Loader
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                document.getElementById('loader').classList.add('hidden');
-            }, 800);
-        });
-
         // Theme Toggle
         const themeToggle = document.getElementById('theme-toggle');
         const html = document.documentElement;
@@ -636,26 +491,72 @@
             el.addEventListener('mouseleave', () => cursorOutline.classList.remove('hover'));
         });
 
-        // Scroll Reveal Animation
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: "0px 0px -50px 0px"
-        };
+        // Load projects from projects/projects.json (fallback used when fetch fails, e.g. file://)
+        window.__PORTFOLIO_PROJECTS__ = [{"slug":"woven-pavilion","title":"Woven Pavilion","category":"Installation / Textile","dataCategory":["architecture"],"description":"Temporary structure exploring textile logic at architectural scale using bamboo.","tags":["Physical Model","Kangaroo"],"image":"https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&q=80&w=800"}];
+        const projectsGrid = document.getElementById('projects-grid');
+        const projectsEmpty = document.getElementById('projects-empty');
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    observer.unobserve(entry.target);
-                }
+        function escapeAttr(s) {
+            if (!s) return '';
+            const div = document.createElement('div');
+            div.textContent = s;
+            return div.innerHTML.replace(/"/g, '&quot;');
+        }
+
+        function renderProjects(projects) {
+            if (!Array.isArray(projects) || projects.length === 0) {
+                projectsEmpty.classList.remove('hidden');
+                return;
+            }
+            projectsEmpty.classList.add('hidden');
+            projectsGrid.innerHTML = '';
+            projects.forEach((p, i) => {
+                const dataCategory = Array.isArray(p.dataCategory) ? p.dataCategory.join(' ') : (p.dataCategory || '');
+                const tags = Array.isArray(p.tags) ? p.tags : (p.tags || '').toString().split(/[\n,]+/).map(t => t.trim()).filter(Boolean);
+                const tagsHtml = tags.map((t, j) => (j > 0 ? ' <span class="overlay-accent">•</span> ' : '') + '<span>' + escapeAttr(t) + '</span>').join('');
+                const imgSrc = p.image || '';
+                const href = 'projects/' + (p.slug || '') + '.html';
+                const card = document.createElement('a');
+                card.href = href;
+                card.className = 'block';
+                card.innerHTML = `
+                    <article class="project-card group relative aspect-[4/5] overflow-hidden reveal hoverable cursor-pointer" data-category="${escapeAttr(dataCategory)}" ${i > 0 ? `style="transition-delay: ${i * 0.1}s;"` : ''}>
+                        <div class="absolute inset-0 bg-[var(--bg-primary)]">
+                            <img src="${escapeAttr(imgSrc)}" alt="${escapeAttr(p.title)}" class="w-full h-full object-cover opacity-90 sepia-[0.2]" loading="lazy">
+                        </div>
+                        <div class="overlay absolute inset-0 flex flex-col justify-end p-8">
+                            <span class="overlay-meta text-xs uppercase tracking-[0.2em] mb-3 font-medium">${escapeAttr(p.category || '')}</span>
+                            <h3 class="text-3xl font-light mb-3 italic">${escapeAttr(p.title || '')}</h3>
+                            <p class="overlay-muted text-sm mb-4 font-light leading-relaxed">${escapeAttr(p.description || '')}</p>
+                            <div class="flex gap-3 text-xs overlay-muted uppercase tracking-wider">${tagsHtml}</div>
+                        </div>
+                    </article>
+                `;
+                projectsGrid.appendChild(card);
+                card.querySelectorAll('.hoverable').forEach(el => {
+                    el.addEventListener('mouseenter', () => cursorOutline.classList.add('hover'));
+                    el.addEventListener('mouseleave', () => cursorOutline.classList.remove('hover'));
+                });
             });
-        }, observerOptions);
+        }
 
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        function loadProjects() {
+            const fallback = window.__PORTFOLIO_PROJECTS__;
+            fetch(new URL('projects/projects.json', document.baseURI || window.location.href).href)
+                .then(r => r.ok ? r.json() : [])
+                .then(projects => {
+                    const list = (Array.isArray(projects) && projects.length > 0) ? projects : (fallback || []);
+                    renderProjects(list);
+                })
+                .catch(() => {
+                    renderProjects(fallback || []);
+                });
+        }
 
-        // Project Filtering
+        loadProjects();
+
+        // Project Filtering — show/hide grid item (card or its wrapper e.g. <a>); queries cards each click so dynamic cards work
         const filterBtns = document.querySelectorAll('.filter-btn');
-        const projectCards = document.querySelectorAll('.project-card');
 
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
@@ -663,21 +564,24 @@
                 btn.classList.add('active');
 
                 const filter = btn.getAttribute('data-filter');
+                const projectCards = document.querySelectorAll('#projects-grid .project-card');
 
                 projectCards.forEach(card => {
-                    const categories = card.getAttribute('data-category');
-                    
-                    if (filter === 'all' || categories.includes(filter)) {
-                        card.style.display = 'block';
-                        setTimeout(() => {
-                            card.style.opacity = '1';
-                            card.style.transform = 'translateY(0)';
-                        }, 50);
+                    const categories = (card.getAttribute('data-category') || '').trim();
+                    const gridItem = card.parentElement === projectsGrid ? card : card.parentElement;
+
+                    if (filter === 'all' || categories.split(/\s+/).includes(filter)) {
+                        gridItem.style.display = '';
+                        gridItem.style.opacity = '1';
+                        gridItem.style.transform = '';
+                        card.style.display = '';
+                        card.style.opacity = '1';
+                        card.style.transform = '';
                     } else {
                         card.style.opacity = '0';
                         card.style.transform = 'translateY(20px)';
                         setTimeout(() => {
-                            card.style.display = 'none';
+                            gridItem.style.display = 'none';
                         }, 300);
                     }
                 });
