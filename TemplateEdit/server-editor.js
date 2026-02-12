@@ -2,13 +2,13 @@
  * Template editor server — Node.js (JavaScript), not Java.
  * You only need to run this if you want to:
  *   - Upload images from the editor into public/images
- *   - Save generated project pages to TemplateEdit/projects/ from the editor
+ *   - Save generated project pages to projects/ (at portfolio root) from the editor
  *
  * Run: npm install   (once)
  *      npm run editor
  * Then open: http://localhost:3333/template-editor.html
  *
- * Without the server: use the editor with image URLs and "Download HTML", then move the file to TemplateEdit/projects/ yourself.
+ * Without the server: use the editor with image URLs and "Download HTML", then move the file to projects/ yourself.
  */
 
 const express = require('express');
@@ -20,11 +20,10 @@ const { spawn } = require('child_process');
 const app = express();
 const PORT = 3333;
 const ROOT = __dirname;
-// Portfolio root is parent of TemplateEdit; public images live there
+// Portfolio root is parent of TemplateEdit; projects and public/images live there
 const PORTFOLIO_ROOT = path.join(ROOT, '..');
 const PUBLIC_IMAGES = path.join(PORTFOLIO_ROOT, 'public', 'images');
-// Projects live in TemplateEdit/projects so index.html and Cloudflare Pages can serve them from one place
-const PROJECTS_DIR = path.join(ROOT, 'projects');
+const PROJECTS_DIR = path.join(PORTFOLIO_ROOT, 'projects');
 const PROJECTS_JSON = path.join(PROJECTS_DIR, 'projects.json');
 
 // Ensure directories exist
@@ -87,7 +86,7 @@ app.post('/api/save', express.json(), (req, res) => {
 
   fs.writeFileSync(PROJECTS_JSON, JSON.stringify(projects, null, 2), 'utf8');
 
-  res.json({ path: 'TemplateEdit/projects/' + slug + '.html' });
+  res.json({ path: 'projects/' + slug + '.html' });
 });
 
 // Sync projects.json with .html files in the projects folder (add missing entries, optionally remove orphans)
@@ -220,5 +219,5 @@ app.post('/api/push', express.json(), (req, res) => {
 
 app.listen(PORT, () => {
   console.log('Template editor: http://localhost:' + PORT + '/template-editor.html');
-  console.log('  Uploads → public/images/   Save → TemplateEdit/projects/<slug>.html');
+  console.log('  Uploads → public/images/   Save → projects/<slug>.html');
 });
