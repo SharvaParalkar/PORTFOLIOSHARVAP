@@ -5,8 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex" />
     <title>Content Manager</title>
+    <style>
+      .cms-tools-bar {
+        font-family: system-ui, sans-serif;
+        background: #111827;
+        color: #f8fafc;
+        padding: 0.65rem 1.25rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem 1.25rem;
+        align-items: center;
+        font-size: 0.8125rem;
+      }
+      .cms-tools-bar a {
+        color: #93c5fd;
+        text-decoration: none;
+      }
+      .cms-tools-bar a:hover { text-decoration: underline; }
+      .cms-tools-bar .sep { opacity: 0.35; }
+    </style>
   </head>
   <body>
+    <div class="cms-tools-bar">
+      <strong>CMS tools</strong>
+      <span class="sep">|</span>
+      <a href="https://sharvaparalkar.com/" target="_blank" rel="noopener">View site</a>
+      <span class="sep">|</span>
+      <a href="http://localhost:3333/template-editor.html" target="_blank" rel="noopener">Template Editor (local)</a>
+      <span class="sep">|</span>
+      <span>Upload resume PDF under Site pages → Resume · Full layouts under Projects</span>
+    </div>
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
   </body>
 </html>

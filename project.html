@@ -19,6 +19,8 @@
     <nav class="site-nav" aria-label="Primary">
         <a href="index.html" class="nav-logo">sp.</a>
         <div class="nav-links">
+            <a href="index.html#resume">Resume</a>
+            <a href="index.html#portfolio">Portfolio</a>
             <a href="index.html#work">Selected Works</a>
             <a href="index.html#about">Approach</a>
             <a href="index.html#contact">Contact</a>
@@ -85,17 +87,46 @@
                 return (new URLSearchParams(window.location.search).get('slug') || '').trim();
             }
 
+            function renderBlocks(blocks) {
+                if (!Array.isArray(blocks) || !blocks.length) return '';
+                return blocks.map((b) => {
+                    const type = b.type || b.typeName || '';
+                    if (type === 'image') {
+                        const url = b.url || '';
+                        const caption = b.caption || '';
+                        const content = b.content || '';
+                        let html = '<figure class="project-block-figure">' +
+                            '<img src="' + escapeHtml(url) + '" alt="' + escapeHtml(caption || 'Project image') + '" loading="lazy" decoding="async">' +
+                            (caption ? '<figcaption>' + escapeHtml(caption) + '</figcaption>' : '') +
+                            '</figure>';
+                        if (content) html += '<div class="project-body"><p>' + escapeHtml(content) + '</p></div>';
+                        return html;
+                    }
+                    if (type === 'heading') {
+                        const level = b.level === 'h3' ? 'h3' : 'h2';
+                        return '<' + level + ' class="project-block-heading">' + escapeHtml(b.text || '') + '</' + level + '>';
+                    }
+                    if (type === 'paragraph') {
+                        return '<div class="project-body"><p>' + escapeHtml(b.text || '') + '</p></div>';
+                    }
+                    return '';
+                }).join('');
+            }
+
             function renderProject(p) {
                 document.title = (p.title || 'Project') + ' | Sharva Paralkar';
                 const desc = document.querySelector('meta[name="description"]');
                 if (desc && p.description) desc.setAttribute('content', p.description);
-                const tags = Array.isArray(p.tags) ? p.tags : [];
+                const tags = Array.isArray(p.tags)
+                    ? p.tags.map((t) => (typeof t === 'string' ? t : (t && t.tag) || '')).filter(Boolean)
+                    : [];
                 const tagsHtml = tags.map((t, i) =>
                     (i > 0 ? '<span class="overlay-accent" aria-hidden="true">•</span>' : '') +
                     '<span>' + escapeHtml(t) + '</span>'
                 ).join('');
                 const bodyHtml = simpleMarkdown(p.body || '');
-                const cover = p.image
+                const blocksHtml = renderBlocks(p.blocks || []);
+                const cover = (!blocksHtml && p.image)
                     ? '<img class="project-hero-img" src="' + escapeHtml(p.image) + '" alt="' + escapeHtml(p.title || '') + '" width="1200" height="675" decoding="async">'
                     : '';
 
@@ -109,7 +140,8 @@
                     '<p class="about-lead" style="max-width:42rem;margin-bottom:0">' + escapeHtml(p.description || '') + '</p>' +
                     (tagsHtml ? '<div class="project-meta-row">' + tagsHtml + '</div>' : '') +
                     cover +
-                    '<div class="project-body">' + bodyHtml + '</div>' +
+                    (bodyHtml ? '<div class="project-body">' + bodyHtml + '</div>' : '') +
+                    '<div class="project-blocks">' + blocksHtml + '</div>' +
                     '</div>';
             }
 

@@ -11,11 +11,78 @@ media_folder: public/images
 public_folder: /public/images
 
 collections:
+  # —— Site pages (homepage sections) ——
+  - name: site
+    label: Site pages
+    files:
+      - name: homepage
+        label: Homepage content
+        file: content/site.json
+        fields:
+          - label: Hero
+            name: hero
+            widget: object
+            fields:
+              - { label: Eyebrow, name: eyebrow, widget: string }
+              - { label: Title line 1, name: title_line1, widget: string }
+              - { label: Title line 2, name: title_line2, widget: string }
+              - { label: Lead paragraph, name: lead, widget: text }
+              - { label: Location line, name: location, widget: string }
+              - { label: Availability line, name: availability, widget: string }
+
+          - label: Resume section
+            name: resume
+            widget: object
+            fields:
+              - { label: Eyebrow, name: eyebrow, widget: string }
+              - { label: Title, name: title, widget: string }
+              - { label: Subtitle, name: subtitle, widget: string }
+              - label: Resume PDF
+                name: pdf
+                widget: file
+                media_folder: public
+                public_folder: /public
+                hint: Upload a PDF (saved under public/). Default path /public/resume.pdf
+
+          - label: Portfolio section (placeholder)
+            name: portfolio
+            widget: object
+            fields:
+              - { label: Eyebrow, name: eyebrow, widget: string }
+              - { label: Title, name: title, widget: string }
+              - { label: Subtitle, name: subtitle, widget: string }
+              - { label: Body, name: body, widget: markdown, required: false }
+
+          - label: Approach / About
+            name: about
+            widget: object
+            fields:
+              - { label: Eyebrow, name: eyebrow, widget: string }
+              - { label: Title line 1, name: title_line1, widget: string }
+              - { label: Title line 2, name: title_line2, widget: string }
+              - { label: Lead, name: lead, widget: text }
+              - { label: Stat 1 number, name: stat1_num, widget: string }
+              - { label: Stat 1 label, name: stat1_label, widget: string }
+              - { label: Stat 2 number, name: stat2_num, widget: string }
+              - { label: Stat 2 label, name: stat2_label, widget: string }
+
+          - label: Contact
+            name: contact
+            widget: object
+            fields:
+              - { label: Eyebrow, name: eyebrow, widget: string }
+              - { label: Title line 1, name: title_line1, widget: string }
+              - { label: Title line 2, name: title_line2, widget: string }
+              - { label: Lead, name: lead, widget: text }
+              - { label: Email, name: email, widget: string }
+              - { label: LinkedIn URL, name: linkedin, widget: string }
+
+  # —— Project list + full page layouts ——
   - name: projects
     label: Projects
     files:
       - name: projects
-        label: Project list
+        label: Project list & layouts
         file: projects/projects.json
         fields:
           - label: Projects
@@ -25,7 +92,7 @@ collections:
             fields:
               - { label: Slug, name: slug, widget: string, hint: "URL id, e.g. woven-pavilion" }
               - { label: Title, name: title, widget: string }
-              - { label: Category label, name: category, widget: string, hint: "Shown on the card, e.g. Installation / Textile" }
+              - { label: Category label, name: category, widget: string, hint: "Shown on the card" }
               - label: Filter categories
                 name: dataCategory
                 widget: select
@@ -37,4 +104,42 @@ collections:
                 widget: list
                 field: { label: Tag, name: tag, widget: string }
               - { label: Cover image, name: image, widget: image }
-              - { label: Page content, name: body, widget: markdown, required: false }
+              - { label: Intro (markdown, optional), name: body, widget: markdown, required: false }
+              - label: Full page layout
+                name: blocks
+                widget: list
+                summary: "{{fields.type}} {{fields.text}}{{fields.caption}}"
+                types:
+                  - label: Image
+                    name: image
+                    widget: object
+                    fields:
+                      - { label: Image, name: url, widget: image }
+                      - { label: Caption, name: caption, widget: string, required: false }
+                      - { label: Text below image, name: content, widget: text, required: false }
+                  - label: Heading
+                    name: heading
+                    widget: object
+                    fields:
+                      - label: Level
+                        name: level
+                        widget: select
+                        options: [h2, h3]
+                        default: h2
+                      - { label: Text, name: text, widget: string }
+                  - label: Paragraph
+                    name: paragraph
+                    widget: object
+                    fields:
+                      - { label: Text, name: text, widget: text }
+
+  # —— Template Editor guide ——
+  - name: tools
+    label: Tools
+    files:
+      - name: template_editor
+        label: Template Editor
+        file: content/template-editor.md
+        fields:
+          - { label: Title, name: title, widget: string }
+          - { label: Instructions, name: body, widget: markdown }

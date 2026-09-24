@@ -1,0 +1,4 @@
+Replace this note by uploading your resume PDF as:
+  public/resume.pdf
+
+Use the CMS (Site → Resume) or drop the file into the public/ folder.

@@ -22,6 +22,8 @@
     <nav class="site-nav" aria-label="Primary">
         <a href="#" class="nav-logo hoverable">sp.</a>
         <div class="nav-links">
+            <a href="#resume" class="hoverable">Resume</a>
+            <a href="#portfolio" class="hoverable">Portfolio</a>
             <a href="#work" class="hoverable">Selected Works</a>
             <a href="#about" class="hoverable">Approach</a>
             <a href="#contact" class="hoverable">Contact</a>
@@ -36,22 +38,20 @@
     <header class="hero">
         <div class="hero-inner">
             <div class="reveal">
-                <p class="eyebrow">Computational Architecture &amp; Design</p>
+                <p class="eyebrow" data-cms="hero.eyebrow">Computational Architecture &amp; Design</p>
                 <h1 class="hero-title">
-                    SHARVA<br>
-                    <span class="clay">PARALKAR</span>
+                    <span data-cms="hero.title_line1">SHARVA</span><br>
+                    <span class="clay" data-cms="hero.title_line2">PARALKAR</span>
                 </h1>
                 <div class="accent-rule" aria-hidden="true"></div>
-                <p class="hero-lead">
+                <p class="hero-lead" data-cms="hero.lead">
                     Exploring the intersection of algorithmic thinking, material innovation, and spatial experience. Currently pursuing BS.Arch at Texas A&amp;M.
                 </p>
             </div>
-            <div class="hero-ctas reveal">
-                <a href="#work" class="btn btn-primary hoverable">
-                    View Selected Works
-                    <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
-                </a>
-                <a href="#about" class="btn btn-ghost hoverable">Design Philosophy</a>
+            <div class="hero-ctas reveal hero-ctas-triple" role="group" aria-label="Jump to section">
+                <a href="#work" class="btn btn-primary hoverable">View Selected Works</a>
+                <a href="#portfolio" class="btn btn-ghost hoverable">View Portfolio</a>
+                <a href="#resume" class="btn btn-ghost hoverable">View Resume</a>
             </div>
         </div>
         <div class="hero-scroll reveal" aria-hidden="true">
@@ -59,12 +59,47 @@
             <p class="hero-scroll-label">Scroll to Explore</p>
         </div>
         <div class="hero-meta reveal">
-            <p>Based in College Station, TX</p>
-            <p class="avail">Available for Collaboration</p>
+            <p data-cms="hero.location">Based in College Station, TX</p>
+            <p class="avail" data-cms="hero.availability">Available for Collaboration</p>
         </div>
     </header>
 
-    <section id="work" class="section section-alt" aria-labelledby="work-heading">
+    <section id="resume" class="section" aria-labelledby="resume-heading">
+        <div class="section-wide">
+            <div class="resume-header reveal">
+                <div>
+                    <p class="eyebrow" data-cms="resume.eyebrow">CV</p>
+                    <h2 id="resume-heading" class="section-title" data-cms="resume.title">Resume</h2>
+                    <p class="section-sub" data-cms="resume.subtitle">Download or preview the latest PDF.</p>
+                </div>
+                <a id="resume-download" class="btn btn-ghost hoverable" href="/public/resume.pdf" target="_blank" rel="noopener noreferrer">Open PDF</a>
+            </div>
+            <div class="resume-frame-wrap reveal">
+                <iframe
+                    id="resume-frame"
+                    class="resume-frame"
+                    title="Resume PDF preview"
+                    src="/public/resume.pdf"
+                ></iframe>
+            </div>
+            <p id="resume-missing" class="projects-empty hidden">Upload a resume PDF in the CMS (Site pages → Resume) or place it at <code>public/resume.pdf</code>.</p>
+        </div>
+    </section>
+
+    <section id="portfolio" class="section section-alt" aria-labelledby="portfolio-heading">
+        <div class="section-wide">
+            <div class="reveal">
+                <p class="eyebrow" data-cms="portfolio.eyebrow">Overview</p>
+                <h2 id="portfolio-heading" class="section-title" data-cms="portfolio.title">Portfolio</h2>
+                <p class="section-sub" data-cms="portfolio.subtitle">Coming soon.</p>
+                <div class="portfolio-blank" data-cms-html="portfolio.body">
+                    <!-- Intentionally blank for now — edit via CMS Site pages → Portfolio -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="work" class="section" aria-labelledby="work-heading">
         <div class="section-wide">
             <div class="work-header reveal">
                 <div>
@@ -88,20 +123,20 @@
         <div class="section-mid">
             <div class="about-grid">
                 <div class="reveal">
-                    <p class="eyebrow">Methodology</p>
-                    <h2 id="about-heading" class="section-title">Design<br>Approach</h2>
+                    <p class="eyebrow" data-cms="about.eyebrow">Methodology</p>
+                    <h2 id="about-heading" class="section-title"><span data-cms="about.title_line1">Design</span><br><span data-cms="about.title_line2">Approach</span></h2>
                     <div class="accent-rule" aria-hidden="true"></div>
-                    <p class="about-lead">
+                    <p class="about-lead" data-cms="about.lead">
                         A synthesis of computational precision and organic intuition. Each project begins with an understanding of material behavior and spatial context.
                     </p>
                     <div class="stats">
                         <div>
-                            <p class="stat-num">5+</p>
-                            <p class="stat-label">Years Experience</p>
+                            <p class="stat-num" data-cms="about.stat1_num">5+</p>
+                            <p class="stat-label" data-cms="about.stat1_label">Years Experience</p>
                         </div>
                         <div>
-                            <p class="stat-num">12</p>
-                            <p class="stat-label">Projects Completed</p>
+                            <p class="stat-num" data-cms="about.stat2_num">12</p>
+                            <p class="stat-label" data-cms="about.stat2_label">Projects Completed</p>
                         </div>
                     </div>
                 </div>
@@ -162,21 +197,21 @@
 
     <section id="contact" class="section section-alt" aria-labelledby="contact-heading">
         <div class="section-narrow reveal">
-            <p class="eyebrow">Collaboration</p>
-            <h2 id="contact-heading" class="contact-title">Let's Create<br><span class="clay">Together</span></h2>
+            <p class="eyebrow" data-cms="contact.eyebrow">Collaboration</p>
+            <h2 id="contact-heading" class="contact-title"><span data-cms="contact.title_line1">Let's Create</span><br><span class="clay" data-cms="contact.title_line2">Together</span></h2>
             <div class="accent-rule-center" aria-hidden="true"></div>
-            <p class="contact-lead">
+            <p class="contact-lead" data-cms="contact.lead">
                 Currently open for internship opportunities and freelance computational design consulting. Based in College Station, available globally.
             </p>
             <div class="contact-actions">
-                <a href="mailto:sharva.paralkar@gmail.com" class="btn-email hoverable">
+                <a id="contact-email" href="mailto:sharva.paralkar@gmail.com" class="btn-email hoverable">
                     <span class="btn-email-inner">
-                        sharva.paralkar@gmail.com
+                        <span data-cms="contact.email">sharva.paralkar@gmail.com</span>
                         <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg>
                     </span>
                 </a>
                 <div class="social">
-                    <a href="https://www.linkedin.com/in/sharva-paralkar-9b5147228/" target="_blank" rel="noopener noreferrer" class="social-link hoverable" aria-label="LinkedIn profile">
+                    <a id="contact-linkedin" href="https://www.linkedin.com/in/sharva-paralkar-9b5147228/" target="_blank" rel="noopener noreferrer" class="social-link hoverable" aria-label="LinkedIn profile">
                         <svg class="icon icon-md" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
                     </a>
                 </div>
@@ -236,6 +271,74 @@
                 div.textContent = s;
                 return div.innerHTML.replace(/"/g, '&quot;');
             }
+
+            function getPath(obj, path) {
+                return path.split('.').reduce((o, k) => (o && o[k] != null ? o[k] : ''), obj);
+            }
+
+            function simpleMarkdown(src) {
+                if (!src) return '';
+                const lines = String(src).replace(/\r\n/g, '\n').split('\n');
+                const out = [];
+                let para = [];
+                function flush() {
+                    if (!para.length) return;
+                    out.push('<p>' + escapeAttr(para.join(' ').trim()) + '</p>');
+                    para = [];
+                }
+                lines.forEach((line) => {
+                    const t = line.trim();
+                    if (!t) { flush(); return; }
+                    if (/^###\s+/.test(t)) { flush(); out.push('<h3>' + escapeAttr(t.replace(/^###\s+/, '')) + '</h3>'); return; }
+                    if (/^##\s+/.test(t)) { flush(); out.push('<h2>' + escapeAttr(t.replace(/^##\s+/, '')) + '</h2>'); return; }
+                    if (/^#\s+/.test(t)) { flush(); out.push('<h2>' + escapeAttr(t.replace(/^#\s+/, '')) + '</h2>'); return; }
+                    para.push(t);
+                });
+                flush();
+                return out.join('');
+            }
+
+            function applySiteContent(site) {
+                if (!site) return;
+                document.querySelectorAll('[data-cms]').forEach((el) => {
+                    const val = getPath(site, el.getAttribute('data-cms'));
+                    if (val === '' || val == null) return;
+                    el.textContent = val;
+                });
+                document.querySelectorAll('[data-cms-html]').forEach((el) => {
+                    const val = getPath(site, el.getAttribute('data-cms-html'));
+                    if (!val) return;
+                    el.innerHTML = simpleMarkdown(val);
+                });
+                const pdf = (site.resume && site.resume.pdf) || '/public/resume.pdf';
+                const frame = document.getElementById('resume-frame');
+                const download = document.getElementById('resume-download');
+                if (frame) frame.src = pdf;
+                if (download) download.href = pdf;
+                const email = site.contact && site.contact.email;
+                const emailLink = document.getElementById('contact-email');
+                if (email && emailLink) emailLink.href = 'mailto:' + email;
+                const linkedin = site.contact && site.contact.linkedin;
+                const li = document.getElementById('contact-linkedin');
+                if (linkedin && li) li.href = linkedin;
+            }
+
+            function loadSiteContent() {
+                fetch(new URL('content/site.json', document.baseURI || window.location.href).href)
+                    .then((r) => (r.ok ? r.json() : null))
+                    .then(applySiteContent)
+                    .catch(() => {});
+                // Soft-check PDF presence
+                const frame = document.getElementById('resume-frame');
+                const missing = document.getElementById('resume-missing');
+                if (frame && missing) {
+                    fetch(frame.src, { method: 'HEAD' }).then((r) => {
+                        if (!r.ok) missing.classList.remove('hidden');
+                    }).catch(() => missing.classList.remove('hidden'));
+                }
+            }
+
+            loadSiteContent();
 
             function normalizeProjects(data) {
                 if (Array.isArray(data)) return data;

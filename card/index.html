@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sharva Paralkar | Choose where to go</title>
+    <meta name="description" content="Quick links — website, LinkedIn, resume &amp; portfolio. Shared via NFC card.">
+    <meta name="robots" content="noindex">
+    <meta name="theme-color" content="#F5F1EB">
+    <link rel="canonical" href="https://sharvaparalkar.com/card/">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/site.css">
+</head>
+<body class="card-page">
+    <div class="grain-overlay" aria-hidden="true"></div>
+
+    <main class="card-shell">
+        <p class="card-brand">sp.</p>
+        <h1 class="card-name">Sharva Paralkar</h1>
+        <p class="card-tagline">Computational architecture &amp; design</p>
+        <div class="accent-rule" aria-hidden="true"></div>
+
+        <nav class="card-actions" aria-label="Where to go">
+            <a class="card-action card-action-primary" href="/">Continue to Website</a>
+            <a class="card-action" id="card-linkedin" href="https://www.linkedin.com/in/sharva-paralkar-9b5147228/" target="_blank" rel="noopener noreferrer">View LinkedIn</a>
+            <a class="card-action" href="/#resume">View Resume / Portfolio</a>
+        </nav>
+
+        <p class="card-hint">Tap an option to continue</p>
+    </main>
+
+    <script>
+        (function () {
+            fetch(new URL('../content/site.json', document.baseURI || window.location.href).href)
+                .then((r) => (r.ok ? r.json() : null))
+                .then((site) => {
+                    const url = site && site.contact && site.contact.linkedin;
+                    const link = document.getElementById('card-linkedin');
+                    if (url && link) link.href = url;
+                })
+                .catch(() => {});
+        })();
+    </script>
+</body>
+</html>

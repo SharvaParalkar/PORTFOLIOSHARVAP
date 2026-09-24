@@ -8,7 +8,28 @@
       "description": "Temporary structure exploring textile logic at architectural scale using bamboo.",
       "tags": ["Physical Model", "Kangaroo"],
       "image": "https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&q=80&w=800",
-      "body": "A temporary pavilion exploring textile logic at architectural scale.\n\nBamboo members are woven using form-finding strategies adapted from Kangaroo physics simulation, translating fabric behavior into a inhabitable structure."
+      "body": "A temporary pavilion exploring textile logic at architectural scale.",
+      "blocks": [
+        {
+          "type": "image",
+          "url": "https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&q=80&w=1200",
+          "caption": "Bamboo structure study",
+          "content": ""
+        },
+        {
+          "type": "paragraph",
+          "text": "This project investigates how textile logic—weaving, tension, and pattern—can be translated to an architectural scale. Using bamboo as the primary material, the pavilion explores temporary occupation and low-impact construction while maintaining a strong spatial presence."
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "Process"
+        },
+        {
+          "type": "paragraph",
+          "text": "Bamboo members are woven using form-finding strategies adapted from Kangaroo physics simulation, translating fabric behavior into a inhabitable structure."
+        }
+      ]
     }
   ]
 }

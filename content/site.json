@@ -1,0 +1,40 @@
+{
+  "hero": {
+    "eyebrow": "Computational Architecture & Design",
+    "title_line1": "SHARVA",
+    "title_line2": "PARALKAR",
+    "lead": "Exploring the intersection of algorithmic thinking, material innovation, and spatial experience. Currently pursuing BS.Arch at Texas A&M.",
+    "location": "Based in College Station, TX",
+    "availability": "Available for Collaboration"
+  },
+  "resume": {
+    "eyebrow": "CV",
+    "title": "Resume",
+    "subtitle": "Download or preview the latest PDF.",
+    "pdf": "/public/resume.pdf"
+  },
+  "portfolio": {
+    "eyebrow": "Overview",
+    "title": "Portfolio",
+    "subtitle": "Coming soon.",
+    "body": ""
+  },
+  "about": {
+    "eyebrow": "Methodology",
+    "title_line1": "Design",
+    "title_line2": "Approach",
+    "lead": "A synthesis of computational precision and organic intuition. Each project begins with an understanding of material behavior and spatial context.",
+    "stat1_num": "5+",
+    "stat1_label": "Years Experience",
+    "stat2_num": "12",
+    "stat2_label": "Projects Completed"
+  },
+  "contact": {
+    "eyebrow": "Collaboration",
+    "title_line1": "Let's Create",
+    "title_line2": "Together",
+    "lead": "Currently open for internship opportunities and freelance computational design consulting. Based in College Station, available globally.",
+    "email": "sharva.paralkar@gmail.com",
+    "linkedin": "https://www.linkedin.com/in/sharva-paralkar-9b5147228/"
+  }
+}
