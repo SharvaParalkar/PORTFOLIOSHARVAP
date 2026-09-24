@@ -68,7 +68,10 @@ app.post('/api/save', express.json(), (req, res) => {
       projects = [];
     }
   }
-  if (!Array.isArray(projects)) projects = [];
+  if (!Array.isArray(projects)) {
+    if (projects && Array.isArray(projects.projects)) projects = projects.projects;
+    else projects = [];
+  }
 
   const entry = {
     slug,
@@ -81,10 +84,13 @@ app.post('/api/save', express.json(), (req, res) => {
   };
 
   const idx = projects.findIndex((p) => (p.slug || '').toLowerCase() === slug.toLowerCase());
-  if (idx >= 0) projects[idx] = entry;
-  else projects.push(entry);
+  if (idx >= 0) {
+    projects[idx] = { ...projects[idx], ...entry };
+  } else {
+    projects.push(entry);
+  }
 
-  fs.writeFileSync(PROJECTS_JSON, JSON.stringify(projects, null, 2), 'utf8');
+  fs.writeFileSync(PROJECTS_JSON, JSON.stringify({ projects }, null, 2), 'utf8');
 
   res.json({ path: 'projects/' + slug + '.html' });
 });
@@ -112,7 +118,10 @@ app.get('/api/sync-projects', (req, res) => {
       projects = [];
     }
   }
-  if (!Array.isArray(projects)) projects = [];
+  if (!Array.isArray(projects)) {
+    if (projects && Array.isArray(projects.projects)) projects = projects.projects;
+    else projects = [];
+  }
 
   const files = fs.readdirSync(PROJECTS_DIR).filter((f) => f.endsWith('.html'));
   const slugsFromFiles = new Set(files.map((f) => path.basename(f, '.html').toLowerCase()));
@@ -151,7 +160,7 @@ app.get('/api/sync-projects', (req, res) => {
   projects = projects.filter((p) => slugsFromFiles.has(String(p.slug || '').toLowerCase()));
   const removedCount = before - projects.length;
 
-  fs.writeFileSync(PROJECTS_JSON, JSON.stringify(projects, null, 2), 'utf8');
+  fs.writeFileSync(PROJECTS_JSON, JSON.stringify({ projects }, null, 2), 'utf8');
 
   res.json({
     projects,

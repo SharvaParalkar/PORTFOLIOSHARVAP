@@ -1,0 +1,12 @@
+{
+  "name": "portfoliosharvap",
+  "private": true,
+  "scripts": {
+    "start": "npx --yes serve . -p 3000",
+    "cms": "npx --yes decap-server"
+  },
+  "devDependencies": {
+    "decap-server": "^3.1.2",
+    "serve": "^14.2.4"
+  }
+}

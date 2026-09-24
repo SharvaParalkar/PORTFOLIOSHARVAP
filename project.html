@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project | Sharva Paralkar</title>
+    <meta name="description" content="Project detail — Sharva Paralkar, computational architect and designer.">
+    <meta name="theme-color" content="#F5F1EB">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+    <div class="grain-overlay" aria-hidden="true"></div>
+
+    <nav class="site-nav" aria-label="Primary">
+        <a href="index.html" class="nav-logo">sp.</a>
+        <div class="nav-links">
+            <a href="index.html#work">Selected Works</a>
+            <a href="index.html#about">Approach</a>
+            <a href="index.html#contact">Contact</a>
+        </div>
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle dark mode">
+            <svg class="icon icon-sm icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+            <svg class="icon icon-sm icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+        </button>
+    </nav>
+
+    <main class="project-page section" id="project-root">
+        <div class="section-mid">
+            <p class="section-sub">Loading project…</p>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <p>© 2026 Sharva Paralkar</p>
+    </footer>
+
+    <script>
+        (function () {
+            const html = document.documentElement;
+            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                html.classList.add('dark');
+            } else {
+                html.classList.remove('dark');
+            }
+            document.getElementById('theme-toggle').addEventListener('click', () => {
+                html.classList.toggle('dark');
+                localStorage.theme = html.classList.contains('dark') ? 'dark' : 'light';
+            });
+
+            function escapeHtml(s) {
+                if (!s) return '';
+                const div = document.createElement('div');
+                div.textContent = s;
+                return div.innerHTML;
+            }
+
+            function simpleMarkdown(src) {
+                if (!src) return '';
+                const lines = String(src).replace(/\r\n/g, '\n').split('\n');
+                const out = [];
+                let para = [];
+                function flush() {
+                    if (!para.length) return;
+                    out.push('<p>' + para.join(' ').trim() + '</p>');
+                    para = [];
+                }
+                lines.forEach((line) => {
+                    const t = line.trim();
+                    if (!t) { flush(); return; }
+                    if (/^###\s+/.test(t)) { flush(); out.push('<h3>' + escapeHtml(t.replace(/^###\s+/, '')) + '</h3>'); return; }
+                    if (/^##\s+/.test(t)) { flush(); out.push('<h2>' + escapeHtml(t.replace(/^##\s+/, '')) + '</h2>'); return; }
+                    if (/^#\s+/.test(t)) { flush(); out.push('<h2>' + escapeHtml(t.replace(/^#\s+/, '')) + '</h2>'); return; }
+                    para.push(escapeHtml(t));
+                });
+                flush();
+                return out.join('');
+            }
+
+            function getSlug() {
+                return (new URLSearchParams(window.location.search).get('slug') || '').trim();
+            }
+
+            function renderProject(p) {
+                document.title = (p.title || 'Project') + ' | Sharva Paralkar';
+                const desc = document.querySelector('meta[name="description"]');
+                if (desc && p.description) desc.setAttribute('content', p.description);
+                const tags = Array.isArray(p.tags) ? p.tags : [];
+                const tagsHtml = tags.map((t, i) =>
+                    (i > 0 ? '<span class="overlay-accent" aria-hidden="true">•</span>' : '') +
+                    '<span>' + escapeHtml(t) + '</span>'
+                ).join('');
+                const bodyHtml = simpleMarkdown(p.body || '');
+                const cover = p.image
+                    ? '<img class="project-hero-img" src="' + escapeHtml(p.image) + '" alt="' + escapeHtml(p.title || '') + '" width="1200" height="675" decoding="async">'
+                    : '';
+
+                document.getElementById('project-root').innerHTML =
+                    '<div class="section-mid">' +
+                    '<a href="index.html#work" class="back-link">' +
+                    '<svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>' +
+                    'Back to Selected Works</a>' +
+                    '<p class="eyebrow">' + escapeHtml(p.category || '') + '</p>' +
+                    '<h1 class="section-title" style="margin-bottom:1.5rem">' + escapeHtml(p.title || '') + '</h1>' +
+                    '<p class="about-lead" style="max-width:42rem;margin-bottom:0">' + escapeHtml(p.description || '') + '</p>' +
+                    (tagsHtml ? '<div class="project-meta-row">' + tagsHtml + '</div>' : '') +
+                    cover +
+                    '<div class="project-body">' + bodyHtml + '</div>' +
+                    '</div>';
+            }
+
+            const slug = getSlug();
+            const root = document.getElementById('project-root');
+            if (!slug) {
+                root.innerHTML = '<div class="section-mid"><p class="section-sub">Missing project slug. <a class="back-link" href="index.html#work">Back to works</a></p></div>';
+                return;
+            }
+            fetch(new URL('projects/projects.json', document.baseURI || window.location.href).href)
+                .then(r => r.ok ? r.json() : Promise.reject())
+                .then(data => {
+                    const list = Array.isArray(data) ? data : (data.projects || []);
+                    const project = list.find(p => (p.slug || '').toLowerCase() === slug.toLowerCase());
+                    if (!project) {
+                        root.innerHTML = '<div class="section-mid"><p class="section-sub">Project not found. <a class="back-link" href="index.html#work">Back to works</a></p></div>';
+                        return;
+                    }
+                    renderProject(project);
+                })
+                .catch(() => {
+                    root.innerHTML = '<div class="section-mid"><p class="section-sub">Could not load projects. <a class="back-link" href="index.html#work">Back to works</a></p></div>';
+                });
+        })();
+    </script>
+</body>
+</html>

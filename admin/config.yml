@@ -1,0 +1,42 @@
+backend:
+  name: github
+  repo: SharvaParalkar/PORTFOLIOSHARVAP
+  branch: master
+  # CMS-AUTH Cloudflare Worker (replace with your deployed worker URL)
+  base_url: https://cms-auth.YOUR_SUBDOMAIN.workers.dev
+  auth_endpoint: auth
+
+# Local editing: run `npm start` and `npm run cms` together, then open /admin/
+local_backend: true
+
+media_folder: public/images
+public_folder: /public/images
+
+collections:
+  - name: projects
+    label: Projects
+    files:
+      - name: projects
+        label: Project list
+        file: projects/projects.json
+        fields:
+          - label: Projects
+            name: projects
+            widget: list
+            summary: "{{fields.title}} — {{fields.slug}}"
+            fields:
+              - { label: Slug, name: slug, widget: string, hint: "URL id, e.g. woven-pavilion" }
+              - { label: Title, name: title, widget: string }
+              - { label: Category label, name: category, widget: string, hint: "Shown on the card, e.g. Installation / Textile" }
+              - label: Filter categories
+                name: dataCategory
+                widget: select
+                multiple: true
+                options: [architecture, product, computational]
+              - { label: Short description, name: description, widget: text }
+              - label: Tags
+                name: tags
+                widget: list
+                field: { label: Tag, name: tag, widget: string }
+              - { label: Cover image, name: image, widget: image }
+              - { label: Page content, name: body, widget: markdown, required: false }

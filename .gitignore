@@ -1,25 +1,27 @@
 # Dependencies
 node_modules/
+cms-auth/node_modules/
+cms-auth/.wrangler/
 
-# OS files
+# OS
 .DS_Store
 Thumbs.db
 desktop.ini
 
-# Editor / IDE
+# Editor
 .idea/
 .vscode/
 *.swp
 *.swo
 *~
 
-# Logs and temp
+# Logs / env
 *.log
 npm-debug.log*
 .npm
 .env
 .env.local
 .env.*.local
+cms-auth/.dev.vars
 
-# Optional
 *.tgz

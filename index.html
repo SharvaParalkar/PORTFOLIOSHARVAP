@@ -1,408 +1,157 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sharva Paralkar | Computational Architect & Designer</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="description" content="Portfolio of Sharva Paralkar — computational architecture, material innovation, and spatial design. BS.Arch at Texas A&M, based in College Station, TX.">
+    <meta name="theme-color" content="#F5F1EB">
+    <link rel="canonical" href="https://sharvaparalkar.com/">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Space+Grotesk:wght@300;500;700&family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
-    
-    <style>
-        :root {
-            /* Earthy Color Palette */
-            --bg-primary: #F5F1EB;
-            --bg-secondary: #E8E2D9;
-            --bg-dark: #2C2420;
-            --text-primary: #1A1614;
-            --text-secondary: #6B5D54;
-            --text-light: #F5F1EB;
-            --accent-terracotta: #C17A53;
-            --accent-sage: #8B9A7B;
-            --accent-clay: #A67B5B;
-            --accent-stone: #9C8B7A;
-            --border: #D4C8BC;
-            --border-dark: #4A403C;
-        }
-
-        .dark {
-            --bg-primary: #1A1614;
-            --bg-secondary: #252019;
-            --bg-dark: #F5F1EB;
-            --text-primary: #E8E2D9;
-            --text-secondary: #B8A99A;
-            --text-light: #1A1614;
-            --accent-terracotta: #D48C63;
-            --accent-sage: #9BAE8A;
-            --accent-clay: #B88B6B;
-            --accent-stone: #A99B8A;
-            --border: #3D3530;
-            --border-dark: #D4C8BC;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            transition: background-color 0.5s ease, color 0.5s ease;
-            overflow-x: hidden;
-        }
-
-        h1 {
-            font-family: 'Cormorant Garamond', serif;
-            font-weight: 300;
-            letter-spacing: -0.02em;
-        }
-
-        h2, h3 {
-            font-family: 'Gowun Batang', serif;
-            font-weight: 400;
-            letter-spacing: -0.02em;
-        }
-
-        h4, .font-display {
-            font-family: 'Space Grotesk', sans-serif;
-        }
-
-        .font-gowun {
-            font-family: 'Gowun Batang', serif;
-        }
-
-        /* Custom Cursor */
-        .cursor-dot,
-        .cursor-outline {
-            position: fixed;
-            top: 0;
-            left: 0;
-            transform: translate(-50%, -50%);
-            border-radius: 50%;
-            z-index: 9999;
-            pointer-events: none;
-        }
-
-        .cursor-dot {
-            width: 5px;
-            height: 5px;
-            background-color: var(--accent-terracotta);
-        }
-
-        .cursor-outline {
-            width: 30px;
-            height: 30px;
-            border: 1px solid var(--accent-terracotta);
-            transition: width 0.3s, height 0.3s, background-color 0.3s, border-color 0.3s;
-        }
-
-        .cursor-outline.hover {
-            width: 50px;
-            height: 50px;
-            background-color: rgba(193, 122, 83, 0.1);
-            border-color: var(--accent-terracotta);
-        }
-
-        /* Organic Grain Texture Overlay */
-        .grain-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 9998;
-            opacity: 0.03;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-        }
-
-        .reveal {
-            opacity: 1;
-            transform: none;
-        }
-
-        /* Project Card Hover - Earthy Style */
-        .project-card {
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-            background: linear-gradient(135deg, var(--bg-secondary) 0%, transparent 100%);
-            border-radius: 0.5rem;
-        }
-
-        .project-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px -15px rgba(193, 122, 83, 0.2);
-        }
-
-        .project-card .overlay {
-            opacity: 0;
-            transition: all 0.4s ease;
-            background: linear-gradient(to top, rgba(44, 36, 32, 0.95) 0%, rgba(44, 36, 32, 0.7) 50%, transparent 100%);
-            color: #E8E2D9;
-        }
-
-        .project-card .overlay * {
-            color: inherit;
-        }
-
-        .project-card .overlay .overlay-meta {
-            color: #9BAE8A !important;
-        }
-
-        .project-card .overlay .overlay-accent {
-            color: #D48C63 !important;
-        }
-
-        .project-card .overlay .overlay-muted {
-            color: rgba(232, 226, 217, 0.85) !important;
-        }
-
-        .project-card:hover .overlay {
-            opacity: 1;
-        }
-
-        /* Filter Buttons - Organic Shape */
-        .filter-btn {
-            transition: all 0.3s ease;
-            border-radius: 9999px;
-            border: 1px solid var(--border);
-            background: transparent;
-            color: var(--text-secondary);
-        }
-
-        .filter-btn:hover {
-            border-color: var(--accent-terracotta);
-            color: var(--accent-terracotta);
-        }
-
-        .filter-btn.active {
-            background-color: var(--accent-terracotta);
-            color: white;
-            border-color: var(--accent-terracotta);
-        }
-
-        /* Custom Scrollbar - Earthy */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--bg-primary);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--accent-clay);
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--accent-terracotta);
-        }
-
-        /* Process Section Cards */
-        .process-card {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            transition: all 0.4s ease;
-        }
-
-        .process-card:hover {
-            border-color: var(--accent-terracotta);
-            transform: translateX(10px);
-        }
-
-        /* Accent Lines */
-        .accent-line {
-            height: 1px;
-            background: linear-gradient(to right, var(--accent-terracotta), transparent);
-            width: 100%;
-        }
-
-        /* Image Masking for Organic Feel */
-        .organic-mask {
-            border-radius: 40% 60% 60% 40% / 60% 40% 60% 40%;
-            transition: all 0.6s ease;
-        }
-
-        .project-card:hover .organic-mask {
-            border-radius: 50% 50% 50% 50% / 50% 50% 50% 50%;
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/site.css">
 </head>
-<body class="antialiased selection:bg-[#C17A53] selection:text-white dark:selection:bg-[#D48C63] dark:selection:text-[#1A1614]">
+<body>
+    <div class="grain-overlay" aria-hidden="true"></div>
+    <div class="cursor-dot" aria-hidden="true"></div>
+    <div class="cursor-outline" aria-hidden="true"></div>
 
-    <!-- Grain Texture Overlay -->
-    <div class="grain-overlay"></div>
-
-    <!-- Custom Cursor Elements -->
-    <div class="cursor-dot hidden md:block"></div>
-    <div class="cursor-outline hidden md:block"></div>
-
-    <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 px-6 py-6 flex justify-between items-center backdrop-blur-md bg-[var(--bg-primary)]/80 border-b border-[var(--border)]">
-        <a href="#" class="text-2xl font-bold tracking-tighter font-['Cormorant_Garamond'] hoverable text-[var(--accent-terracotta)] italic">sp.</a>
-        
-        <div class="hidden md:flex gap-12 text-sm font-medium tracking-widest uppercase">
-            <a href="#work" class="hoverable hover:text-[var(--accent-terracotta)] transition-colors duration-300">Selected Works</a>
-            <a href="#about" class="hoverable hover:text-[var(--accent-terracotta)] transition-colors duration-300">Approach</a>
-            <a href="#contact" class="hoverable hover:text-[var(--accent-terracotta)] transition-colors duration-300">Contact</a>
+    <nav class="site-nav" aria-label="Primary">
+        <a href="#" class="nav-logo hoverable">sp.</a>
+        <div class="nav-links">
+            <a href="#work" class="hoverable">Selected Works</a>
+            <a href="#about" class="hoverable">Approach</a>
+            <a href="#contact" class="hoverable">Contact</a>
         </div>
-
-        <button id="theme-toggle" class="hoverable p-2 rounded-full border border-[var(--border)] hover:border-[var(--accent-terracotta)] transition-all duration-300 group">
-            <i data-lucide="sun" class="w-4 h-4 hidden dark:block text-[var(--accent-terracotta)]"></i>
-            <i data-lucide="moon" class="w-4 h-4 block dark:hidden text-[var(--accent-terracotta)]"></i>
+        <button id="theme-toggle" class="theme-toggle hoverable" type="button" aria-label="Toggle dark mode">
+            <svg class="icon icon-sm icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+            <svg class="icon icon-sm icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
         </button>
     </nav>
 
-    <!-- Hero Section -->
-    <header class="relative min-h-screen flex flex-col justify-center px-6 md:px-12 lg:px-24 pt-20">
-        <div class="max-w-6xl mx-auto w-full relative z-10">
+    <main>
+    <header class="hero">
+        <div class="hero-inner">
             <div class="reveal">
-                <p class="text-xs md:text-sm text-[var(--accent-terracotta)] mb-6 tracking-[0.3em] uppercase font-medium">Computational Architecture & Design</p>
-                <h1 class="text-6xl md:text-8xl lg:text-[10rem] font-light leading-[0.85] tracking-tight mb-8 text-[var(--text-primary)]">
+                <p class="eyebrow">Computational Architecture &amp; Design</p>
+                <h1 class="hero-title">
                     SHARVA<br>
-                    <span class="italic text-[var(--accent-clay)]">PARALKAR</span>
+                    <span class="clay">PARALKAR</span>
                 </h1>
-                <div class="w-24 h-px bg-[var(--accent-terracotta)] mb-8"></div>
-                <p class="text-lg md:text-xl max-w-xl text-[var(--text-secondary)] leading-relaxed font-light">
-                    Exploring the intersection of algorithmic thinking, material innovation, and spatial experience. Currently pursuing BS.Arch at Texas A&M.
+                <div class="accent-rule" aria-hidden="true"></div>
+                <p class="hero-lead">
+                    Exploring the intersection of algorithmic thinking, material innovation, and spatial experience. Currently pursuing BS.Arch at Texas A&amp;M.
                 </p>
             </div>
-
-            <div class="mt-16 flex gap-6 reveal" style="transition-delay: 0.2s;">
-                <a href="#work" class="hoverable group flex items-center gap-3 text-sm font-medium bg-[var(--accent-terracotta)] text-white px-8 py-4 rounded-full hover:bg-[var(--accent-clay)] transition-all duration-300 shadow-lg shadow-[var(--accent-terracotta)]/20">
+            <div class="hero-ctas reveal">
+                <a href="#work" class="btn btn-primary hoverable">
                     View Selected Works
-                    <i data-lucide="arrow-down" class="w-4 h-4 group-hover:translate-y-1 transition-transform"></i>
+                    <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
                 </a>
-                <a href="#about" class="hoverable group flex items-center gap-3 text-sm font-medium border border-[var(--border)] text-[var(--text-primary)] px-8 py-4 rounded-full hover:border-[var(--accent-terracotta)] hover:text-[var(--accent-terracotta)] transition-all duration-300">
-                    Design Philosophy
-                </a>
+                <a href="#about" class="btn btn-ghost hoverable">Design Philosophy</a>
             </div>
         </div>
-
-        <!-- Decorative Element -->
-        <div class="absolute right-12 top-1/2 -translate-y-1/2 hidden lg:block reveal" style="transition-delay: 0.5s;">
-            <div class="w-px h-32 bg-[var(--border)] mx-auto mb-4"></div>
-            <p class="text-xs tracking-widest text-[var(--text-secondary)] uppercase vertical-rl" style="writing-mode: vertical-rl;">Scroll to Explore</p>
+        <div class="hero-scroll reveal" aria-hidden="true">
+            <div class="hero-scroll-line"></div>
+            <p class="hero-scroll-label">Scroll to Explore</p>
         </div>
-
-        <div class="absolute bottom-12 right-6 md:right-12 text-xs text-[var(--text-secondary)] space-y-2 text-right reveal" style="transition-delay: 0.4s;">
-            <p class="tracking-widest uppercase">Based in College Station, TX</p>
-            <p class="tracking-widest uppercase text-[var(--accent-terracotta)]">Available for Collaboration</p>
+        <div class="hero-meta reveal">
+            <p>Based in College Station, TX</p>
+            <p class="avail">Available for Collaboration</p>
         </div>
     </header>
 
-    <!-- Work Section -->
-    <section id="work" class="py-32 px-6 md:px-12 lg:px-24 relative bg-[var(--bg-secondary)]">
-        <div class="max-w-7xl mx-auto">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-20 reveal">
+    <section id="work" class="section section-alt" aria-labelledby="work-heading">
+        <div class="section-wide">
+            <div class="work-header reveal">
                 <div>
-                    <p class="text-xs text-[var(--accent-terracotta)] tracking-widest uppercase mb-4">Portfolio</p>
-                    <h2 class="text-5xl md:text-7xl font-light mb-4 text-[var(--text-primary)]">Selected<br>Works</h2>
-                    <p class="text-[var(--text-secondary)] font-light">2024 — 2026</p>
+                    <p class="eyebrow">Portfolio</p>
+                    <h2 id="work-heading" class="section-title">Selected<br>Works</h2>
+                    <p class="section-sub">2024 — 2026</p>
                 </div>
-                
-                <!-- Filter Buttons -->
-                <div class="flex gap-3 mt-8 md:mt-0 flex-wrap">
-                    <button class="filter-btn active hoverable px-6 py-2 text-xs uppercase tracking-wider" data-filter="all">All</button>
-                    <button class="filter-btn hoverable px-6 py-2 text-xs uppercase tracking-wider" data-filter="architecture">Architecture</button>
-                    <button class="filter-btn hoverable px-6 py-2 text-xs uppercase tracking-wider" data-filter="product">Product</button>
-                    <button class="filter-btn hoverable px-6 py-2 text-xs uppercase tracking-wider" data-filter="computational">Computational</button>
+                <div class="filters" role="group" aria-label="Filter projects">
+                    <button type="button" class="filter-btn active hoverable" data-filter="all">All</button>
+                    <button type="button" class="filter-btn hoverable" data-filter="architecture">Architecture</button>
+                    <button type="button" class="filter-btn hoverable" data-filter="product">Product</button>
+                    <button type="button" class="filter-btn hoverable" data-filter="computational">Computational</button>
                 </div>
             </div>
-
-            <!-- Projects Grid (loaded from TemplateEdit/projects/projects.json) -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid">
-                <!-- Cards injected by loadProjects() -->
-            </div>
-            <p id="projects-empty" class="text-[var(--text-secondary)] font-light text-center py-12 hidden">No projects added yet.</p>
+            <div class="projects-grid" id="projects-grid"></div>
+            <p id="projects-empty" class="projects-empty hidden">No projects added yet.</p>
         </div>
     </section>
 
-    <!-- Process / About Section - Redesigned -->
-    <section id="about" class="py-32 px-6 md:px-12 lg:px-24 bg-[var(--bg-primary)] relative overflow-hidden">
-        <!-- Decorative Background -->
-        <div class="max-w-6xl mx-auto relative z-10">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
-                
-                <!-- Left Column - Title -->
-                <div class="lg:col-span-5 reveal">
-                    <p class="text-xs text-[var(--accent-terracotta)] tracking-widest uppercase mb-4">Methodology</p>
-                    <h2 class="text-5xl md:text-6xl font-light mb-6 leading-tight">Design<br>Approach</h2>
-                    <div class="w-16 h-px bg-[var(--accent-terracotta)] mb-8"></div>
-                    <p class="text-[var(--text-secondary)] leading-relaxed font-light text-lg">
+    <section id="about" class="section" aria-labelledby="about-heading">
+        <div class="section-mid">
+            <div class="about-grid">
+                <div class="reveal">
+                    <p class="eyebrow">Methodology</p>
+                    <h2 id="about-heading" class="section-title">Design<br>Approach</h2>
+                    <div class="accent-rule" aria-hidden="true"></div>
+                    <p class="about-lead">
                         A synthesis of computational precision and organic intuition. Each project begins with an understanding of material behavior and spatial context.
                     </p>
-                    
-                    <!-- Stats -->
-                    <div class="mt-12 grid grid-cols-2 gap-8">
+                    <div class="stats">
                         <div>
-                            <p class="text-3xl font-light text-[var(--accent-terracotta)] italic">5+</p>
-                            <p class="text-xs uppercase tracking-wider text-[var(--text-secondary)] mt-1">Years Experience</p>
+                            <p class="stat-num">5+</p>
+                            <p class="stat-label">Years Experience</p>
                         </div>
                         <div>
-                            <p class="text-3xl font-light text-[var(--accent-terracotta)] italic">12</p>
-                            <p class="text-xs uppercase tracking-wider text-[var(--text-secondary)] mt-1">Projects Completed</p>
+                            <p class="stat-num">12</p>
+                            <p class="stat-label">Projects Completed</p>
                         </div>
                     </div>
                 </div>
-                
-                <!-- Right Column - Process Cards -->
-                <div class="lg:col-span-7 space-y-6">
-                    
-                    <div class="process-card p-8 rounded-2xl reveal">
-                        <div class="flex items-start gap-6">
-                            <div class="w-12 h-12 rounded-full bg-[var(--accent-terracotta)]/10 flex items-center justify-center flex-shrink-0">
-                                <i data-lucide="cpu" class="w-5 h-5 text-[var(--accent-terracotta)]"></i>
+                <div class="process-stack">
+                    <div class="process-card reveal">
+                        <div class="process-row">
+                            <div class="process-icon terra" aria-hidden="true">
+                                <svg class="icon icon-md" viewBox="0 0 24 24"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2M15 20v2M2 15h2M2 9h2M20 15h2M20 9h2M9 2v2M9 20v2"/></svg>
                             </div>
                             <div>
-                                <h3 class="text-xl font-medium mb-3 text-[var(--text-primary)]">Algorithmic Design</h3>
-                                <p class="text-[var(--text-secondary)] leading-relaxed font-light">
-                                    Utilizing computational tools as collaborative partners. From genetic algorithms to machine learning, code enables exploration of solution spaces impossible to navigate manually, while maintaining human oversight on qualitative decisions.
-                                </p>
+                                <h3>Algorithmic Design</h3>
+                                <p>Utilizing computational tools as collaborative partners. From genetic algorithms to machine learning, code enables exploration of solution spaces impossible to navigate manually, while maintaining human oversight on qualitative decisions.</p>
                             </div>
                         </div>
                     </div>
-
-                    <div class="process-card p-8 rounded-2xl reveal" style="transition-delay: 0.1s;">
-                        <div class="flex items-start gap-6">
-                            <div class="w-12 h-12 rounded-full bg-[var(--accent-sage)]/10 flex items-center justify-center flex-shrink-0">
-                                <i data-lucide="layers" class="w-5 h-5 text-[var(--accent-sage)]"></i>
+                    <div class="process-card reveal">
+                        <div class="process-row">
+                            <div class="process-icon sage" aria-hidden="true">
+                                <svg class="icon icon-md" viewBox="0 0 24 24"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"/><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"/></svg>
                             </div>
                             <div>
-                                <h3 class="text-xl font-medium mb-3 text-[var(--text-primary)]">Material Innovation</h3>
-                                <p class="text-[var(--text-secondary)] leading-relaxed font-light">
-                                    Digital fabrication collapses the boundary between design and making. Specializing in robotic fabrication, 3D printing, and composite materials to ensure computational complexity translates into physical reality with tactile warmth.
-                                </p>
+                                <h3>Material Innovation</h3>
+                                <p>Digital fabrication collapses the boundary between design and making. Specializing in robotic fabrication, 3D printing, and composite materials to ensure computational complexity translates into physical reality with tactile warmth.</p>
                             </div>
                         </div>
                     </div>
-
-                    <div class="process-card p-8 rounded-2xl reveal" style="transition-delay: 0.2s;">
-                        <div class="flex items-start gap-6">
-                            <div class="w-12 h-12 rounded-full bg-[var(--accent-clay)]/10 flex items-center justify-center flex-shrink-0">
-                                <i data-lucide="users" class="w-5 h-5 text-[var(--accent-clay)]"></i>
+                    <div class="process-card reveal">
+                        <div class="process-row">
+                            <div class="process-icon clay" aria-hidden="true">
+                                <svg class="icon icon-md" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                             </div>
                             <div>
-                                <h3 class="text-xl font-medium mb-3 text-[var(--text-primary)]">Human Experience</h3>
-                                <p class="text-[var(--text-secondary)] leading-relaxed font-light">
-                                    Technology serves humanity. Every parametric model is judged by its ability to enhance spatial experience, improve functionality, and evoke emotional connection. The metric of success is human comfort and wonder.
-                                </p>
+                                <h3>Human Experience</h3>
+                                <p>Technology serves humanity. Every parametric model is judged by its ability to enhance spatial experience, improve functionality, and evoke emotional connection. The metric of success is human comfort and wonder.</p>
                             </div>
                         </div>
                     </div>
-
-                    <div class="mt-8 pt-8 border-t border-[var(--border)] reveal" style="transition-delay: 0.3s;">
-                        <div class="grid grid-cols-2 md:grid-cols-3 gap-6 text-sm">
+                    <div class="skills reveal">
+                        <div class="skills-grid">
                             <div>
-                                <p class="text-[var(--text-secondary)] mb-2 uppercase text-xs tracking-wider">Software</p>
-                                <p class="text-[var(--text-primary)] font-medium">Rhino, Grasshopper, Blender, Houdini, Python</p>
+                                <p class="skills-label">Software</p>
+                                <p class="skills-value">Rhino, Grasshopper, Blender, Houdini, Python</p>
                             </div>
                             <div>
-                                <p class="text-[var(--text-secondary)] mb-2 uppercase text-xs tracking-wider">Fabrication</p>
-                                <p class="text-[var(--text-primary)] font-medium">CNC, 3D Printing, Laser, Robotics</p>
+                                <p class="skills-label">Fabrication</p>
+                                <p class="skills-value">CNC, 3D Printing, Laser, Robotics</p>
                             </div>
                             <div>
-                                <p class="text-[var(--text-secondary)] mb-2 uppercase text-xs tracking-wider">Focus</p>
-                                <p class="text-[var(--text-primary)] font-medium">Sustainable Materials, Biophilic Design</p>
+                                <p class="skills-label">Focus</p>
+                                <p class="skills-value">Sustainable Materials, Biophilic Design</p>
                             </div>
                         </div>
                     </div>
@@ -411,190 +160,160 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="py-32 px-6 md:px-12 lg:px-24 bg-[var(--bg-secondary)] relative">
-        <div class="max-w-4xl mx-auto text-center reveal">
-            <p class="text-xs text-[var(--accent-terracotta)] tracking-[0.3em] uppercase mb-6">Collaboration</p>
-            <h2 class="text-6xl md:text-8xl font-light mb-8 text-[var(--text-primary)]">Let's Create<br><span class="italic text-[var(--accent-clay)]">Together</span></h2>
-            <div class="w-24 h-px bg-[var(--accent-terracotta)] mx-auto mb-8"></div>
-            <p class="text-lg text-[var(--text-secondary)] mb-12 max-w-2xl mx-auto font-light leading-relaxed">
+    <section id="contact" class="section section-alt" aria-labelledby="contact-heading">
+        <div class="section-narrow reveal">
+            <p class="eyebrow">Collaboration</p>
+            <h2 id="contact-heading" class="contact-title">Let's Create<br><span class="clay">Together</span></h2>
+            <div class="accent-rule-center" aria-hidden="true"></div>
+            <p class="contact-lead">
                 Currently open for internship opportunities and freelance computational design consulting. Based in College Station, available globally.
             </p>
-            
-            <div class="flex flex-col md:flex-row gap-6 justify-center items-center">
-                <a href="mailto:sharva.paralkar@gmail.com" class="hoverable group relative overflow-hidden px-10 py-5 bg-[var(--accent-terracotta)] text-white rounded-full font-medium transition-all duration-300 hover:shadow-xl hover:shadow-[var(--accent-terracotta)]/30 hover:scale-105">
-                    <span class="relative z-10 flex items-center gap-3">
+            <div class="contact-actions">
+                <a href="mailto:sharva.paralkar@gmail.com" class="btn-email hoverable">
+                    <span class="btn-email-inner">
                         sharva.paralkar@gmail.com
-                        <i data-lucide="arrow-up-right" class="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
+                        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg>
                     </span>
                 </a>
-                
-                <div class="flex gap-4">
-                    <a href="https://www.linkedin.com/in/sharva-paralkar-9b5147228/" target="_blank" rel="noopener noreferrer" class="hoverable w-14 h-14 rounded-full border border-[var(--border)] flex items-center justify-center text-[var(--text-secondary)] hover:border-[var(--accent-terracotta)] hover:text-[var(--accent-terracotta)] transition-all duration-300 hover:scale-110">
-                        <i data-lucide="linkedin" class="w-5 h-5"></i>
+                <div class="social">
+                    <a href="https://www.linkedin.com/in/sharva-paralkar-9b5147228/" target="_blank" rel="noopener noreferrer" class="social-link hoverable" aria-label="LinkedIn profile">
+                        <svg class="icon icon-md" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
                     </a>
                 </div>
             </div>
         </div>
     </section>
+    </main>
 
-    <!-- Footer -->
-    <footer class="py-12 px-6 md:px-12 text-center bg-[var(--bg-primary)] border-t border-[var(--border)]">
-        <p class="text-sm text-[var(--text-secondary)] font-light">© 2026 Sharva Paralkar</p>
+    <footer class="site-footer">
+        <p>© 2026 Sharva Paralkar</p>
+        <p class="edit-link"><a href="admin/">Edit content</a></p>
     </footer>
 
     <script>
-        // Initialize Lucide Icons
-        lucide.createIcons();
-
-        // Theme Toggle
-        const themeToggle = document.getElementById('theme-toggle');
-        const html = document.documentElement;
-        
-        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            html.classList.add('dark');
-        } else {
-            html.classList.remove('dark');
-        }
-
-        themeToggle.addEventListener('click', () => {
-            html.classList.toggle('dark');
-            localStorage.theme = html.classList.contains('dark') ? 'dark' : 'light';
-        });
-
-        // Custom Cursor
-        const cursorDot = document.querySelector('.cursor-dot');
-        const cursorOutline = document.querySelector('.cursor-outline');
-        const hoverables = document.querySelectorAll('.hoverable');
-
-        window.addEventListener('mousemove', (e) => {
-            const posX = e.clientX;
-            const posY = e.clientY;
-
-            cursorDot.style.left = `${posX}px`;
-            cursorDot.style.top = `${posY}px`;
-
-            cursorOutline.animate({
-                left: `${posX}px`,
-                top: `${posY}px`
-            }, { duration: 500, fill: "forwards" });
-        });
-
-        hoverables.forEach(el => {
-            el.addEventListener('mouseenter', () => cursorOutline.classList.add('hover'));
-            el.addEventListener('mouseleave', () => cursorOutline.classList.remove('hover'));
-        });
-
-        // Load projects from TemplateEdit/projects/projects.json (fallback used when fetch fails, e.g. file://)
-        window.__PORTFOLIO_PROJECTS__ = [{"slug":"woven-pavilion","title":"Woven Pavilion","category":"Installation / Textile","dataCategory":["architecture"],"description":"Temporary structure exploring textile logic at architectural scale using bamboo.","tags":["Physical Model","Kangaroo"],"image":"https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&q=80&w=800"}];
-        const projectsGrid = document.getElementById('projects-grid');
-        const projectsEmpty = document.getElementById('projects-empty');
-
-        function escapeAttr(s) {
-            if (!s) return '';
-            const div = document.createElement('div');
-            div.textContent = s;
-            return div.innerHTML.replace(/"/g, '&quot;');
-        }
-
-        function renderProjects(projects) {
-            if (!Array.isArray(projects) || projects.length === 0) {
-                projectsEmpty.classList.remove('hidden');
-                return;
+        (function () {
+            const html = document.documentElement;
+            const themeToggle = document.getElementById('theme-toggle');
+            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                html.classList.add('dark');
+            } else {
+                html.classList.remove('dark');
             }
-            projectsEmpty.classList.add('hidden');
-            projectsGrid.innerHTML = '';
-            projects.forEach((p, i) => {
-                const dataCategory = Array.isArray(p.dataCategory) ? p.dataCategory.join(' ') : (p.dataCategory || '');
-                const tags = Array.isArray(p.tags) ? p.tags : (p.tags || '').toString().split(/[\n,]+/).map(t => t.trim()).filter(Boolean);
-                const tagsHtml = tags.map((t, j) => (j > 0 ? ' <span class="overlay-accent">•</span> ' : '') + '<span>' + escapeAttr(t) + '</span>').join('');
-                const imgSrc = p.image || '';
-                const href = 'TemplateEdit/projects/' + (p.slug || '') + '.html';
-                const card = document.createElement('a');
-                card.href = href;
-                card.className = 'block';
-                card.innerHTML = `
-                    <article class="project-card group relative aspect-[4/5] overflow-hidden reveal hoverable cursor-pointer" data-category="${escapeAttr(dataCategory)}" ${i > 0 ? `style="transition-delay: ${i * 0.1}s;"` : ''}>
-                        <div class="absolute inset-0 bg-[var(--bg-primary)]">
-                            <img src="${escapeAttr(imgSrc)}" alt="${escapeAttr(p.title)}" class="w-full h-full object-cover opacity-90 sepia-[0.2]" loading="lazy">
-                        </div>
-                        <div class="overlay absolute inset-0 flex flex-col justify-end p-8">
-                            <span class="overlay-meta text-xs uppercase tracking-[0.2em] mb-3 font-medium">${escapeAttr(p.category || '')}</span>
-                            <h3 class="text-3xl font-light mb-3 italic">${escapeAttr(p.title || '')}</h3>
-                            <p class="overlay-muted text-sm mb-4 font-light leading-relaxed">${escapeAttr(p.description || '')}</p>
-                            <div class="flex gap-3 text-xs overlay-muted uppercase tracking-wider">${tagsHtml}</div>
-                        </div>
-                    </article>
-                `;
-                projectsGrid.appendChild(card);
-                card.querySelectorAll('.hoverable').forEach(el => {
-                    el.addEventListener('mouseenter', () => cursorOutline.classList.add('hover'));
-                    el.addEventListener('mouseleave', () => cursorOutline.classList.remove('hover'));
+            themeToggle.addEventListener('click', () => {
+                html.classList.toggle('dark');
+                localStorage.theme = html.classList.contains('dark') ? 'dark' : 'light';
+            });
+
+            const cursorDot = document.querySelector('.cursor-dot');
+            const cursorOutline = document.querySelector('.cursor-outline');
+            const canCursor = window.matchMedia('(pointer: fine)').matches;
+
+            function bindHover(el) {
+                if (!canCursor || !cursorOutline) return;
+                el.addEventListener('mouseenter', () => cursorOutline.classList.add('hover'));
+                el.addEventListener('mouseleave', () => cursorOutline.classList.remove('hover'));
+            }
+
+            if (canCursor && cursorDot && cursorOutline) {
+                window.addEventListener('mousemove', (e) => {
+                    cursorDot.style.left = e.clientX + 'px';
+                    cursorDot.style.top = e.clientY + 'px';
+                    cursorOutline.animate(
+                        { left: e.clientX + 'px', top: e.clientY + 'px' },
+                        { duration: 500, fill: 'forwards' }
+                    );
+                }, { passive: true });
+                document.querySelectorAll('.hoverable').forEach(bindHover);
+            }
+
+            window.__PORTFOLIO_PROJECTS__ = [{"slug":"woven-pavilion","title":"Woven Pavilion","category":"Installation / Textile","dataCategory":["architecture"],"description":"Temporary structure exploring textile logic at architectural scale using bamboo.","tags":["Physical Model","Kangaroo"],"image":"https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&q=80&w=800"}];
+            const projectsGrid = document.getElementById('projects-grid');
+            const projectsEmpty = document.getElementById('projects-empty');
+
+            function escapeAttr(s) {
+                if (!s) return '';
+                const div = document.createElement('div');
+                div.textContent = s;
+                return div.innerHTML.replace(/"/g, '&quot;');
+            }
+
+            function normalizeProjects(data) {
+                if (Array.isArray(data)) return data;
+                if (data && Array.isArray(data.projects)) return data.projects;
+                return [];
+            }
+
+            function renderProjects(projects) {
+                if (!Array.isArray(projects) || projects.length === 0) {
+                    projectsEmpty.classList.remove('hidden');
+                    return;
+                }
+                projectsEmpty.classList.add('hidden');
+                projectsGrid.innerHTML = '';
+                projects.forEach((p) => {
+                    const dataCategory = Array.isArray(p.dataCategory) ? p.dataCategory.join(' ') : (p.dataCategory || '');
+                    const tags = Array.isArray(p.tags) ? p.tags : (p.tags || '').toString().split(/[\n,]+/).map(t => t.trim()).filter(Boolean);
+                    const tagsHtml = tags.map((t, j) => (j > 0 ? ' <span class="overlay-accent">•</span> ' : '') + '<span>' + escapeAttr(t) + '</span>').join('');
+                    const href = 'project.html?slug=' + encodeURIComponent(p.slug || '');
+                    const card = document.createElement('a');
+                    card.href = href;
+                    card.className = 'project-card hoverable';
+                    card.setAttribute('data-category', dataCategory);
+                    card.setAttribute('aria-label', (p.title || 'Project') + (p.description ? ': ' + p.description : ''));
+                    card.innerHTML =
+                        '<div class="project-card-media">' +
+                        '<img src="' + escapeAttr(p.image || '') + '" alt="' + escapeAttr(p.title || '') + '" width="800" height="1000" loading="lazy" decoding="async">' +
+                        '</div>' +
+                        '<div class="overlay">' +
+                        '<span class="overlay-meta">' + escapeAttr(p.category || '') + '</span>' +
+                        '<h3>' + escapeAttr(p.title || '') + '</h3>' +
+                        '<p class="overlay-muted">' + escapeAttr(p.description || '') + '</p>' +
+                        '<div class="overlay-tags">' + tagsHtml + '</div>' +
+                        '</div>';
+                    projectsGrid.appendChild(card);
+                    bindHover(card);
+                });
+            }
+
+            function loadProjects() {
+                const fallback = window.__PORTFOLIO_PROJECTS__;
+                fetch(new URL('projects/projects.json', document.baseURI || window.location.href).href)
+                    .then(r => r.ok ? r.json() : null)
+                    .then(data => {
+                        const list = normalizeProjects(data);
+                        renderProjects(list.length > 0 ? list : (fallback || []));
+                    })
+                    .catch(() => renderProjects(fallback || []));
+            }
+
+            loadProjects();
+
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    const filter = btn.getAttribute('data-filter');
+                    document.querySelectorAll('#projects-grid .project-card').forEach(card => {
+                        const categories = (card.getAttribute('data-category') || '').trim();
+                        const show = filter === 'all' || categories.split(/\s+/).includes(filter);
+                        card.style.display = show ? '' : 'none';
+                    });
                 });
             });
-        }
 
-        function loadProjects() {
-            const fallback = window.__PORTFOLIO_PROJECTS__;
-            fetch(new URL('TemplateEdit/projects/projects.json', document.baseURI || window.location.href).href)
-                .then(r => r.ok ? r.json() : [])
-                .then(projects => {
-                    const list = (Array.isArray(projects) && projects.length > 0) ? projects : (fallback || []);
-                    renderProjects(list);
-                })
-                .catch(() => {
-                    renderProjects(fallback || []);
-                });
-        }
-
-        loadProjects();
-
-        // Project Filtering — show/hide grid item (card or its wrapper e.g. <a>); queries cards each click so dynamic cards work
-        const filterBtns = document.querySelectorAll('.filter-btn');
-
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                filterBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-
-                const filter = btn.getAttribute('data-filter');
-                const projectCards = document.querySelectorAll('#projects-grid .project-card');
-
-                projectCards.forEach(card => {
-                    const categories = (card.getAttribute('data-category') || '').trim();
-                    const gridItem = card.parentElement === projectsGrid ? card : card.parentElement;
-
-                    if (filter === 'all' || categories.split(/\s+/).includes(filter)) {
-                        gridItem.style.display = '';
-                        gridItem.style.opacity = '1';
-                        gridItem.style.transform = '';
-                        card.style.display = '';
-                        card.style.opacity = '1';
-                        card.style.transform = '';
-                    } else {
-                        card.style.opacity = '0';
-                        card.style.transform = 'translateY(20px)';
-                        setTimeout(() => {
-                            gridItem.style.display = 'none';
-                        }, 300);
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    const href = this.getAttribute('href');
+                    if (!href || href === '#') return;
+                    const target = document.querySelector(href);
+                    if (target) {
+                        e.preventDefault();
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                     }
                 });
             });
-        });
-
-        // Smooth Scroll for Navigation
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
+        })();
     </script>
 </body>
 </html>
