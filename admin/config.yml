@@ -2,12 +2,10 @@ backend:
   name: github
   repo: SharvaParalkar/PORTFOLIOSHARVAP
   branch: master
-  # CMS-AUTH Cloudflare Worker (replace with your deployed worker URL)
-  base_url: https://cms-auth.YOUR_SUBDOMAIN.workers.dev
+  base_url: https://cms-auth.sharva-paralkar.workers.dev
   auth_endpoint: auth
 
-# Local editing: run `npm start` and `npm run cms` together, then open /admin/
-local_backend: true
+local_backend: false
 
 media_folder: public/images
 public_folder: /public/images
