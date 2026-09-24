@@ -64,37 +64,44 @@
         </div>
     </header>
 
-    <section id="resume" class="section" aria-labelledby="resume-heading">
+    <section class="section section-split" aria-label="Resume and portfolio">
         <div class="section-wide">
-            <div class="resume-header reveal">
-                <div>
-                    <p class="eyebrow" data-cms="resume.eyebrow">CV</p>
-                    <h2 id="resume-heading" class="section-title" data-cms="resume.title">Resume</h2>
-                    <p class="section-sub" data-cms="resume.subtitle">Download or preview the latest PDF.</p>
-                </div>
-                <a id="resume-download" class="btn btn-ghost hoverable" href="/public/resume.pdf" target="_blank" rel="noopener noreferrer">Open PDF</a>
-            </div>
-            <div class="resume-frame-wrap reveal">
-                <iframe
-                    id="resume-frame"
-                    class="resume-frame"
-                    title="Resume PDF preview"
-                    src="/public/resume.pdf"
-                ></iframe>
-            </div>
-            <p id="resume-missing" class="projects-empty hidden">Upload a resume PDF in the CMS (Site pages → Resume) or place it at <code>public/resume.pdf</code>.</p>
-        </div>
-    </section>
+            <div class="split-panels">
+                <article id="resume" class="split-panel reveal" aria-labelledby="resume-heading">
+                    <header class="split-panel-head">
+                        <div>
+                            <p class="eyebrow" data-cms="resume.eyebrow">CV</p>
+                            <h2 id="resume-heading" class="split-panel-title" data-cms="resume.title">Resume</h2>
+                            <p class="section-sub" data-cms="resume.subtitle">Download or preview the latest PDF.</p>
+                        </div>
+                        <a id="resume-download" class="btn btn-ghost hoverable" href="/public/resume.pdf" target="_blank" rel="noopener noreferrer">Open PDF</a>
+                    </header>
+                    <div class="resume-frame-wrap" id="resume-frame-wrap">
+                        <iframe
+                            id="resume-frame"
+                            class="resume-frame hidden"
+                            title="Resume PDF preview"
+                        ></iframe>
+                        <div id="resume-missing" class="panel-empty" role="status">
+                            <p class="panel-empty-title">Loading resume…</p>
+                            <p class="panel-empty-copy">Checking for PDF preview.</p>
+                        </div>
+                    </div>
+                </article>
 
-    <section id="portfolio" class="section section-alt" aria-labelledby="portfolio-heading">
-        <div class="section-wide">
-            <div class="reveal">
-                <p class="eyebrow" data-cms="portfolio.eyebrow">Overview</p>
-                <h2 id="portfolio-heading" class="section-title" data-cms="portfolio.title">Portfolio</h2>
-                <p class="section-sub" data-cms="portfolio.subtitle">Coming soon.</p>
-                <div class="portfolio-blank" data-cms-html="portfolio.body">
-                    <!-- Intentionally blank for now — edit via CMS Site pages → Portfolio -->
-                </div>
+                <article id="portfolio" class="split-panel reveal" aria-labelledby="portfolio-heading">
+                    <header class="split-panel-head">
+                        <div>
+                            <p class="eyebrow" data-cms="portfolio.eyebrow">Overview</p>
+                            <h2 id="portfolio-heading" class="split-panel-title" data-cms="portfolio.title">Portfolio</h2>
+                            <p class="section-sub" data-cms="portfolio.subtitle">Coming soon.</p>
+                        </div>
+                        <a href="#work" class="btn btn-ghost hoverable">Selected Works</a>
+                    </header>
+                    <div class="portfolio-stage">
+                        <div class="portfolio-blank" data-cms-html="portfolio.body"></div>
+                    </div>
+                </article>
             </div>
         </div>
     </section>
@@ -103,7 +110,7 @@
         <div class="section-wide">
             <div class="work-header reveal">
                 <div>
-                    <p class="eyebrow">Portfolio</p>
+                    <p class="eyebrow">Projects</p>
                     <h2 id="work-heading" class="section-title">Selected<br>Works</h2>
                     <p class="section-sub">2024 — 2026</p>
                 </div>
@@ -298,6 +305,45 @@
                 return out.join('');
             }
 
+            function setResumeAvailable(ok, pdfUrl) {
+                const frame = document.getElementById('resume-frame');
+                const missing = document.getElementById('resume-missing');
+                const wrap = document.getElementById('resume-frame-wrap');
+                if (!frame || !missing) return;
+                if (ok) {
+                    missing.classList.add('hidden');
+                    frame.classList.remove('hidden');
+                    if (pdfUrl) frame.src = pdfUrl.includes('#') ? pdfUrl : pdfUrl + '#view=FitH';
+                    if (wrap) wrap.classList.remove('is-empty');
+                } else {
+                    frame.removeAttribute('src');
+                    frame.classList.add('hidden');
+                    missing.classList.remove('hidden');
+                    missing.querySelector('.panel-empty-title').textContent = 'Resume PDF not uploaded yet';
+                    missing.querySelector('.panel-empty-copy').innerHTML = 'Add <code>public/resume.pdf</code> or upload it in the CMS.';
+                    if (wrap) wrap.classList.add('is-empty');
+                }
+            }
+
+            function checkResumePdf(pdfUrl) {
+                const url = (pdfUrl || '/public/resume.pdf').split('#')[0];
+                fetch(url, {
+                    method: 'GET',
+                    headers: { Accept: 'application/pdf', Range: 'bytes=0-4' }
+                })
+                    .then(async (r) => {
+                        if (!r.ok && r.status !== 206) return setResumeAvailable(false);
+                        const type = (r.headers.get('content-type') || '').toLowerCase();
+                        if (type.includes('html') || type.includes('text/')) return setResumeAvailable(false);
+                        if (type.includes('pdf')) return setResumeAvailable(true, url);
+                        const buf = await r.arrayBuffer();
+                        const bytes = new Uint8Array(buf.slice(0, 5));
+                        const sig = String.fromCharCode(...bytes);
+                        setResumeAvailable(sig === '%PDF-', url);
+                    })
+                    .catch(() => setResumeAvailable(false));
+            }
+
             function applySiteContent(site) {
                 if (!site) return;
                 document.querySelectorAll('[data-cms]').forEach((el) => {
@@ -311,10 +357,9 @@
                     el.innerHTML = simpleMarkdown(val);
                 });
                 const pdf = (site.resume && site.resume.pdf) || '/public/resume.pdf';
-                const frame = document.getElementById('resume-frame');
                 const download = document.getElementById('resume-download');
-                if (frame) frame.src = pdf;
                 if (download) download.href = pdf;
+                checkResumePdf(pdf);
                 const email = site.contact && site.contact.email;
                 const emailLink = document.getElementById('contact-email');
                 if (email && emailLink) emailLink.href = 'mailto:' + email;
@@ -326,16 +371,11 @@
             function loadSiteContent() {
                 fetch(new URL('content/site.json', document.baseURI || window.location.href).href)
                     .then((r) => (r.ok ? r.json() : null))
-                    .then(applySiteContent)
-                    .catch(() => {});
-                // Soft-check PDF presence
-                const frame = document.getElementById('resume-frame');
-                const missing = document.getElementById('resume-missing');
-                if (frame && missing) {
-                    fetch(frame.src, { method: 'HEAD' }).then((r) => {
-                        if (!r.ok) missing.classList.remove('hidden');
-                    }).catch(() => missing.classList.remove('hidden'));
-                }
+                    .then((site) => {
+                        if (site) applySiteContent(site);
+                        else checkResumePdf('/public/resume.pdf');
+                    })
+                    .catch(() => checkResumePdf('/public/resume.pdf'));
             }
 
             loadSiteContent();

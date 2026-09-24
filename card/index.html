@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Sharva Paralkar | Choose where to go</title>
     <meta name="description" content="Quick links — website, LinkedIn, resume &amp; portfolio. Shared via NFC card.">
     <meta name="robots" content="noindex">
@@ -12,8 +12,165 @@
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/site.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/site.css">
+    <style>
+      /* Self-contained so the NFC page still looks right if site.css fails to load */
+      :root {
+        --card-bg: #F5F1EB;
+        --card-bg-soft: #E8E2D9;
+        --card-text: #1A1614;
+        --card-muted: #6B5D54;
+        --card-accent: #C17A53;
+        --card-btn: #8A4728;
+        --card-btn-hover: #733B21;
+        --card-border: #D4C8BC;
+        --card-display: "Cormorant Garamond", "Times New Roman", serif;
+        --card-body: Inter, "Segoe UI", Helvetica, Arial, sans-serif;
+      }
+
+      * { box-sizing: border-box; }
+
+      html, body {
+        margin: 0;
+        min-height: 100%;
+        min-height: 100dvh;
+      }
+
+      body.card-page {
+        font-family: var(--card-body);
+        background:
+          radial-gradient(120% 80% at 50% 0%, #fff8f1 0%, transparent 55%),
+          linear-gradient(180deg, var(--card-bg) 0%, var(--card-bg-soft) 100%);
+        color: var(--card-text);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .card-page .grain-overlay { pointer-events: none; }
+
+      .card-shell {
+        min-height: 100vh;
+        min-height: 100dvh;
+        width: 100%;
+        max-width: 28rem;
+        margin: 0 auto;
+        padding: max(1.5rem, env(safe-area-inset-top)) 1.35rem max(2rem, env(safe-area-inset-bottom));
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .card-brand {
+        font-family: var(--card-display);
+        font-style: italic;
+        font-size: 1.65rem;
+        color: var(--card-accent);
+        margin: 0 0 1.25rem;
+        line-height: 1;
+      }
+
+      .card-name {
+        font-family: var(--card-display);
+        font-weight: 300;
+        font-size: clamp(2.4rem, 9vw, 3.1rem);
+        letter-spacing: -0.02em;
+        margin: 0 0 0.4rem;
+        line-height: 1.05;
+      }
+
+      .card-tagline {
+        margin: 0;
+        color: var(--card-muted);
+        font-weight: 400;
+        font-size: 0.95rem;
+      }
+
+      .card-rule {
+        width: 2.75rem;
+        height: 2px;
+        margin: 1.25rem auto 1.5rem;
+        background: var(--card-accent);
+        border: 0;
+        opacity: 0.85;
+      }
+
+      .card-greeting {
+        margin: 0 0 2rem;
+        max-width: 22rem;
+        font-size: 1.05rem;
+        line-height: 1.55;
+        font-weight: 400;
+        color: var(--card-text);
+      }
+
+      .card-actions {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 0.85rem;
+      }
+
+      .card-action {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        min-height: 3.5rem;
+        padding: 1rem 1.25rem;
+        border-radius: 999px;
+        border: 1.5px solid var(--card-border);
+        background: rgba(255, 255, 255, 0.45);
+        color: var(--card-text);
+        text-decoration: none;
+        font-size: 1rem;
+        font-weight: 500;
+        letter-spacing: 0.01em;
+        box-shadow: 0 8px 24px rgba(26, 22, 20, 0.06);
+        transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      .card-action:active {
+        transform: scale(0.98);
+      }
+
+      .card-action:hover,
+      .card-action:focus-visible {
+        border-color: var(--card-accent);
+        color: var(--card-accent);
+        outline: none;
+      }
+
+      .card-action-primary {
+        background: var(--card-btn);
+        border-color: var(--card-btn);
+        color: #fff;
+        box-shadow: 0 10px 28px rgba(138, 71, 40, 0.28);
+      }
+
+      .card-action-primary:hover,
+      .card-action-primary:focus-visible {
+        background: var(--card-btn-hover);
+        border-color: var(--card-btn-hover);
+        color: #fff;
+      }
+
+      .card-hint {
+        margin: 1.75rem 0 0;
+        font-size: 0.7rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--card-muted);
+        opacity: 0.8;
+      }
+
+      @media (min-width: 480px) {
+        .card-greeting { font-size: 1.1rem; }
+        .card-action { min-height: 3.65rem; font-size: 1.05rem; }
+      }
+    </style>
 </head>
 <body class="card-page">
     <div class="grain-overlay" aria-hidden="true"></div>
@@ -22,7 +179,11 @@
         <p class="card-brand">sp.</p>
         <h1 class="card-name">Sharva Paralkar</h1>
         <p class="card-tagline">Computational architecture &amp; design</p>
-        <div class="accent-rule" aria-hidden="true"></div>
+        <hr class="card-rule" aria-hidden="true">
+
+        <p class="card-greeting">
+            Howdy! Thank you for speaking with me, please choose one of the following options to learn more about me.
+        </p>
 
         <nav class="card-actions" aria-label="Where to go">
             <a class="card-action card-action-primary" href="/">Continue to Website</a>
@@ -35,7 +196,7 @@
 
     <script>
         (function () {
-            fetch(new URL('../content/site.json', document.baseURI || window.location.href).href)
+            fetch('/content/site.json')
                 .then((r) => (r.ok ? r.json() : null))
                 .then((site) => {
                     const url = site && site.contact && site.contact.linkedin;

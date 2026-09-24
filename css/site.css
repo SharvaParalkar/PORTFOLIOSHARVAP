@@ -933,29 +933,77 @@ button {
   border-radius: 0.5rem;
 }
 
-/* Resume PDF frame */
-.resume-header {
+/* Resume + Portfolio side-by-side */
+.section-split {
+  background: var(--bg-secondary);
+}
+
+.split-panels {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+@media (min-width: 900px) {
+  .split-panels {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    align-items: stretch;
+  }
+}
+
+.split-panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  padding: 1.75rem;
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+}
+
+@media (min-width: 768px) {
+  .split-panel {
+    padding: 2rem 2.25rem 2.25rem;
+  }
+}
+
+.split-panel-head {
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-end;
+  align-items: flex-start;
   justify-content: space-between;
-  gap: 1.5rem;
-  margin-bottom: 2.5rem;
+  gap: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.split-panel-title {
+  font-size: clamp(2.25rem, 4vw, 3.25rem);
+  line-height: 1.05;
+  margin: 0.35rem 0 0.5rem;
+  color: var(--text-primary);
+}
+
+.split-panel .section-sub {
+  margin: 0;
+  max-width: 22rem;
 }
 
 .resume-frame-wrap {
-  width: 100%;
+  position: relative;
+  flex: 1;
+  min-height: 28rem;
   border: 1px solid var(--border);
   border-radius: 0.75rem;
   overflow: hidden;
-  background: var(--bg-secondary);
-  box-shadow: 0 12px 40px rgba(26, 22, 20, 0.08);
+  background: color-mix(in srgb, var(--bg-secondary) 70%, var(--bg-primary));
 }
 
 .resume-frame {
   display: block;
   width: 100%;
-  height: min(80vh, 920px);
+  height: 100%;
+  min-height: 28rem;
   border: 0;
   background: #fff;
 }
@@ -964,87 +1012,180 @@ button {
   background: #111;
 }
 
-/* Portfolio placeholder */
-.portfolio-blank {
-  min-height: 12rem;
-  margin-top: 2rem;
+.resume-frame-wrap.is-empty .resume-frame {
+  display: none;
+}
+
+.panel-empty {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
   padding: 2rem;
-  border: 1px dashed var(--border);
+  text-align: center;
+}
+
+.panel-empty.hidden {
+  display: none;
+}
+
+.panel-empty-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--text-primary);
+}
+
+.panel-empty-copy {
+  margin: 0;
+  max-width: 18rem;
+  font-size: 0.875rem;
+  font-weight: 300;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.panel-empty-copy code {
+  font-size: 0.8em;
+  padding: 0.1em 0.35em;
+  border-radius: 0.25rem;
+  background: var(--bg-secondary);
+}
+
+.portfolio-stage {
+  flex: 1;
+  min-height: 28rem;
+  display: flex;
+}
+
+.portfolio-blank {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 28rem;
+  padding: 2.5rem 2rem;
   border-radius: 0.75rem;
+  border: 1px solid var(--border);
+  background:
+    linear-gradient(160deg, color-mix(in srgb, var(--bg-secondary) 55%, transparent), transparent 55%),
+    var(--bg-primary);
   color: var(--text-secondary);
   font-weight: 300;
-  line-height: 1.7;
+  line-height: 1.75;
+}
+
+.portfolio-blank:empty {
+  align-items: center;
+  text-align: center;
 }
 
 .portfolio-blank:empty::before {
-  content: "This section is intentionally blank. Add content in the CMS under Site pages → Portfolio.";
-  opacity: 0.7;
+  content: "Portfolio space";
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
 }
 
-/* NFC / card landing */
+.portfolio-blank:empty::after {
+  content: "Content for this panel will live here.";
+  opacity: 0.75;
+  font-size: 0.9rem;
+  max-width: 16rem;
+}
+
+/* NFC / card landing — shared tokens; page also inlines critical styles */
 .card-page {
   min-height: 100vh;
   min-height: 100dvh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem 1.25rem;
 }
 
 .card-shell {
+  min-height: 100vh;
+  min-height: 100dvh;
   width: 100%;
-  max-width: 24rem;
+  max-width: 28rem;
+  margin: 0 auto;
+  padding: max(1.5rem, env(safe-area-inset-top)) 1.35rem max(2rem, env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
 }
 
 .card-brand {
   font-family: var(--font-display);
   font-style: italic;
-  font-size: 1.75rem;
+  font-size: 1.65rem;
   color: var(--accent-terracotta);
-  margin: 0 0 1.5rem;
+  margin: 0 0 1.25rem;
 }
 
 .card-name {
   font-family: var(--font-display);
   font-weight: 300;
-  font-size: clamp(2.25rem, 8vw, 3rem);
+  font-size: clamp(2.4rem, 9vw, 3.1rem);
   letter-spacing: -0.02em;
-  margin: 0 0 0.5rem;
-  line-height: 1.1;
+  margin: 0 0 0.4rem;
+  line-height: 1.05;
 }
 
 .card-tagline {
-  margin: 0 0 1.25rem;
+  margin: 0;
   color: var(--text-secondary);
-  font-weight: 300;
-  font-size: 0.9375rem;
+  font-weight: 400;
+  font-size: 0.95rem;
 }
 
-.card-shell .accent-rule {
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 2.5rem;
+.card-rule {
+  width: 2.75rem;
+  height: 2px;
+  margin: 1.25rem auto 1.5rem;
+  background: var(--accent-terracotta);
+  border: 0;
+}
+
+.card-greeting {
+  margin: 0 0 2rem;
+  max-width: 22rem;
+  font-size: 1.05rem;
+  line-height: 1.55;
+  color: var(--text-primary);
 }
 
 .card-actions {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.85rem;
 }
 
 .card-action {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 3.25rem;
-  padding: 0.875rem 1.25rem;
-  border-radius: 0.65rem;
-  border: 1px solid var(--border);
-  font-size: 0.9375rem;
+  width: 100%;
+  min-height: 3.5rem;
+  padding: 1rem 1.25rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--border);
+  background: color-mix(in srgb, #fff 45%, transparent);
+  color: var(--text-primary);
+  font-size: 1rem;
   font-weight: 500;
-  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  box-shadow: 0 8px 24px rgba(26, 22, 20, 0.06);
+  transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
   -webkit-tap-highlight-color: transparent;
+}
+
+.card-action:active {
+  transform: scale(0.98);
 }
 
 .card-action:hover,
@@ -1058,6 +1199,7 @@ button {
   background: var(--accent-btn);
   border-color: var(--accent-btn);
   color: #fff;
+  box-shadow: 0 10px 28px color-mix(in srgb, var(--accent-btn) 28%, transparent);
 }
 
 .card-action-primary:hover,
@@ -1068,12 +1210,12 @@ button {
 }
 
 .card-hint {
-  margin: 2rem 0 0;
-  font-size: 0.75rem;
-  letter-spacing: 0.06em;
+  margin: 1.75rem 0 0;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--text-secondary);
-  opacity: 0.75;
+  opacity: 0.8;
 }
 
 .project-blocks {
