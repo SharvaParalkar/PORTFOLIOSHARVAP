@@ -51,7 +51,6 @@
             <div class="hero-ctas reveal hero-ctas-triple" role="group" aria-label="Jump to section">
                 <a href="#work" class="btn btn-primary hoverable">View Selected Works</a>
                 <a href="#portfolio" class="btn btn-ghost hoverable">View Portfolio</a>
-                <a href="#resume" class="btn btn-ghost hoverable">View Resume</a>
             </div>
         </div>
         <div class="hero-scroll reveal" aria-hidden="true">
@@ -64,31 +63,11 @@
         </div>
     </header>
 
-    <section class="section section-split" aria-label="Resume and portfolio">
+    <section class="section section-split" aria-label="Portfolio">
         <div class="section-wide">
-            <div class="split-panels">
-                <article id="resume" class="split-panel reveal" aria-labelledby="resume-heading">
-                    <header class="split-panel-head">
-                        <div>
-                            <p class="eyebrow" data-cms="resume.eyebrow">CV</p>
-                            <h2 id="resume-heading" class="split-panel-title" data-cms="resume.title">Resume</h2>
-                            <p class="section-sub" data-cms="resume.subtitle">Download or preview the latest PDF.</p>
-                        </div>
-                        <a id="resume-download" class="btn btn-ghost hoverable" href="/public/resume.pdf" target="_blank" rel="noopener noreferrer">Open PDF</a>
-                    </header>
-                    <div class="resume-frame-wrap" id="resume-frame-wrap">
-                        <iframe
-                            id="resume-frame"
-                            class="resume-frame hidden"
-                            title="Resume PDF preview"
-                        ></iframe>
-                        <div id="resume-missing" class="panel-empty" role="status">
-                            <p class="panel-empty-title">Loading resume…</p>
-                            <p class="panel-empty-copy">Checking for PDF preview.</p>
-                        </div>
-                    </div>
-                </article>
-
+            <!-- Resume panel disabled for now; nav link kept. Re-add split panel when PDF is ready. -->
+            <div id="resume" class="section-anchor" aria-hidden="true"></div>
+            <div class="split-panels split-panels-single">
                 <article id="portfolio" class="split-panel reveal" aria-labelledby="portfolio-heading">
                     <header class="split-panel-head">
                         <div>
@@ -305,45 +284,6 @@
                 return out.join('');
             }
 
-            function setResumeAvailable(ok, pdfUrl) {
-                const frame = document.getElementById('resume-frame');
-                const missing = document.getElementById('resume-missing');
-                const wrap = document.getElementById('resume-frame-wrap');
-                if (!frame || !missing) return;
-                if (ok) {
-                    missing.classList.add('hidden');
-                    frame.classList.remove('hidden');
-                    if (pdfUrl) frame.src = pdfUrl.includes('#') ? pdfUrl : pdfUrl + '#view=FitH';
-                    if (wrap) wrap.classList.remove('is-empty');
-                } else {
-                    frame.removeAttribute('src');
-                    frame.classList.add('hidden');
-                    missing.classList.remove('hidden');
-                    missing.querySelector('.panel-empty-title').textContent = 'Resume PDF not uploaded yet';
-                    missing.querySelector('.panel-empty-copy').innerHTML = 'Add <code>public/resume.pdf</code> or upload it in the CMS.';
-                    if (wrap) wrap.classList.add('is-empty');
-                }
-            }
-
-            function checkResumePdf(pdfUrl) {
-                const url = (pdfUrl || '/public/resume.pdf').split('#')[0];
-                fetch(url, {
-                    method: 'GET',
-                    headers: { Accept: 'application/pdf', Range: 'bytes=0-4' }
-                })
-                    .then(async (r) => {
-                        if (!r.ok && r.status !== 206) return setResumeAvailable(false);
-                        const type = (r.headers.get('content-type') || '').toLowerCase();
-                        if (type.includes('html') || type.includes('text/')) return setResumeAvailable(false);
-                        if (type.includes('pdf')) return setResumeAvailable(true, url);
-                        const buf = await r.arrayBuffer();
-                        const bytes = new Uint8Array(buf.slice(0, 5));
-                        const sig = String.fromCharCode(...bytes);
-                        setResumeAvailable(sig === '%PDF-', url);
-                    })
-                    .catch(() => setResumeAvailable(false));
-            }
-
             function applySiteContent(site) {
                 if (!site) return;
                 document.querySelectorAll('[data-cms]').forEach((el) => {
@@ -356,10 +296,6 @@
                     if (!val) return;
                     el.innerHTML = simpleMarkdown(val);
                 });
-                const pdf = (site.resume && site.resume.pdf) || '/public/resume.pdf';
-                const download = document.getElementById('resume-download');
-                if (download) download.href = pdf;
-                checkResumePdf(pdf);
                 const email = site.contact && site.contact.email;
                 const emailLink = document.getElementById('contact-email');
                 if (email && emailLink) emailLink.href = 'mailto:' + email;
@@ -371,11 +307,8 @@
             function loadSiteContent() {
                 fetch(new URL('content/site.json', document.baseURI || window.location.href).href)
                     .then((r) => (r.ok ? r.json() : null))
-                    .then((site) => {
-                        if (site) applySiteContent(site);
-                        else checkResumePdf('/public/resume.pdf');
-                    })
-                    .catch(() => checkResumePdf('/public/resume.pdf'));
+                    .then((site) => { if (site) applySiteContent(site); })
+                    .catch(() => {});
             }
 
             loadSiteContent();

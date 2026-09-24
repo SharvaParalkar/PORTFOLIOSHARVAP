@@ -950,6 +950,18 @@ button {
     gap: 1.5rem;
     align-items: stretch;
   }
+
+  .split-panels-single {
+    grid-template-columns: 1fr;
+    max-width: 52rem;
+  }
+}
+
+.section-anchor {
+  height: 0;
+  width: 0;
+  overflow: hidden;
+  scroll-margin-top: 5rem;
 }
 
 .split-panel {
