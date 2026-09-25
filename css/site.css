@@ -194,8 +194,10 @@ button {
 .nav-links {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  flex: 1;
+  justify-content: center;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   gap: 0.7rem;
   font-size: 0.62rem;
   font-weight: 500;
@@ -214,6 +216,9 @@ button {
 
 @media (min-width: 768px) {
   .nav-links {
+    position: static;
+    left: auto;
+    transform: none;
     flex: 0 1 auto;
     justify-content: center;
     gap: 2.25rem;
