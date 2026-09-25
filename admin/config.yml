@@ -42,7 +42,8 @@ collections:
                 widget: file
                 media_folder: public
                 public_folder: /public
-                hint: Upload a PDF (saved under public/). Default path /public/resume.pdf
+                media_folder_relative: false
+                hint: Upload a PDF. It is stored in the site's public/ folder.
 
           - label: Portfolio section (placeholder)
             name: portfolio

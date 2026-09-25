@@ -62,9 +62,32 @@
         </div>
     </header>
 
-    <!-- Portfolio overview panel disabled for now; nav link kept. -->
     <div id="portfolio" class="section-anchor" aria-hidden="true"></div>
-    <div id="resume" class="section-anchor" aria-hidden="true"></div>
+
+    <section class="section section-split" aria-label="Resume">
+        <div class="section-wide">
+            <div class="split-panels split-panels-single">
+                <article id="resume" class="split-panel reveal" aria-labelledby="resume-heading">
+                    <header class="split-panel-head">
+                        <div>
+                            <p class="eyebrow" data-cms="resume.eyebrow">CV</p>
+                            <h2 id="resume-heading" class="split-panel-title" data-cms="resume.title">Resume</h2>
+                            <p class="section-sub" data-cms="resume.subtitle">Download or preview the latest PDF.</p>
+                        </div>
+                        <a id="resume-download" class="btn btn-ghost hoverable" href="/public/sharvaparalkar_resume.pdf" target="_blank" rel="noopener noreferrer">Open PDF</a>
+                    </header>
+                    <div class="resume-frame-wrap" id="resume-frame-wrap">
+                        <iframe
+                            id="resume-frame"
+                            class="resume-frame"
+                            title="Resume PDF preview"
+                            src="/public/sharvaparalkar_resume.pdf#view=FitH"
+                        ></iframe>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
 
     <section id="work" class="section" aria-labelledby="work-heading">
         <div class="section-wide">
@@ -277,6 +300,11 @@
                     if (!val) return;
                     el.innerHTML = simpleMarkdown(val);
                 });
+                const pdf = site.resume && site.resume.pdf;
+                const frame = document.getElementById('resume-frame');
+                const download = document.getElementById('resume-download');
+                if (pdf && frame) frame.src = pdf.includes('#') ? pdf : pdf + '#view=FitH';
+                if (pdf && download) download.href = pdf;
                 const email = site.contact && site.contact.email;
                 const emailLink = document.getElementById('contact-email');
                 if (email && emailLink) emailLink.href = 'mailto:' + email;
