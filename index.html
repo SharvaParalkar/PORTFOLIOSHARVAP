@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/site.css?v=20260925b">
+    <link rel="stylesheet" href="css/site.css?v=20260925c">
 </head>
 <body>
     <div class="grain-overlay" aria-hidden="true"></div>
@@ -74,11 +74,7 @@
                 <a id="resume-download" class="resume-open hoverable" href="/public/sharvaparalkar_resume.pdf" target="_blank" rel="noopener noreferrer">Open PDF</a>
             </header>
             <div class="resume-sheet reveal" id="resume-sheet">
-                <iframe
-                    id="resume-frame"
-                    title="Resume PDF preview"
-                    src="/public/sharvaparalkar_resume.pdf#toolbar=0&navpanes=0&scrollbar=0&view=Fit"
-                ></iframe>
+                <canvas id="resume-canvas" aria-label="Resume PDF preview"></canvas>
             </div>
         </div>
     </section>
@@ -209,6 +205,7 @@
         <p class="edit-link"><a href="admin/">Edit content</a></p>
     </footer>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <script>
         (function () {
             const html = document.documentElement;
@@ -295,10 +292,9 @@
                     el.innerHTML = simpleMarkdown(val);
                 });
                 const pdf = site.resume && site.resume.pdf;
-                const frame = document.getElementById('resume-frame');
                 const download = document.getElementById('resume-download');
-                if (pdf && frame) frame.src = pdf.split('#')[0] + '#toolbar=0&navpanes=0&scrollbar=0&view=Fit';
                 if (pdf && download) download.href = pdf;
+                renderResume();
                 const email = site.contact && site.contact.email;
                 const emailLink = document.getElementById('contact-email');
                 if (email && emailLink) emailLink.href = 'mailto:' + email;
@@ -307,12 +303,55 @@
                 if (linkedin && li) li.href = linkedin;
             }
 
-            function fitResumeFrame() {
+            let resumePdfDoc = null;
+            let resumeRenderToken = 0;
+
+            function resumeTargetWidth(base) {
                 const sheet = document.getElementById('resume-sheet');
-                const frame = document.getElementById('resume-frame');
-                if (!sheet || !frame) return;
-                const scale = sheet.clientWidth / 816;
-                frame.style.transform = 'scale(' + scale + ')';
+                const parentW = sheet.parentElement.clientWidth;
+                const narrow = window.matchMedia('(max-width: 767px)').matches;
+                if (!narrow) return parentW;
+                const intro = document.querySelector('.resume-intro');
+                const section = document.querySelector('.resume-section');
+                const style = getComputedStyle(section);
+                const pad = parseFloat(style.paddingTop) + parseFloat(style.paddingBottom);
+                const introH = intro.offsetHeight + parseFloat(getComputedStyle(intro).marginBottom);
+                const availH = Math.max(180, window.innerHeight - pad - introH);
+                const widthFromHeight = availH * (base.width / base.height);
+                return Math.max(160, Math.min(parentW, widthFromHeight));
+            }
+
+            async function renderResume() {
+                const token = ++resumeRenderToken;
+                const canvas = document.getElementById('resume-canvas');
+                const sheet = document.getElementById('resume-sheet');
+                if (!canvas || !sheet || !window.pdfjsLib) return;
+                const download = document.getElementById('resume-download');
+                const url = ((download && download.getAttribute('href')) || '/public/sharvaparalkar_resume.pdf').split('#')[0];
+                pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+                if (!resumePdfDoc || resumePdfDoc.__url !== url) {
+                    resumePdfDoc = await pdfjsLib.getDocument(url).promise;
+                    resumePdfDoc.__url = url;
+                }
+                if (token !== resumeRenderToken) return;
+                const page = await resumePdfDoc.getPage(1);
+                const base = page.getViewport({ scale: 1 });
+                const targetW = resumeTargetWidth(base);
+                const scale = (targetW / base.width) * (window.devicePixelRatio || 1);
+                const viewport = page.getViewport({ scale });
+                canvas.width = Math.floor(viewport.width);
+                canvas.height = Math.floor(viewport.height);
+                const cssH = targetW * (base.height / base.width);
+                canvas.style.width = targetW + 'px';
+                canvas.style.height = cssH + 'px';
+                sheet.style.width = targetW + 'px';
+                sheet.style.height = cssH + 'px';
+                sheet.style.aspectRatio = 'auto';
+                await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+            }
+
+            function fitResumeFrame() {
+                renderResume().catch(function () {});
             }
 
             function loadSiteContent() {
