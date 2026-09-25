@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/site.css?v=20260924">
+    <link rel="stylesheet" href="css/site.css?v=20260925">
 </head>
 <body>
     <div class="grain-overlay" aria-hidden="true"></div>
@@ -24,9 +24,9 @@
         <div class="nav-links">
             <a href="#resume" class="hoverable">Resume</a>
             <a href="#portfolio" class="hoverable">Portfolio</a>
-            <a href="#work" class="hoverable">Selected Works</a>
-            <a href="#about" class="hoverable">Approach</a>
-            <a href="#contact" class="hoverable">Contact</a>
+            <a href="#work" class="hoverable"><span class="nav-wide">Selected Works</span><span class="nav-short">Projects</span></a>
+            <a href="#about" class="nav-wide hoverable">Approach</a>
+            <a href="#contact" class="nav-wide hoverable">Contact</a>
         </div>
         <button id="theme-toggle" class="theme-toggle hoverable" type="button" aria-label="Toggle dark mode">
             <svg class="icon icon-sm icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
@@ -73,7 +73,7 @@
                 </div>
                 <a id="resume-download" class="resume-open hoverable" href="/public/sharvaparalkar_resume.pdf" target="_blank" rel="noopener noreferrer">Open PDF</a>
             </header>
-            <div class="resume-sheet reveal">
+            <div class="resume-sheet reveal" id="resume-sheet">
                 <iframe
                     id="resume-frame"
                     title="Resume PDF preview"
@@ -307,6 +307,14 @@
                 if (linkedin && li) li.href = linkedin;
             }
 
+            function fitResumeFrame() {
+                const sheet = document.getElementById('resume-sheet');
+                const frame = document.getElementById('resume-frame');
+                if (!sheet || !frame) return;
+                const scale = sheet.clientWidth / 816;
+                frame.style.transform = 'scale(' + scale + ')';
+            }
+
             function loadSiteContent() {
                 fetch(new URL('content/site.json', document.baseURI || window.location.href).href)
                     .then((r) => (r.ok ? r.json() : null))
@@ -315,6 +323,8 @@
             }
 
             loadSiteContent();
+            fitResumeFrame();
+            window.addEventListener('resize', fitResumeFrame);
 
             function normalizeProjects(data) {
                 if (Array.isArray(data)) return data;
