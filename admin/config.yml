@@ -45,13 +45,20 @@ collections:
                 media_folder_relative: false
                 hint: Upload a PDF. It is stored in the site's public/ folder.
 
-          - label: Portfolio section (placeholder)
+          - label: Portfolio section
             name: portfolio
             widget: object
             fields:
               - { label: Eyebrow, name: eyebrow, widget: string }
               - { label: Title, name: title, widget: string }
               - { label: Subtitle, name: subtitle, widget: string }
+              - label: Portfolio PDF
+                name: pdf
+                widget: file
+                media_folder: public
+                public_folder: /public
+                media_folder_relative: false
+                hint: Upload a PDF. It is stored in the site's public/ folder.
               - { label: Body, name: body, widget: markdown, required: false }
 
           - label: Approach / About

@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/site.css?v=20260925c">
+    <link rel="stylesheet" href="css/site.css?v=20260929b">
 </head>
 <body>
     <div class="grain-overlay" aria-hidden="true"></div>
@@ -62,19 +62,31 @@
         </div>
     </header>
 
-    <div id="portfolio" class="section-anchor" aria-hidden="true"></div>
-
     <section id="resume" class="section resume-section" aria-labelledby="resume-heading">
-        <div class="resume-layout">
-            <header class="resume-intro reveal">
-                <div>
-                    <p class="eyebrow" data-cms="resume.eyebrow">CV</p>
-                    <h2 id="resume-heading" class="section-title resume-title" data-cms="resume.title">Resume</h2>
+        <div class="docs-grid">
+            <div class="doc">
+                <header class="resume-intro reveal">
+                    <div>
+                        <p class="eyebrow" data-cms="resume.eyebrow">CV</p>
+                        <h2 id="resume-heading" class="section-title resume-title" data-cms="resume.title">Resume</h2>
+                    </div>
+                    <a id="resume-download" class="resume-open hoverable" href="/public/sharvaparalkar_resume.pdf" target="_blank" rel="noopener noreferrer">Open PDF</a>
+                </header>
+                <div class="resume-sheet reveal" id="resume-sheet">
+                    <canvas id="resume-canvas" aria-label="Resume PDF preview"></canvas>
                 </div>
-                <a id="resume-download" class="resume-open hoverable" href="/public/sharvaparalkar_resume.pdf" target="_blank" rel="noopener noreferrer">Open PDF</a>
-            </header>
-            <div class="resume-sheet reveal" id="resume-sheet">
-                <canvas id="resume-canvas" aria-label="Resume PDF preview"></canvas>
+            </div>
+            <div class="doc" id="portfolio">
+                <header class="resume-intro reveal">
+                    <div>
+                        <p class="eyebrow" data-cms="portfolio.eyebrow">Overview</p>
+                        <h2 id="portfolio-heading" class="section-title resume-title" data-cms="portfolio.title">Portfolio</h2>
+                    </div>
+                    <a id="portfolio-download" class="resume-open hoverable" href="/public/sharvaparalkar_portfolio.pdf" target="_blank" rel="noopener noreferrer">Open PDF</a>
+                </header>
+                <div class="resume-sheet doc-scroll reveal" id="portfolio-sheet" tabindex="0" aria-label="Portfolio PDF preview. Scroll to read more pages.">
+                    <div class="doc-pages" id="portfolio-pages"></div>
+                </div>
             </div>
         </div>
     </section>
@@ -291,10 +303,13 @@
                     if (!val) return;
                     el.innerHTML = simpleMarkdown(val);
                 });
-                const pdf = site.resume && site.resume.pdf;
-                const download = document.getElementById('resume-download');
-                if (pdf && download) download.href = pdf;
-                renderResume();
+                const resumePdf = site.resume && site.resume.pdf;
+                const resumeDownload = document.getElementById('resume-download');
+                if (resumePdf && resumeDownload) resumeDownload.href = resumePdf;
+                const portfolioPdf = site.portfolio && site.portfolio.pdf;
+                const portfolioDownload = document.getElementById('portfolio-download');
+                if (portfolioPdf && portfolioDownload) portfolioDownload.href = portfolioPdf;
+                fitDocFrames();
                 const email = site.contact && site.contact.email;
                 const emailLink = document.getElementById('contact-email');
                 if (email && emailLink) emailLink.href = 'mailto:' + email;
@@ -303,40 +318,25 @@
                 if (linkedin && li) li.href = linkedin;
             }
 
-            let resumePdfDoc = null;
-            let resumeRenderToken = 0;
+            const pdfDocs = Object.create(null);
+            const pdfTokens = Object.create(null);
 
-            function resumeTargetWidth(base) {
-                const sheet = document.getElementById('resume-sheet');
-                const parentW = sheet.parentElement.clientWidth;
-                const narrow = window.matchMedia('(max-width: 767px)').matches;
-                if (!narrow) return parentW;
-                const intro = document.querySelector('.resume-intro');
-                const section = document.querySelector('.resume-section');
-                const style = getComputedStyle(section);
-                const pad = parseFloat(style.paddingTop) + parseFloat(style.paddingBottom);
-                const introH = intro.offsetHeight + parseFloat(getComputedStyle(intro).marginBottom);
-                const availH = Math.max(180, window.innerHeight - pad - introH);
-                const widthFromHeight = availH * (base.width / base.height);
-                return Math.max(160, Math.min(parentW, widthFromHeight));
-            }
-
-            async function renderResume() {
-                const token = ++resumeRenderToken;
-                const canvas = document.getElementById('resume-canvas');
-                const sheet = document.getElementById('resume-sheet');
+            async function renderPdfPreview(id, canvasId, sheetId, linkId, fallbackUrl) {
+                const token = (pdfTokens[id] = (pdfTokens[id] || 0) + 1);
+                const canvas = document.getElementById(canvasId);
+                const sheet = document.getElementById(sheetId);
                 if (!canvas || !sheet || !window.pdfjsLib) return;
-                const download = document.getElementById('resume-download');
-                const url = ((download && download.getAttribute('href')) || '/public/sharvaparalkar_resume.pdf').split('#')[0];
+                const download = document.getElementById(linkId);
+                const url = ((download && download.getAttribute('href')) || fallbackUrl).split('#')[0];
                 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-                if (!resumePdfDoc || resumePdfDoc.__url !== url) {
-                    resumePdfDoc = await pdfjsLib.getDocument(url).promise;
-                    resumePdfDoc.__url = url;
+                if (!pdfDocs[id] || pdfDocs[id].__url !== url) {
+                    pdfDocs[id] = await pdfjsLib.getDocument(url).promise;
+                    pdfDocs[id].__url = url;
                 }
-                if (token !== resumeRenderToken) return;
-                const page = await resumePdfDoc.getPage(1);
+                if (token !== pdfTokens[id]) return;
+                const page = await pdfDocs[id].getPage(1);
                 const base = page.getViewport({ scale: 1 });
-                const targetW = resumeTargetWidth(base);
+                const targetW = sheet.parentElement.clientWidth;
                 const scale = (targetW / base.width) * (window.devicePixelRatio || 1);
                 const viewport = page.getViewport({ scale });
                 canvas.width = Math.floor(viewport.width);
@@ -350,8 +350,79 @@
                 await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
             }
 
-            function fitResumeFrame() {
-                renderResume().catch(function () {});
+            let portfolioObserver = null;
+
+            async function renderPortfolioScroll() {
+                const token = (pdfTokens.portfolio = (pdfTokens.portfolio || 0) + 1);
+                const sheet = document.getElementById('portfolio-sheet');
+                const pagesEl = document.getElementById('portfolio-pages');
+                if (!sheet || !pagesEl || !window.pdfjsLib) return;
+                const download = document.getElementById('portfolio-download');
+                const url = ((download && download.getAttribute('href')) || '/public/sharvaparalkar_portfolio.pdf').split('#')[0];
+                pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+                if (!pdfDocs.portfolio || pdfDocs.portfolio.__url !== url) {
+                    pdfDocs.portfolio = await pdfjsLib.getDocument(url).promise;
+                    pdfDocs.portfolio.__url = url;
+                }
+                if (token !== pdfTokens.portfolio) return;
+                const doc = pdfDocs.portfolio;
+                const resumeSheet = document.getElementById('resume-sheet');
+                const resumeH = resumeSheet ? resumeSheet.offsetHeight : 0;
+                const viewH = Math.max(320, resumeH || Math.round(window.innerHeight * 0.72));
+                sheet.style.width = '';
+                sheet.style.height = viewH + 'px';
+                sheet.style.aspectRatio = 'auto';
+                const innerW = sheet.clientWidth;
+                if (!innerW) return;
+                if (pagesEl.dataset.url === url && Number(pagesEl.dataset.width) === innerW && pagesEl.childElementCount === doc.numPages) return;
+
+                if (portfolioObserver) portfolioObserver.disconnect();
+                pagesEl.innerHTML = '';
+                pagesEl.dataset.url = url;
+                pagesEl.dataset.width = String(innerW);
+                const dpr = window.devicePixelRatio || 1;
+                const holders = [];
+                for (let i = 1; i <= doc.numPages; i++) {
+                    if (token !== pdfTokens.portfolio) return;
+                    const page = await doc.getPage(i);
+                    const base = page.getViewport({ scale: 1 });
+                    const cssH = innerW * (base.height / base.width);
+                    const holder = document.createElement('div');
+                    holder.className = 'doc-page';
+                    holder.style.height = cssH + 'px';
+                    const canvas = document.createElement('canvas');
+                    const scale = (innerW / base.width) * dpr;
+                    const viewport = page.getViewport({ scale });
+                    canvas.width = Math.floor(viewport.width);
+                    canvas.height = Math.floor(viewport.height);
+                    canvas.style.width = innerW + 'px';
+                    canvas.style.height = cssH + 'px';
+                    canvas.setAttribute('aria-label', 'Portfolio page ' + i + ' of ' + doc.numPages);
+                    holder.appendChild(canvas);
+                    pagesEl.appendChild(holder);
+                    holders.push({ holder, page, viewport, canvas });
+                    if (i === 1) {
+                        holder.dataset.drawn = '1';
+                        await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+                    }
+                }
+                if (token !== pdfTokens.portfolio) return;
+                portfolioObserver = new IntersectionObserver(function (entries) {
+                    entries.forEach(function (entry) {
+                        if (!entry.isIntersecting) return;
+                        const item = holders.find(function (h) { return h.holder === entry.target; });
+                        if (!item || item.holder.dataset.drawn === '1') return;
+                        item.holder.dataset.drawn = '1';
+                        item.page.render({ canvasContext: item.canvas.getContext('2d'), viewport: item.viewport }).promise.catch(function () {});
+                    });
+                }, { root: sheet, rootMargin: '400px 0px' });
+                holders.forEach(function (item) { portfolioObserver.observe(item.holder); });
+            }
+
+            function fitDocFrames() {
+                renderPdfPreview('resume', 'resume-canvas', 'resume-sheet', 'resume-download', '/public/sharvaparalkar_resume.pdf')
+                    .then(function () { return renderPortfolioScroll(); })
+                    .catch(function () {});
             }
 
             function loadSiteContent() {
@@ -362,8 +433,12 @@
             }
 
             loadSiteContent();
-            fitResumeFrame();
-            window.addEventListener('resize', fitResumeFrame);
+            fitDocFrames();
+            let docResizeTimer = 0;
+            window.addEventListener('resize', function () {
+                clearTimeout(docResizeTimer);
+                docResizeTimer = setTimeout(fitDocFrames, 150);
+            });
 
             function normalizeProjects(data) {
                 if (Array.isArray(data)) return data;

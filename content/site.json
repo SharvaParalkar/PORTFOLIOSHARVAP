@@ -16,7 +16,8 @@
   "portfolio": {
     "eyebrow": "Overview",
     "title": "Portfolio",
-    "subtitle": "Coming soon.",
+    "subtitle": "Download or preview the latest PDF.",
+    "pdf": "/public/sharvaparalkar_portfolio.pdf",
     "body": ""
   },
   "about": {
