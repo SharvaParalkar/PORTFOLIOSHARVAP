@@ -19,6 +19,12 @@
       "body": "",
       "blocks": [
         {
+          "caption": "Front view showing the passage and selected floor bridges.",
+          "content": "Most slabs stop at the cut, while every third slab spans the opening.",
+          "type": "image",
+          "url": "/public/images/project1_screenshot1.jpg"
+        },
+        {
           "type": "heading",
           "text": "Project brief",
           "level": "h2"
@@ -56,12 +62,6 @@
           "content": "The opening follows the curve, with selected floor plates connecting across it.",
           "type": "image",
           "url": "/public/images/project1_screenshot4.jpg"
-        },
-        {
-          "caption": "Front view showing the passage and selected floor bridges.",
-          "content": "Most slabs stop at the cut, while every third slab spans the opening.",
-          "type": "image",
-          "url": "/public/images/project1_screenshot1.jpg"
         },
         {
           "type": "heading",
