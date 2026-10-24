@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/site.css?v=20260929b">
+    <link rel="stylesheet" href="css/site.css?v=20261023a">
 </head>
 <body>
     <div class="grain-overlay" aria-hidden="true"></div>
@@ -467,11 +467,11 @@
                         '<div class="project-card-media">' +
                         '<img src="' + escapeAttr(p.image || '') + '" alt="' + escapeAttr(p.title || '') + '" width="800" height="1000" loading="lazy" decoding="async">' +
                         '</div>' +
-                        '<div class="overlay">' +
-                        '<span class="overlay-meta">' + escapeAttr(p.category || '') + '</span>' +
-                        '<h3>' + escapeAttr(p.title || '') + '</h3>' +
-                        '<p class="overlay-muted">' + escapeAttr(p.description || '') + '</p>' +
-                        '<div class="overlay-tags">' + tagsHtml + '</div>' +
+                        '<div class="project-card-info">' +
+                        '<span class="project-card-category">' + escapeAttr(p.category || '') + '</span>' +
+                        '<h3 class="project-card-title">' + escapeAttr(p.title || '') + '</h3>' +
+                        '<p class="project-card-description">' + escapeAttr(p.description || '') + '</p>' +
+                        '<div class="project-card-tags">' + tagsHtml + '</div>' +
                         '</div>';
                     projectsGrid.appendChild(card);
                     bindHover(card);

@@ -554,25 +554,24 @@ button {
 }
 
 .project-card {
-  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  background: linear-gradient(135deg, var(--bg-secondary) 0%, transparent 100%);
-  border-radius: 0.5rem;
-  position: relative;
-  aspect-ratio: 4 / 5;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   cursor: pointer;
-  display: block;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .project-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 40px -15px rgba(193, 122, 83, 0.2);
+  transform: translateY(-4px);
 }
 
 .project-card-media {
-  position: absolute;
-  inset: 0;
-  background: var(--bg-primary);
+  position: relative;
+  flex: 0 0 auto;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  background: var(--bg-secondary);
 }
 
 .project-card-media img {
@@ -583,55 +582,47 @@ button {
   filter: sepia(0.2);
 }
 
-.project-card .overlay {
-  opacity: 0;
-  transition: all 0.4s ease;
-  background: linear-gradient(to top, rgba(44, 36, 32, 0.95) 0%, rgba(44, 36, 32, 0.7) 50%, transparent 100%);
-  color: #E8E2D9;
-  position: absolute;
-  inset: 0;
+.project-card-info {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  padding: 2rem;
+  align-items: flex-start;
+  flex: 1;
+  padding: 1.25rem 0 0;
+  color: var(--text-primary);
 }
 
-.project-card:hover .overlay {
-  opacity: 1;
-}
-
-.overlay-meta {
-  color: #9BAE8A !important;
+.project-card-category {
+  color: var(--accent-terracotta);
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.2em;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.5rem;
   font-weight: 500;
 }
 
-.overlay h3 {
+.project-card-title {
   font-size: 1.875rem;
   font-weight: 300;
   margin-bottom: 0.75rem;
   font-style: italic;
-  color: inherit;
+  color: var(--text-primary);
 }
 
-.overlay-muted {
-  color: rgba(232, 226, 217, 0.85) !important;
+.project-card-description {
+  color: var(--text-secondary);
   font-size: 0.875rem;
   margin-bottom: 1rem;
   font-weight: 300;
   line-height: 1.625;
 }
 
-.overlay-tags {
+.project-card-tags {
   display: flex;
   gap: 0.75rem;
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: rgba(232, 226, 217, 0.85);
+  color: var(--text-secondary);
   flex-wrap: wrap;
 }
 
