@@ -1,21 +1,6 @@
 {
   "projects": [
     {
-      "slug": "ParametricExo",
-      "title": "Parametric Exoskeleton Building",
-      "category": "ARCH655 Project 1 · Parametric Tower",
-      "dataCategory": [
-        "architecture",
-        "computational"
-      ],
-      "description": "A BIM-ready, twisting and tapering tower with floors, ceilings, and an exterior exoskeleton. A user-defined natural cut runs through the building, with selected floors spanning the opening to connect both sides.",
-      "tags": [
-        "Grasshopper",
-        "Parametric Design",
-        "Exoskeleton",
-        "Public Space"
-      ],
-      "image": "/public/images/aiimage2.png",
       "body": "",
       "blocks": [
         {
@@ -95,15 +80,6 @@
         },
         {
           "type": "heading",
-          "text": "Geometric analysis in Grasshopper",
-          "level": "h2"
-        },
-        {
-          "type": "paragraph",
-          "text": "After establishing the form, I added a separate analysis group in Grasshopper to describe the tower surface. It calculates surface area and centroid, samples the surface at 121 UV points, and reports principal curvature, curvature directions, Gaussian curvature, and mean curvature. A bounding box measures the overall X, Y, and Z dimensions. The analysis outputs are saved in project1_analyses.gh, with a companion Rhino file, project1_analyses.3dm, containing the labeled curvature and dimension visualization."
-        },
-        {
-          "type": "heading",
           "text": "AI visualization",
           "level": "h2"
         },
@@ -128,7 +104,22 @@
           "type": "image",
           "url": "/public/images/aiimage2.png"
         }
-      ]
+      ],
+      "dataCategory": [
+        "architecture",
+        "computational"
+      ],
+      "slug": "ParametricExo",
+      "title": "Parametric Exoskeleton Building",
+      "tags": [
+        "Grasshopper",
+        "Parametric Design",
+        "Exoskeleton",
+        "Public Space"
+      ],
+      "image": "/public/images/aiimage2.png",
+      "description": "A BIM-ready, twisting and tapering tower with floors, ceilings, and an exterior exoskeleton. A user-defined natural cut runs through the building, with selected floors spanning the opening to connect both sides.",
+      "category": "ARCH655 Project 1 · Parametric Tower"
     }
   ]
 }
