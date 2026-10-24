@@ -1,3 +1,33 @@
 {
-  "projects": []
+  "projects": [
+    {
+      "slug": "a-passage-through-the-exoskeleton",
+      "title": "A Passage Through the Exoskeleton",
+      "category": "Parametric Tower · ARCH 655 Project 1",
+      "dataCategory": ["architecture", "computational"],
+      "description": "A twisting tower shaped around a vertical public passage, with an exoskeleton that frames the opening and selected floors that bridge across it.",
+      "tags": ["Grasshopper", "Parametric Design", "Exoskeleton", "Public Space"],
+      "image": "/public/images/exoskeleton-tower-placeholder-01.svg",
+      "body": "This project explores how a tall, twisting tower can make room for a public passage through its center. The opening gives the mass a more open profile and creates a route through the building, while the exterior exoskeleton traces the changing form.\n\nThe floor plates respond to that cut. Most stop at the passage, while every third slab continues across it to form a bridge between the two sides. This rhythm keeps the opening legible while reconnecting the tower at regular intervals.\n\nThe Grasshopper definition brings the tower profile, twist, taper, exoskeleton, passage, and floor behavior into one adjustable system. The current work focuses on making the structure meet the passage edges cleanly and on testing how the floor bridges read within the larger facade.\n\nThe visuals below are temporary illustrations used to hold the page layout and communicate the design direction. They are not final renderings of the Rhino model and can be replaced when project-specific views are ready.",
+      "blocks": [
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "Concept view"
+        },
+        {
+          "type": "image",
+          "url": "/public/images/exoskeleton-tower-placeholder-01.svg",
+          "caption": "Temporary design illustration — public terraces spiral through the tower.",
+          "content": "The first reference frames the passage as a sequence of planted terraces and shared outdoor rooms."
+        },
+        {
+          "type": "image",
+          "url": "/public/images/exoskeleton-tower-placeholder-02.svg",
+          "caption": "Temporary design illustration — an alternate view of the open tower profile.",
+          "content": "A second view helps test how the opening and exterior lattice might read from the waterfront."
+        }
+      ]
+    }
+  ]
 }

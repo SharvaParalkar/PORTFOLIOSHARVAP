@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Placeholder illustration of a tower with a public passage</title>
+  <desc id="desc">A glass tower with an exterior structural lattice and a spiraling opening, shown beside a waterfront city.</desc>
+  <defs>
+    <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#a9c8ce"/><stop offset="1" stop-color="#e6d6c5"/></linearGradient>
+    <linearGradient id="glass" x2="1" y2="1"><stop stop-color="#7ea4a6"/><stop offset=".5" stop-color="#d4e0d8"/><stop offset="1" stop-color="#6f9898"/></linearGradient>
+    <linearGradient id="ground" x2="0" y2="1"><stop stop-color="#c8b79f"/><stop offset="1" stop-color="#718f8c"/></linearGradient>
+    <clipPath id="tower"><path d="M595 770 Q570 590 630 390 Q682 205 720 105 Q822 65 925 102 Q1030 300 1072 770Z"/></clipPath>
+  </defs>
+  <rect width="1600" height="900" fill="url(#sky)"/>
+  <circle cx="1260" cy="170" r="76" fill="#f3e3c6" opacity=".7"/>
+  <path d="M0 625 L110 520 205 608 305 470 405 610 520 505 610 625 760 500 870 625 1030 505 1160 620 1325 490 1460 620 1600 520V900H0Z" fill="#9caeaa" opacity=".55"/>
+  <path d="M0 690H1600V900H0Z" fill="url(#ground)"/>
+  <path d="M0 760 Q390 735 790 770 T1600 748V900H0Z" fill="#779a99"/>
+  <path d="M0 777 Q390 752 790 787 T1600 765" fill="none" stroke="#e7ddd0" stroke-width="4" opacity=".7"/>
+  <g fill="#687a76" opacity=".52">
+    <path d="M120 625v-95h42v95zm55 0v-145h54v145zm76 0v-80h44v80zm80 0V500h55v125zm91 0V545h38v80zm750 0V530h54v95zm73 0V460h64v165zm85 0V520h48v105zm70 0V485h75v140z"/>
+  </g>
+  <path d="M595 770 Q570 590 630 390 Q682 205 720 105 Q822 65 925 102 Q1030 300 1072 770Z" fill="url(#glass)" stroke="#f0e6d8" stroke-width="8"/>
+  <g clip-path="url(#tower)" stroke="#f4eee2" opacity=".7" fill="none">
+    <path d="M560 205H1020M550 265H1045M540 325H1060M530 385H1075M520 445H1090M510 505H1105M500 565H1120M490 625H1135M480 685H1150M470 745H1160" stroke-width="5"/>
+    <path d="M650 90V800M720 80V800M790 70V800M860 70V800M930 80V800M1000 120V800" stroke-width="3"/>
+    <path d="M610 710L720 150 810 700 900 140 1040 720M600 500L780 250 880 520 1010 240" stroke="#9a493b" stroke-width="10" opacity=".85"/>
+  </g>
+  <path d="M655 770 Q670 665 742 600 Q815 535 922 490 Q1002 455 1043 385" fill="none" stroke="#f1dfc3" stroke-width="72" stroke-linecap="round"/>
+  <path d="M655 770 Q670 665 742 600 Q815 535 922 490 Q1002 455 1043 385" fill="none" stroke="#a04b3d" stroke-width="9" stroke-linecap="round"/>
+  <path d="M708 655 Q790 640 876 672M785 553 Q871 580 961 565M882 481 Q945 505 1007 478" fill="none" stroke="#f8eedc" stroke-width="16"/>
+  <g fill="#748575"><circle cx="756" cy="627" r="15"/><circle cx="798" cy="617" r="12"/><circle cx="890" cy="557" r="14"/><circle cx="950" cy="532" r="12"/><circle cx="991" cy="457" r="13"/></g>
+  <path d="M575 772H1090" stroke="#6f5546" stroke-width="10"/>
+  <g fill="#5d6d65"><circle cx="540" cy="765" r="28"/><circle cx="1115" cy="768" r="36"/><circle cx="465" cy="774" r="20"/></g>
+  <rect x="48" y="44" width="260" height="40" rx="20" fill="#f5f1eb" opacity=".86"/>
+  <text x="72" y="71" font-family="Arial,sans-serif" font-size="17" letter-spacing="2" fill="#6f4a3c">DESIGN PLACEHOLDER</text>
+</svg>
