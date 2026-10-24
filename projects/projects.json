@@ -8,7 +8,7 @@
         "architecture",
         "computational"
       ],
-      "description": "A twisting, tapering tower organized around a public passage, with an exterior exoskeleton and selected floors that bridge across the opening.",
+      "description": "A BIM-ready, twisting and tapering tower with floors, ceilings, and an exterior exoskeleton. A user-defined natural cut runs through the building, with selected floors spanning the opening to connect both sides.",
       "tags": [
         "Grasshopper",
         "Parametric Design",
@@ -25,7 +25,7 @@
         },
         {
           "type": "paragraph",
-          "text": "For ARCH655 Project 1, I explored how a vertical passage could become the organizing idea for a tower. The building tapers and twists around a route that begins at the ground and continues through the floors. A curved exoskeleton follows the changing profile, tying the two sides together while keeping the opening visible."
+          "text": "For ARCH655 Project 1, my goal was to develop a BIM-ready building system rather than a tower shell alone. The model brings together floors, ceilings, and an exterior exoskeleton within a form that tapers and twists as it rises. A natural cut passes through the full height of the building, creating a route that can be defined by the user and shaping how the building opens to its surroundings."
         },
         {
           "type": "heading",
@@ -34,7 +34,7 @@
         },
         {
           "type": "paragraph",
-          "text": "The passage is defined by a guide curve that shifts across the tower as it rises. Its path controls where the opening moves and changes direction, turning a straight slot into a continuous route through the building. Most floor plates stop at the opening. Every third floor crosses it as a bridge, connecting the two sides while leaving the levels between open. The exoskeleton frames this movement and helps the tower read as one connected form."
+          "text": "The cut is guided by a user-defined curve, so its position and direction can shift as it travels through the building. Because the cut runs all the way through, it opens a continuous passage between the two sides. Most floors stop at the opening, while every third floor spans across it as a bridge. This keeps the passage clear while reconnecting the building at selected levels. The floors, ceilings, and exoskeleton follow the same changing geometry, making the cut part of the overall building system."
         },
         {
           "type": "heading",
@@ -79,7 +79,7 @@
         },
         {
           "type": "paragraph",
-          "text": "The Grasshopper definition turns that design sequence into linked operations. The tower profile, taper, and twist establish the outer form. The guide curve then defines the passage route, and the floor logic responds to the cut: most slabs terminate at the opening, while every third slab bridges across. The exoskeleton follows the changing tower profile. Grouped controls and notes make the inputs easier to follow and let the form update as its dimensions change."
+          "text": "The Grasshopper definition links the building systems into one adjustable sequence. The tower profile, taper, and twist establish the form. The user-defined guide curve sets the full-height passage, and the floor logic responds to it: most slabs stop at the cut, while every third slab bridges across. Floors, ceilings, and the exterior exoskeleton are generated in relation to the changing tower geometry. Grouped controls and notes make the inputs easier to follow and let the design update when its parameters change."
         },
         {
           "caption": "Grasshopper definition: grouped controls and geometry logic for the tower, passage, floors, and exoskeleton.",
