@@ -25,8 +25,8 @@
         "architecture",
         "computational"
       ],
-      "slug": "a-passage-through-the-exoskeleton",
-      "title": "A Passage Through the Exoskeleton",
+      "slug": "ParametricExo",
+      "title": "Parametric Exoskeleton Building",
       "tags": [
         "Grasshopper",
         "Parametric Design",
@@ -35,7 +35,7 @@
       ],
       "image": "/public/images/aiimage2.png",
       "description": "A twisting tower shaped around a vertical public passage, with an exoskeleton that frames the opening and selected floors that bridge across it.",
-      "category": "Parametric Tower · ARCH 655 Project 1"
+      "category": "Parametric Tower · ARCH 655"
     }
   ]
 }
