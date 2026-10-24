@@ -1359,8 +1359,12 @@ button {
 .project-blocks {
   display: flex;
   flex-direction: column;
-  gap: 2.5rem;
+  gap: 1.5rem;
   margin-top: 2.5rem;
+}
+
+.project-block-figure {
+  margin: 0;
 }
 
 .project-block-image-link {
@@ -1379,7 +1383,7 @@ button {
 }
 
 .project-block-figure figcaption {
-  margin-top: 0.75rem;
+  margin-top: 0.5rem;
   font-size: 0.875rem;
   color: var(--text-secondary);
   font-weight: 300;

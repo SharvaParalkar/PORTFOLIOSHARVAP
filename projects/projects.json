@@ -19,108 +19,114 @@
       "body": "",
       "blocks": [
         {
-          "text": "Project brief",
-          "level": "h2",
-          "type": "heading"
-        },
-        {
-          "text": "For ARCH655 Project 1, I developed a parametric tower study organized around a tall public passage. The design brings together a twisting, tapering building mass, a curved exterior exoskeleton, and floor plates that respond to a large cut through the form. The passage is treated as a spatial experience in its own right: it opens views through the tower and creates moments where circulation and shared terraces meet.",
-          "type": "paragraph"
-        },
-        {
-          "text": "Design intent",
-          "level": "h2",
-          "type": "heading"
-        },
-        {
-          "text": "The main design question is how a strong vertical opening can remain legible while the tower still reads as one connected structure. The exoskeleton follows the changing profile and gives the building a continuous outer frame. At the passage, most floor slabs stop at the cut. Every third slab spans all the way across, forming a periodic bridge between the two sides while leaving the intervening levels open. This lets the opening read as a deliberate void rather than a continuous slot filled by floor plates.",
-          "type": "paragraph"
-        },
-        {
           "type": "heading",
-          "level": "h3",
-          "text": "Before and after: the curve that defines the cut"
+          "text": "Project brief",
+          "level": "h2"
         },
         {
           "type": "paragraph",
-          "text": "The highlighted guide curve is the design input for the passage. Its path through the tower sets where the vertical opening moves and changes direction. In the resulting model, the cut follows that route; most floor slabs stop at the opening, while every third slab spans across it as a bridge. The after view hides the guide curve so the resulting passage is easier to read."
+          "text": "For ARCH655 Project 1, I explored how a vertical passage could become the organizing idea for a tower. The building tapers and twists around a route that begins at the ground and continues through the floors. A curved exoskeleton follows the changing profile, tying the two sides together while keeping the opening visible."
         },
         {
-          "caption": "Before : the cut-defining guide curve is highlighted in yellow.",
+          "type": "heading",
+          "text": "Design intent",
+          "level": "h2"
+        },
+        {
+          "type": "paragraph",
+          "text": "The passage is defined by a guide curve that shifts across the tower as it rises. Its path controls where the opening moves and changes direction, turning a straight slot into a continuous route through the building. Most floor plates stop at the opening. Every third floor crosses it as a bridge, connecting the two sides while leaving the levels between open. The exoskeleton frames this movement and helps the tower read as one connected form."
+        },
+        {
+          "type": "heading",
+          "text": "Before and after: the curve that defines the cut",
+          "level": "h3"
+        },
+        {
+          "type": "paragraph",
+          "text": "The first view shows the guide curve highlighted in yellow against the tower. In the second, the curve is hidden so the passage it guides is easier to read. Together, the views show how the curve sets the route of the cut and how the floor plates respond to that opening."
+        },
+        {
+          "caption": "Guide curve: the path defining the passage is highlighted in yellow.",
+          "content": "The curve shifts across the tower as it rises, setting the passage route.",
           "type": "image",
-          "content": "The curve traces the passage route through the tower and makes its changing path visible.",
           "url": "/public/images/project1_screenshot3.jpg"
         },
         {
-          "caption": "After : the guide curve is hidden to reveal the resulting passage.",
+          "caption": "Resulting cut: the guide curve is hidden to show the passage.",
+          "content": "The opening follows the curve, with selected floor plates connecting across it.",
           "type": "image",
-          "content": "The opening follows the guide curve through the tower, with selected floor slabs bridging across it.",
           "url": "/public/images/project1_screenshot4.jpg"
         },
         {
-          "content": "This view shows how the open cut and the every-third-floor bridges shape the tower elevation.",
-          "caption": "Front view of the tower showing the central passage and the selected floor bridges.",
-          "url": "/public/images/project1_screenshot1.jpg",
-          "type": "image"
+          "caption": "Front view showing the passage and selected floor bridges.",
+          "content": "Most slabs stop at the cut, while every third slab spans the opening.",
+          "type": "image",
+          "url": "/public/images/project1_screenshot1.jpg"
         },
         {
+          "type": "heading",
           "text": "Case-study references",
-          "level": "h2",
-          "type": "heading"
+          "level": "h2"
         },
         {
-          "text": "Four precedents helped frame the study. [The Klein Bottle House](https://www.mcbridecharlesryan.com.au/project/klein-bottle-house/) uses a spiral that passes back through itself to shape a sequence of spaces. [Arnhem Central Transfer Terminal](https://www.archdaily.com/777495/arnhem-central-transfer-terminal-unstudio) connects movement and form through a twisting structure and a continuous transition between interior and exterior. [One Thousand Museum](https://www.odparchitects.com/project/one-thousand-museum/) makes its curving exoskeleton a defining part of the tower structure and identity. [Morpheus Hotel](https://www.archdaily.com/896433/morpheus-hotel-zaha-hadid-architects) uses carved vertical voids, an atrium, and bridges to connect public spaces through a high-rise. I used these projects as reference points for continuity, circulation, and structure, then combined those ideas in a new design rather than reproducing a single precedent.",
-          "type": "paragraph"
+          "type": "paragraph",
+          "text": "Four precedents helped me think about movement, structure, and carved space. [The Klein Bottle House](https://www.mcbridecharlesryan.com.au/project/klein-bottle-house/) uses a spiral to shape a sequence of spaces. [Arnhem Central Transfer Terminal](https://www.archdaily.com/777495/arnhem-central-transfer-terminal-unstudio) links movement and form through a twisting structure. [One Thousand Museum](https://www.odparchitects.com/project/one-thousand-museum/) makes its curving exoskeleton central to the tower identity. [Morpheus Hotel](https://www.archdaily.com/896433/morpheus-hotel-zaha-hadid-architects) connects public spaces through carved voids and bridges. I used these projects as reference points, then developed a distinct tower organized around its own passage."
         },
         {
+          "type": "heading",
           "text": "Parametric model",
-          "level": "h2",
-          "type": "heading"
+          "level": "h2"
         },
         {
-          "text": "The Rhino and Grasshopper definition turns the design into a set of adjustable relationships. Controls for the tower profile, twist, taper, passage dimensions, and floor rhythm let me compare options while keeping the main design logic intact. The definition is grouped by function, with labeled controls and notes that make it easier to trace how each input affects the geometry. Changing the passage or tower profile updates the surrounding structure, while the every-third-floor rule preserves the intended pattern of open levels and bridges.",
-          "type": "paragraph"
+          "type": "paragraph",
+          "text": "The Grasshopper definition turns that design sequence into linked operations. The tower profile, taper, and twist establish the outer form. The guide curve then defines the passage route, and the floor logic responds to the cut: most slabs terminate at the opening, while every third slab bridges across. The exoskeleton follows the changing tower profile. Grouped controls and notes make the inputs easier to follow and let the form update as its dimensions change."
         },
         {
-          "content": "The oblique view makes the passage depth and the relationship between the exterior frame and floor slabs easier to read.",
-          "caption": "Elevated view of the parametric tower, exoskeleton, floor plates, and passage.",
-          "url": "/public/images/project1_screenshot2.jpg",
-          "type": "image"
+          "caption": "Grasshopper definition: grouped controls and geometry logic for the tower, passage, floors, and exoskeleton.",
+          "content": "The definition shows how the design inputs feed the tower geometry and how the passage, floor plates, and exterior frame are generated from those relationships.",
+          "type": "image",
+          "url": "/public/images/project1_screenshot5.png"
         },
         {
+          "caption": "Elevated view of the completed tower and its central passage.",
+          "content": "This view shows the passage depth and how the exterior frame relates to the floor plates.",
+          "type": "image",
+          "url": "/public/images/project1_screenshot2.jpg"
+        },
+        {
+          "type": "heading",
           "text": "Geometric analysis in Grasshopper",
-          "level": "h2",
-          "type": "heading"
+          "level": "h2"
         },
         {
-          "text": "The analysis is built into a separate Grasshopper definition, project1_analyses.gh, using the tower loft surface as its input. An Area component reports the surface area and centroid. Divide Surface samples the loft at 11 by 11 UV locations (121 points); those locations feed Principal Curvature and Surface Curvature, which report maximum and minimum principal curvature, their direction vectors, and Gaussian and mean curvature. A Bounding Box, followed by domain decomposition and subtraction, measures the tower overall X, Y, and Z extents. These outputs document the surface geometry and curvature directly in Grasshopper. The companion Rhino file, project1_analyses.3dm, contains a separate analysis group with the curvature visualization, dimensions, and labels.",
-          "type": "paragraph"
+          "type": "paragraph",
+          "text": "After establishing the form, I added a separate analysis group in Grasshopper to describe the tower surface. It calculates surface area and centroid, samples the surface at 121 UV points, and reports principal curvature, curvature directions, Gaussian curvature, and mean curvature. A bounding box measures the overall X, Y, and Z dimensions. The analysis outputs are saved in project1_analyses.gh, with a companion Rhino file, project1_analyses.3dm, containing the labeled curvature and dimension visualization."
         },
         {
+          "type": "heading",
           "text": "AI visualization",
-          "level": "h2",
-          "type": "heading"
+          "level": "h2"
         },
         {
-          "text": "The AI images explore how the passage, terraces, and exterior frame might come together as an architectural whole. They helped establish a visual direction for the parametric model, especially the contrast between a glazed tower surface and an open, planted route through its center. These are AI-generated concept images; they communicate an imagined design and should be read separately from screenshots of the Rhino and Grasshopper model.",
-          "type": "paragraph"
+          "type": "paragraph",
+          "text": "The AI images explored a possible atmosphere for the passage, terraces, and exterior frame before the model was complete. They helped test the contrast between a glazed tower and an open route through its center. These images communicate a visual concept; the Rhino and Grasshopper screenshots document how the design was modeled."
         },
         {
+          "type": "heading",
           "text": "AI concept images",
-          "level": "h2",
-          "type": "heading"
+          "level": "h2"
         },
         {
-          "content": "This view explores the opening as a sequence of outdoor terraces and shared spaces.",
-          "caption": "AI-generated concept image 1 : a planted passage spirals through the tower.",
-          "url": "/public/images/aiimage1.png",
-          "type": "image"
+          "caption": "AI concept 1: a planted passage spirals through the tower.",
+          "content": "This view imagines the opening as a sequence of outdoor terraces and shared spaces.",
+          "type": "image",
+          "url": "/public/images/aiimage1.png"
         },
         {
-          "content": "The second study tests how the passage and exterior structure read from the surrounding landscape.",
-          "caption": "AI-generated concept image 2 : an alternate view of the tower and its open frame.",
-          "url": "/public/images/aiimage2.png",
-          "type": "image"
+          "caption": "AI concept 2: an alternate view of the tower and its open frame.",
+          "content": "This study explores how the passage and exterior structure might meet the surrounding landscape.",
+          "type": "image",
+          "url": "/public/images/aiimage2.png"
         }
       ]
     }
