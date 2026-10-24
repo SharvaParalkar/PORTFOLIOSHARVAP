@@ -10,7 +10,7 @@
         },
         {
           "caption": "Front view showing the passage and selected floor bridges.",
-          "content": "Most slabs stop at the cut, while every third slab spans the opening.",
+          "content": "Rendered view from the Rhino viewport highlighting the parametric design.",
           "type": "image",
           "url": "/public/images/project1_screenshot1.jpg"
         },
@@ -118,9 +118,7 @@
       "title": "Parametric Exoskeleton Building",
       "tags": [
         "Grasshopper",
-        "Parametric Design",
-        "Exoskeleton",
-        "Public Space"
+        "Parametric Design"
       ],
       "image": "/public/images/aiimage2.png",
       "description": "A BIM-ready, twisting and tapering tower with floors, ceilings, and an exterior exoskeleton. A user-defined natural cut runs through the building, with selected floors spanning the opening to connect both sides.",
