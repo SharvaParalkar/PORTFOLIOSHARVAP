@@ -111,7 +111,13 @@
                         if (content) html += '<div class="project-body"><p>' + escapeHtml(content) + '</p></div>';
                         return html;
                     }
-                    if (type === 'heading') {
+                    if (type === 'video') {
+                        const videoId = /^[A-Za-z0-9_-]{11}$/.test(b.videoId || '') ? b.videoId : '';
+                        if (!videoId) return '';
+                        const title = escapeHtml(b.title || 'Project video');
+                        const src = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(videoId) + '?rel=0';
+                        return '<div class="project-block-video"><iframe src="' + src + '" title="' + title + '" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>';
+                    }                    if (type === 'heading') {
                         const level = b.level === 'h3' ? 'h3' : 'h2';
                         return '<' + level + ' class="project-block-heading">' + escapeHtml(b.text || '') + '</' + level + '>';
                     }
