@@ -46,13 +46,13 @@
           "text": "The highlighted guide curve is the design input for the passage. Its path through the tower sets where the vertical opening moves and changes direction. In the resulting model, the cut follows that route; most floor slabs stop at the opening, while every third slab spans across it as a bridge. The after view hides the guide curve so the resulting passage is easier to read."
         },
         {
-          "caption": "Before — the cut-defining guide curve is highlighted in yellow.",
+          "caption": "Before : the cut-defining guide curve is highlighted in yellow.",
           "type": "image",
           "content": "The curve traces the passage route through the tower and makes its changing path visible.",
           "url": "/public/images/project1_screenshot3.jpg"
         },
         {
-          "caption": "After — the guide curve is hidden to reveal the resulting passage.",
+          "caption": "After : the guide curve is hidden to reveal the resulting passage.",
           "type": "image",
           "content": "The opening follows the guide curve through the tower, with selected floor slabs bridging across it.",
           "url": "/public/images/project1_screenshot4.jpg"
@@ -112,13 +112,13 @@
         },
         {
           "content": "This view explores the opening as a sequence of outdoor terraces and shared spaces.",
-          "caption": "AI-generated concept image 1 — a planted passage spirals through the tower.",
+          "caption": "AI-generated concept image 1 : a planted passage spirals through the tower.",
           "url": "/public/images/aiimage1.png",
           "type": "image"
         },
         {
           "content": "The second study tests how the passage and exterior structure read from the surrounding landscape.",
-          "caption": "AI-generated concept image 2 — an alternate view of the tower and its open frame.",
+          "caption": "AI-generated concept image 2 : an alternate view of the tower and its open frame.",
           "url": "/public/images/aiimage2.png",
           "type": "image"
         }
