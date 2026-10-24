@@ -940,6 +940,17 @@ button {
   margin: 0 0 1.25rem;
 }
 
+.project-body a {
+  color: var(--accent-terracotta);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+.project-body a:hover {
+  color: var(--accent-clay);
+}
+
 .project-gallery {
   display: grid;
   gap: 1.5rem;
@@ -1350,6 +1361,16 @@ button {
   flex-direction: column;
   gap: 2.5rem;
   margin-top: 2.5rem;
+}
+
+.project-block-image-link {
+  display: block;
+  cursor: zoom-in;
+}
+
+.project-block-image-link:focus-visible {
+  outline: 2px solid var(--accent-terracotta);
+  outline-offset: 4px;
 }
 
 .project-block-figure img {

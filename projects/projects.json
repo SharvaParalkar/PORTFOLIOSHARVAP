@@ -1,32 +1,11 @@
 {
   "projects": [
     {
-      "body": "This project explores how a tall, twisting tower can make room for a public passage through its center. The opening gives the mass a more open profile and creates a route through the building, while the exterior exoskeleton traces the changing form.\n\nThe floor plates respond to that cut. Most stop at the passage, while every third slab continues across it to form a bridge between the two sides. This rhythm keeps the opening legible while reconnecting the tower at regular intervals.\n\nThe Grasshopper definition brings the tower profile, twist, taper, exoskeleton, passage, and floor behavior into one adjustable system. The current work focuses on making the structure meet the passage edges cleanly and on testing how the floor bridges read within the larger facade.\n\nThe visuals below are temporary illustrations used to hold the page layout and communicate the design direction. They are not final renderings of the Rhino model and can be replaced when project-specific views are ready.",
-      "blocks": [
-        {
-          "type": "heading",
-          "level": "h2",
-          "text": "Concept view"
-        },
-        {
-          "type": "image",
-          "url": "/public/images/aiimage1.png",
-          "caption": "Temporary design illustration — public terraces spiral through the tower.",
-          "content": "The first reference frames the passage as a sequence of planted terraces and shared outdoor rooms."
-        },
-        {
-          "type": "image",
-          "url": "/public/images/aiimage2.png",
-          "caption": "Temporary design illustration — an alternate view of the open tower profile.",
-          "content": "A second view helps test how the opening and exterior lattice might read from the waterfront."
-        }
-      ],
-      "dataCategory": [
-        "architecture",
-        "computational"
-      ],
       "slug": "ParametricExo",
       "title": "Parametric Exoskeleton Building",
+      "category": "ARCH655 Project 1 · Parametric Tower",
+      "dataCategory": ["architecture", "computational"],
+      "description": "A twisting, tapering tower organized around a public passage, with an exterior exoskeleton and selected floors that bridge across the opening.",
       "tags": [
         "Grasshopper",
         "Parametric Design",
@@ -34,8 +13,26 @@
         "Public Space"
       ],
       "image": "/public/images/aiimage2.png",
-      "description": "A twisting tower shaped around a vertical public passage, with an exoskeleton that frames the opening and selected floors that bridge across it.",
-      "category": "Parametric Tower · ARCH 655"
+      "body": "## Project brief\nFor ARCH655 Project 1, I developed a parametric tower study organized around a tall public passage. The design brings together a twisting, tapering building mass, a curved exterior exoskeleton, and floor plates that respond to a large cut through the form. The passage is treated as a spatial experience in its own right: it opens views through the tower and creates moments where circulation and shared terraces meet.\n\n## Design intent\nThe main design question is how a strong vertical opening can remain legible while the tower still reads as one connected structure. The exoskeleton follows the changing profile and gives the building a continuous outer frame. At the passage, most floor slabs stop at the cut. Every third slab spans all the way across, forming a periodic bridge between the two sides while leaving the intervening levels open. This lets the opening read as a deliberate void rather than a continuous slot filled by floor plates.\n\n## Case-study references\nFour precedents helped frame the study. [The Klein Bottle House](https://www.mcbridecharlesryan.com.au/project/klein-bottle-house/) uses a spiral that passes back through itself to shape a sequence of spaces. [Arnhem Central Transfer Terminal](https://www.archdaily.com/777495/arnhem-central-transfer-terminal-unstudio) connects movement and form through a twisting structure and a continuous transition between interior and exterior. [One Thousand Museum](https://www.odparchitects.com/project/one-thousand-museum/) makes its curving exoskeleton a defining part of the tower's structure and identity. [Morpheus Hotel](https://www.archdaily.com/896433/morpheus-hotel-zaha-hadid-architects) uses carved vertical voids, an atrium, and bridges to connect public spaces through a high-rise. I used these projects as reference points for continuity, circulation, and structure, then combined those ideas in a new design rather than reproducing a single precedent.\n\n## AI visualization\nThe AI images explore how the passage, terraces, and exterior frame might come together as an architectural whole. They helped establish a visual direction for the parametric model, especially the contrast between a glazed tower surface and an open, planted route through its center. These are AI-generated concept images; they communicate an imagined design and should be read separately from screenshots of the Rhino and Grasshopper model.\n\n## Parametric model\nThe Rhino and Grasshopper definition turns the design into a set of adjustable relationships. Controls for the tower profile, twist, taper, passage dimensions, and floor rhythm let me compare options while keeping the main design logic intact. The definition is grouped by function, with labeled controls and notes that make it easier to trace how each input affects the geometry. Changing the passage or tower profile updates the surrounding structure, while the every-third-floor rule preserves the intended pattern of open levels and bridges.",
+      "blocks": [
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "AI concept images"
+        },
+        {
+          "type": "image",
+          "url": "/public/images/aiimage1.png",
+          "caption": "AI-generated concept image 1 — a planted passage spirals through the tower.",
+          "content": "This view explores the opening as a sequence of outdoor terraces and shared spaces."
+        },
+        {
+          "type": "image",
+          "url": "/public/images/aiimage2.png",
+          "caption": "AI-generated concept image 2 — an alternate view of the tower and its open frame.",
+          "content": "The second study tests how the passage and exterior structure read from the surrounding landscape."
+        }
+      ]
     }
   ]
 }

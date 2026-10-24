@@ -61,6 +61,13 @@
                 return div.innerHTML;
             }
 
+            function inlineMarkdown(s) {
+                return escapeHtml(s).replace(
+                    /\[([^\]]+)\]\((https:\/\/[^\s)]+)\)/g,
+                    '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>'
+                );
+            }
+
             function simpleMarkdown(src) {
                 if (!src) return '';
                 const lines = String(src).replace(/\r\n/g, '\n').split('\n');
@@ -77,7 +84,7 @@
                     if (/^###\s+/.test(t)) { flush(); out.push('<h3>' + escapeHtml(t.replace(/^###\s+/, '')) + '</h3>'); return; }
                     if (/^##\s+/.test(t)) { flush(); out.push('<h2>' + escapeHtml(t.replace(/^##\s+/, '')) + '</h2>'); return; }
                     if (/^#\s+/.test(t)) { flush(); out.push('<h2>' + escapeHtml(t.replace(/^#\s+/, '')) + '</h2>'); return; }
-                    para.push(escapeHtml(t));
+                    para.push(inlineMarkdown(t));
                 });
                 flush();
                 return out.join('');
@@ -96,7 +103,9 @@
                         const caption = b.caption || '';
                         const content = b.content || '';
                         let html = '<figure class="project-block-figure">' +
+                            '<a class="project-block-image-link" href="' + escapeHtml(url) + '" target="_blank" rel="noopener noreferrer" aria-label="Open full-size image: ' + escapeHtml(caption || 'Project image') + '">' +
                             '<img src="' + escapeHtml(url) + '" alt="' + escapeHtml(caption || 'Project image') + '" loading="lazy" decoding="async">' +
+                            '</a>' +
                             (caption ? '<figcaption>' + escapeHtml(caption) + '</figcaption>' : '') +
                             '</figure>';
                         if (content) html += '<div class="project-body"><p>' + escapeHtml(content) + '</p></div>';
@@ -107,7 +116,7 @@
                         return '<' + level + ' class="project-block-heading">' + escapeHtml(b.text || '') + '</' + level + '>';
                     }
                     if (type === 'paragraph') {
-                        return '<div class="project-body"><p>' + escapeHtml(b.text || '') + '</p></div>';
+                        return '<div class="project-body"><p>' + inlineMarkdown(b.text || '') + '</p></div>';
                     }
                     return '';
                 }).join('');
