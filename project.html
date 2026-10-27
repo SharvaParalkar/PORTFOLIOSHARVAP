@@ -115,8 +115,13 @@
                         const videoId = /^[A-Za-z0-9_-]{11}$/.test(b.videoId || '') ? b.videoId : '';
                         if (!videoId) return '';
                         const title = escapeHtml(b.title || 'Project video');
-                        const src = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(videoId) + '?rel=0';
-                        return '<div class="project-block-video"><iframe src="' + src + '" title="' + title + '" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>';
+                        const watchUrl = 'https://www.youtube.com/watch?v=' + encodeURIComponent(videoId);
+                        const thumbnailUrl = 'https://i.ytimg.com/vi/' + encodeURIComponent(videoId) + '/hqdefault.jpg';
+                        return '<a class="project-block-video" href="' + watchUrl + '" target="_blank" rel="noopener noreferrer" aria-label="Watch ' + title + ' on YouTube (opens in a new tab)">' +
+                            '<img src="' + thumbnailUrl + '" alt="" loading="lazy" decoding="async">' +
+                            '<span class="project-video-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l10-6.5z"/></svg></span>' +
+                            '<span class="project-video-link">Watch on YouTube <span aria-hidden="true">↗</span></span>' +
+                            '</a>';
                     }                    if (type === 'heading') {
                         const level = b.level === 'h3' ? 'h3' : 'h2';
                         return '<' + level + ' class="project-block-heading">' + escapeHtml(b.text || '') + '</' + level + '>';
