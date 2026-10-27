@@ -115,13 +115,11 @@
                         const videoId = /^[A-Za-z0-9_-]{11}$/.test(b.videoId || '') ? b.videoId : '';
                         if (!videoId) return '';
                         const title = escapeHtml(b.title || 'Project video');
-                        const watchUrl = 'https://www.youtube.com/watch?v=' + encodeURIComponent(videoId);
                         const thumbnailUrl = 'https://i.ytimg.com/vi/' + encodeURIComponent(videoId) + '/hqdefault.jpg';
-                        return '<a class="project-block-video" href="' + watchUrl + '" target="_blank" rel="noopener noreferrer" aria-label="Watch ' + title + ' on YouTube (opens in a new tab)">' +
+                        return '<div class="project-block-video" data-video-id="' + videoId + '" data-video-title="' + title + '">' +
                             '<img src="' + thumbnailUrl + '" alt="" loading="lazy" decoding="async">' +
-                            '<span class="project-video-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l10-6.5z"/></svg></span>' +
-                            '<span class="project-video-link">Watch on YouTube <span aria-hidden="true">↗</span></span>' +
-                            '</a>';
+                            '<button class="project-video-play" type="button" aria-label="Play ' + title + '"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10-6.5z"/></svg></button>' +
+                            '</div>';
                     }                    if (type === 'heading') {
                         const level = b.level === 'h3' ? 'h3' : 'h2';
                         return '<' + level + ' class="project-block-heading">' + escapeHtml(b.text || '') + '</' + level + '>';
@@ -163,6 +161,20 @@
                     (bodyHtml ? '<div class="project-body">' + bodyHtml + '</div>' : '') +
                     '<div class="project-blocks">' + blocksHtml + '</div>' +
                     '</div>';
+
+                document.querySelectorAll('.project-block-video').forEach((container) => {
+                    container.querySelector('.project-video-play').addEventListener('click', () => {
+                        const videoId = container.dataset.videoId;
+                        const iframe = document.createElement('iframe');
+                        iframe.src = 'https://www.youtube.com/embed/' + encodeURIComponent(videoId) + '?autoplay=1&rel=0';
+                        iframe.title = container.dataset.videoTitle;
+                        iframe.loading = 'eager';
+                        iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+                        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+                        iframe.allowFullscreen = true;
+                        container.replaceChildren(iframe);
+                    }, { once: true });
+                });
             }
 
             const slug = getSlug();
