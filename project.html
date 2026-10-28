@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/site.css?v=20260925c">
+    <link rel="stylesheet" href="css/site.css?v=20261027-radial">
 </head>
 <body>
     <div class="grain-overlay" aria-hidden="true"></div>
@@ -111,11 +111,21 @@
                         if (content) html += '<div class="project-body"><p>' + escapeHtml(content) + '</p></div>';
                         return html;
                     }
+                    if (type === 'pdf') {
+                        const url = b.url || '';
+                        const title = escapeHtml(b.title || 'Project PDF');
+                        return '<section class="project-block-pdf" aria-label="' + title + '">' +
+                            '<div class="project-block-pdf-toolbar"><h2>' + title + '</h2><a href="' + escapeHtml(url) + '" target="_blank" rel="noopener noreferrer">Open PDF</a></div>' +
+                            '<iframe src="' + escapeHtml(url) + '#view=FitH" title="' + title + '"></iframe></section>';
+                    }
+                    if (type === 'gif') {
+                        return '<figure class="project-block-figure project-block-gif"><img src="' + escapeHtml(b.url || '') + '" alt="' + escapeHtml(b.alt || 'Animated project image') + '" loading="lazy" decoding="async"></figure>';
+                    }
                     if (type === 'video') {
                         const videoId = /^[A-Za-z0-9_-]{11}$/.test(b.videoId || '') ? b.videoId : '';
                         if (!videoId) return '';
                         const title = escapeHtml(b.title || 'YouTube video player');
-                        const src = 'https://www.youtube.com/embed/' + encodeURIComponent(videoId) + '?si=7BeEYlt4Ta4XS5y_';
+                        const src = 'https://www.youtube.com/embed/' + encodeURIComponent(videoId) + '?si=beqTog42KCISWUNb';
                         return '<div class="project-block-video"><iframe src="' + src + '" title="' + title + '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>';
                     }                    if (type === 'heading') {
                         const level = b.level === 'h3' ? 'h3' : 'h2';

@@ -123,6 +123,123 @@
       "image": "/public/images/aiimage2.png",
       "description": "A BIM-ready, twisting and tapering tower with floors, ceilings, and an exterior exoskeleton. A user-defined natural cut runs through the building, with selected floors spanning the opening to connect both sides.",
       "category": "ARCH655 Project 1 · Parametric Tower"
+    },
+    {
+      "slug": "kitcardchair",
+      "title": "Radial Chair",
+      "category": "ARCH 381 · Product Design",
+      "description": "A parametric, flat-pack chair designed for CNC fabrication from one 4 × 8 ft sheet, assembled with interlocking slots.",
+      "tags": [
+        "Parametric Design",
+        "Rhino + Grasshopper",
+        "CNC Fabrication",
+        "Furniture"
+      ],
+      "dataCategory": [
+        "architecture",
+        "computational"
+      ],
+      "image": "/public/images/radial-chair/adobe-page-01.png",
+      "body": "",
+      "blocks": [
+        {
+          "type": "pdf",
+          "url": "/public/images/radial-chair/KitCardChair.pdf",
+          "title": "KitCardChair — project book"
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "Project brief"
+        },
+        {
+          "type": "paragraph",
+          "text": "For ARCH 381, taken as part of my product design minor, I set out to design a chair that could be fabricated from a single flat 4 × 8 ft sheet. CNC cutting is the primary fabrication process. The design began with a sketch and a kit-card precedent: [Wood Dragon 3D Puzzle Gift Kit Card](https://www.printables.com/model/688321-wood-dragon-3d-puzzle-gift-kit-card). I carried that idea into furniture: every component is cut from the sheet and assembled through interlocking slots, without glue or screws."
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "Adobe Pages — project documentation"
+        },
+        {
+          "type": "image",
+          "url": "/public/images/radial-chair/adobe-page-01.png",
+          "caption": "Adobe Pages project documentation · 01 / 10"
+        },
+        {
+          "type": "image",
+          "url": "/public/images/radial-chair/adobe-page-02.png",
+          "caption": "Adobe Pages project documentation · 02 / 10"
+        },
+        {
+          "type": "image",
+          "url": "/public/images/radial-chair/adobe-page-03.png",
+          "caption": "Adobe Pages project documentation · 03 / 10"
+        },
+        {
+          "type": "image",
+          "url": "/public/images/radial-chair/adobe-page-04.png",
+          "caption": "Adobe Pages project documentation · 04 / 10"
+        },
+        {
+          "type": "image",
+          "url": "/public/images/radial-chair/adobe-page-05.png",
+          "caption": "Adobe Pages project documentation · 05 / 10"
+        },
+        {
+          "type": "image",
+          "url": "/public/images/radial-chair/adobe-page-06.png",
+          "caption": "Adobe Pages project documentation · 06 / 10"
+        },
+        {
+          "type": "image",
+          "url": "/public/images/radial-chair/adobe-page-07.png",
+          "caption": "Adobe Pages project documentation · 07 / 10"
+        },
+        {
+          "type": "image",
+          "url": "/public/images/radial-chair/adobe-page-08.png",
+          "caption": "Adobe Pages project documentation · 08 / 10"
+        },
+        {
+          "type": "image",
+          "url": "/public/images/radial-chair/adobe-page-09.png",
+          "caption": "Adobe Pages project documentation · 09 / 10"
+        },
+        {
+          "type": "image",
+          "url": "/public/images/radial-chair/adobe-page-10.png",
+          "caption": "Adobe Pages project documentation · 10 / 10"
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "From parametric definition to browser tool"
+        },
+        {
+          "type": "paragraph",
+          "text": "The project developed from a Grasshopper and Rhino script into a custom web app at [sharvaparalkar.com/radial](https://sharvaparalkar.com/radial). In the browser, the chair is computed in a live 3D environment. Switching to the fabrication tab lays out the chair parts using an optimized packing algorithm, helping fit them on the sheet."
+        },
+        {
+          "type": "video",
+          "videoId": "Bkqe_BT3tic",
+          "title": "Radial Chair — design and fabrication"
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "Fabrication and assembly"
+        },
+        {
+          "type": "paragraph",
+          "text": "The chair was CNC cut at the RELLIS FabLab and assembled from its interlocking components. The finished chair is self-supporting and carries its own weight plus a considerable additional load. The broader goal is to make furniture design more approachable: let people customize a design, then prepare it for straightforward fabrication."
+        },
+        {
+          "type": "gif",
+          "url": "/public/images/radial-chair/rotate.gif",
+          "alt": "Radial Chair rotating to show its form and interlocking parts"
+        }
+      ]
     }
   ]
 }

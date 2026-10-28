@@ -1431,3 +1431,50 @@ button {
     transition: none;
   }
 }
+
+.project-block-pdf {
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid var(--border-color, rgba(120, 110, 100, 0.2));
+  border-radius: 0.75rem;
+  background: var(--bg-secondary);
+}
+
+.project-block-pdf-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1.1rem;
+}
+
+.project-block-pdf-toolbar h2 {
+  margin: 0;
+  font-family: Inter, sans-serif;
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+.project-block-pdf-toolbar a {
+  color: var(--text-primary);
+  font-size: 0.8rem;
+  text-underline-offset: 3px;
+}
+
+.project-block-pdf iframe {
+  display: block;
+  width: 100%;
+  height: min(82vh, 900px);
+  min-height: 560px;
+  border: 0;
+  background: #fff;
+}
+
+.project-block-gif img {
+  width: 100%;
+  border-radius: 0.75rem;
+}
+
+@media (max-width: 640px) {
+  .project-block-pdf iframe { min-height: 440px; }
+}

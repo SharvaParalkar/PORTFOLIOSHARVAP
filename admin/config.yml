@@ -140,6 +140,24 @@ collections:
                     widget: object
                     fields:
                       - { label: Text, name: text, widget: text }
+                  - label: PDF
+                    name: pdf
+                    widget: object
+                    fields:
+                      - { label: PDF file, name: url, widget: file }
+                      - { label: Title, name: title, widget: string }
+                  - label: Video
+                    name: video
+                    widget: object
+                    fields:
+                      - { label: YouTube video ID, name: videoId, widget: string }
+                      - { label: Title, name: title, widget: string, required: false }
+                  - label: GIF
+                    name: gif
+                    widget: object
+                    fields:
+                      - { label: GIF image, name: url, widget: image }
+                      - { label: Alt text, name: alt, widget: string }
 
   # —— Template Editor guide ——
   - name: tools
