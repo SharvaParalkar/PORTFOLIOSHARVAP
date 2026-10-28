@@ -91,7 +91,18 @@
             }
 
             function getSlug() {
-                return (new URLSearchParams(window.location.search).get('slug') || '').trim();
+                const querySlug = (new URLSearchParams(window.location.search).get('slug') || '').trim();
+                if (querySlug) return querySlug;
+
+                const pathParts = window.location.pathname.split('/').filter(Boolean);
+                const pathSlug = pathParts.length ? decodeURIComponent(pathParts[pathParts.length - 1]) : '';
+                if (pathSlug && !/^project(?:\.html)?$/i.test(pathSlug)) return pathSlug;
+
+                try {
+                    return (sessionStorage.getItem('portfolioProjectSlug') || '').trim();
+                } catch (_) {
+                    return '';
+                }
             }
 
             function renderBlocks(blocks) {
