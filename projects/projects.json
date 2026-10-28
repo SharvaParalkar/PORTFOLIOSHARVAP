@@ -145,7 +145,7 @@
         {
           "type": "pdf",
           "url": "/public/images/radial-chair/KitCardChair.pdf",
-          "title": "KitCardChair — project book"
+          "title": "KitCardChair  project book"
         },
         {
           "type": "heading",
@@ -173,6 +173,11 @@
         {
           "type": "paragraph",
           "text": "The chair was CNC cut at the RELLIS FabLab and assembled from its interlocking components. The finished chair is self-supporting and carries its own weight plus a considerable additional load. The broader goal is to make furniture design more approachable: let people customize a design, then prepare it for straightforward fabrication."
+        },
+        {
+          "type": "video",
+          "videoId": "Bkqe_BT3tic",
+          "title": "Radial Chair  design and fabrication"
         },
         {
           "type": "image",
@@ -223,11 +228,6 @@
           "type": "image",
           "url": "/public/images/radial-chair/adobe-page-10.png",
           "caption": "Adobe Pages project documentation · 10 / 10"
-        },
-        {
-          "type": "video",
-          "videoId": "Bkqe_BT3tic",
-          "title": "Radial Chair — design and fabrication"
         },
         {
           "type": "gif",
