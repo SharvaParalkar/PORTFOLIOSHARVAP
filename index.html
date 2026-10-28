@@ -460,11 +460,6 @@
                     const href = '/' + encodeURIComponent(p.slug || '').toLowerCase();
                     const card = document.createElement('a');
                     card.href = href;
-                    card.addEventListener('click', () => {
-                        try {
-                            sessionStorage.setItem('portfolioProjectSlug', (p.slug || '').toLowerCase());
-                        } catch (_) {}
-                    });
                     card.className = 'project-card hoverable';
                     card.setAttribute('data-category', dataCategory);
                     card.setAttribute('aria-label', (p.title || 'Project') + (p.description ? ': ' + p.description : ''));

@@ -64,3 +64,4 @@ auth_endpoint: auth
 Push, open `/admin/`, click **Login with GitHub**.
 
 Projects are stored in `projects/projects.json`.
+Each project's `slug` is its URL path. For example, `kitcardchair` is available at `/kitcardchair`. The Pages Function in `functions/[slug].js` serves every project through the same route, so adding a project does not require a new redirect or page file.

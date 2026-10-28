@@ -22,7 +22,7 @@ npm run editor
 
 ## From Decap CMS
 
-Edit **Projects → Project list & layouts** and use the **Full page layout** blocks (Image / Heading / Paragraph). Those render on `project.html?slug=…`.
+Edit **Projects → Project list & layouts** and use the **Full page layout** blocks. Each project's slug becomes its URL, such as `/kitcardchair`.
 
 ## When to use which
 
