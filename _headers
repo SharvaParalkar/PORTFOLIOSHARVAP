@@ -24,6 +24,11 @@
 /sitemap.xml
   Cache-Control: public, max-age=86400
 
+# Clear cached redirects left by the former project URLs.
+/project
+  Clear-Site-Data: "cache"
+  Cache-Control: public, max-age=0, must-revalidate
+
 /*
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
