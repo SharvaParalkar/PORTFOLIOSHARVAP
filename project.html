@@ -188,6 +188,10 @@
                 root.innerHTML = '<div class="section-mid"><p class="section-sub">Missing project slug. <a class="back-link" href="index.html#work">Back to works</a></p></div>';
                 return;
             }
+            const canonicalProjectPath = '/' + encodeURIComponent(slug).toLowerCase();
+            if (window.location.pathname !== canonicalProjectPath || window.location.search) {
+                window.history.replaceState(null, '', canonicalProjectPath);
+            }
             fetch(new URL('projects/projects.json', document.baseURI || window.location.href).href)
                 .then(r => r.ok ? r.json() : Promise.reject())
                 .then(data => {
