@@ -139,7 +139,7 @@
         "architecture",
         "computational"
       ],
-      "image": "/public/images/radial-chair/adobe-cover.png",
+      "image": "/public/images/radial-chair/KitCardChair-01.png",
       "body": "",
       "blocks": [
         {
@@ -181,47 +181,47 @@
         },
         {
           "type": "image",
-          "url": "/public/images/radial-chair/adobe-page-02.png",
+          "url": "/public/images/radial-chair/KitCardChair-02.png",
           "caption": "02 / 10"
         },
         {
           "type": "image",
-          "url": "/public/images/radial-chair/adobe-page-03.png",
+          "url": "/public/images/radial-chair/KitCardChair-03.png",
           "caption": "03 / 10"
         },
         {
           "type": "image",
-          "url": "/public/images/radial-chair/adobe-page-04.png",
+          "url": "/public/images/radial-chair/KitCardChair-04.png",
           "caption": "04 / 10"
         },
         {
           "type": "image",
-          "url": "/public/images/radial-chair/adobe-page-05.png",
+          "url": "/public/images/radial-chair/KitCardChair-05.png",
           "caption": "05 / 10"
         },
         {
           "type": "image",
-          "url": "/public/images/radial-chair/adobe-page-06.png",
+          "url": "/public/images/radial-chair/KitCardChair-06.png",
           "caption": "06 / 10"
         },
         {
           "type": "image",
-          "url": "/public/images/radial-chair/adobe-page-07.png",
+          "url": "/public/images/radial-chair/KitCardChair-07.png",
           "caption": "07 / 10"
         },
         {
           "type": "image",
-          "url": "/public/images/radial-chair/adobe-page-08.png",
+          "url": "/public/images/radial-chair/KitCardChair-08.png",
           "caption": "08 / 10"
         },
         {
           "type": "image",
-          "url": "/public/images/radial-chair/adobe-page-09.png",
+          "url": "/public/images/radial-chair/KitCardChair-09.png",
           "caption": "09 / 10"
         },
         {
           "type": "image",
-          "url": "/public/images/radial-chair/adobe-page-10.png",
+          "url": "/public/images/radial-chair/KitCardChair-10.png",
           "caption": "10 / 10"
         },
         {
