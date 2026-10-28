@@ -139,7 +139,7 @@
         "architecture",
         "computational"
       ],
-      "image": "/public/images/radial-chair/adobe-page-01.png",
+      "image": "/public/images/radial-chair/adobe-page-02.png",
       "body": "",
       "blocks": [
         {
@@ -181,53 +181,48 @@
         },
         {
           "type": "image",
-          "url": "/public/images/radial-chair/adobe-page-01.png",
-          "caption": "Adobe Pages project documentation · 01 / 10"
-        },
-        {
-          "type": "image",
           "url": "/public/images/radial-chair/adobe-page-02.png",
-          "caption": "Adobe Pages project documentation · 02 / 10"
+          "caption": "02 / 10"
         },
         {
           "type": "image",
           "url": "/public/images/radial-chair/adobe-page-03.png",
-          "caption": "Adobe Pages project documentation · 03 / 10"
+          "caption": "03 / 10"
         },
         {
           "type": "image",
           "url": "/public/images/radial-chair/adobe-page-04.png",
-          "caption": "Adobe Pages project documentation · 04 / 10"
+          "caption": "04 / 10"
         },
         {
           "type": "image",
           "url": "/public/images/radial-chair/adobe-page-05.png",
-          "caption": "Adobe Pages project documentation · 05 / 10"
+          "caption": "05 / 10"
         },
         {
           "type": "image",
           "url": "/public/images/radial-chair/adobe-page-06.png",
-          "caption": "Adobe Pages project documentation · 06 / 10"
+          "caption": "06 / 10"
         },
         {
           "type": "image",
           "url": "/public/images/radial-chair/adobe-page-07.png",
-          "caption": "Adobe Pages project documentation · 07 / 10"
+          "caption": "07 / 10"
         },
         {
           "type": "image",
           "url": "/public/images/radial-chair/adobe-page-08.png",
-          "caption": "Adobe Pages project documentation · 08 / 10"
+          "caption": "08 / 10"
         },
         {
           "type": "image",
           "url": "/public/images/radial-chair/adobe-page-09.png",
-          "caption": "Adobe Pages project documentation · 09 / 10"
+          "caption": "09 / 10"
         },
         {
           "type": "image",
           "url": "/public/images/radial-chair/adobe-page-10.png",
-          "caption": "Adobe Pages project documentation · 10 / 10"
+          "caption": "10 / 10"
         },
         {
           "type": "gif",
