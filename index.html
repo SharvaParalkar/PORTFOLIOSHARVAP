@@ -457,7 +457,7 @@
                     const dataCategory = Array.isArray(p.dataCategory) ? p.dataCategory.join(' ') : (p.dataCategory || '');
                     const tags = Array.isArray(p.tags) ? p.tags : (p.tags || '').toString().split(/[\n,]+/).map(t => t.trim()).filter(Boolean);
                     const tagsHtml = tags.map((t, j) => (j > 0 ? ' <span class="overlay-accent">•</span> ' : '') + '<span>' + escapeAttr(t) + '</span>').join('');
-                    const href = 'project.html?slug=' + encodeURIComponent(p.slug || '');
+                    const href = '/' + encodeURIComponent(p.slug || '').toLowerCase();
                     const card = document.createElement('a');
                     card.href = href;
                     card.className = 'project-card hoverable';
