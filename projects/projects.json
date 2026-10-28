@@ -126,7 +126,7 @@
     },
     {
       "slug": "kitcardchair",
-      "title": "Radial Chair",
+      "title": "Kit Card Chair",
       "category": "ARCH 381 · Product Design",
       "description": "A parametric, flat-pack chair designed for CNC fabrication from one 4 × 8 ft sheet, assembled with interlocking slots.",
       "tags": [
@@ -160,6 +160,24 @@
           "type": "heading",
           "level": "h2",
           "text": "Adobe Pages — project documentation"
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "From parametric definition to browser tool"
+        },
+        {
+          "type": "paragraph",
+          "text": "The project developed from a Grasshopper and Rhino script into a custom web app at [sharvaparalkar.com/radial](https://sharvaparalkar.com/radial). In the browser, the chair is computed in a live 3D environment. Switching to the fabrication tab lays out the chair parts using an optimized packing algorithm, helping fit them on the sheet."
+        },
+        {
+          "type": "heading",
+          "level": "h2",
+          "text": "Fabrication and assembly"
+        },
+        {
+          "type": "paragraph",
+          "text": "The chair was CNC cut at the RELLIS FabLab and assembled from its interlocking components. The finished chair is self-supporting and carries its own weight plus a considerable additional load. The broader goal is to make furniture design more approachable: let people customize a design, then prepare it for straightforward fabrication."
         },
         {
           "type": "image",
@@ -212,27 +230,9 @@
           "caption": "Adobe Pages project documentation · 10 / 10"
         },
         {
-          "type": "heading",
-          "level": "h2",
-          "text": "From parametric definition to browser tool"
-        },
-        {
-          "type": "paragraph",
-          "text": "The project developed from a Grasshopper and Rhino script into a custom web app at [sharvaparalkar.com/radial](https://sharvaparalkar.com/radial). In the browser, the chair is computed in a live 3D environment. Switching to the fabrication tab lays out the chair parts using an optimized packing algorithm, helping fit them on the sheet."
-        },
-        {
           "type": "video",
           "videoId": "Bkqe_BT3tic",
           "title": "Radial Chair — design and fabrication"
-        },
-        {
-          "type": "heading",
-          "level": "h2",
-          "text": "Fabrication and assembly"
-        },
-        {
-          "type": "paragraph",
-          "text": "The chair was CNC cut at the RELLIS FabLab and assembled from its interlocking components. The finished chair is self-supporting and carries its own weight plus a considerable additional load. The broader goal is to make furniture design more approachable: let people customize a design, then prepare it for straightforward fabrication."
         },
         {
           "type": "gif",
